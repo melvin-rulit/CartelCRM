@@ -6,7 +6,7 @@ services:
     container_name: nginx
     restart: "no"
     volumes:
-      - /www/Cartel:/var/www
+      - /www/CartelCRM:/var/www
       - ./docker/nginx:/etc/nginx/conf.d/
       - /etc/letsencrypt/live/cartelcrm.ru:/etc/letsencrypt/live/cartelcrm.ru:ro
       - /etc/letsencrypt/archive/cartelcrm.ru:/etc/letsencrypt/archive/cartelcrm.ru:ro
@@ -25,7 +25,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - /www/Cartel:/var/www
+      - /www/CartelCRM:/var/www
     networks:
       - Cartel
 
