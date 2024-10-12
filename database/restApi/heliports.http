@@ -1,0 +1,14 @@
+###
+
+GET localhost:9001/counterparties
+Accept: application/json
+Content-Type: application/json
+Authorization:
+
+####
+#
+#GET localhost/api/heliports/city/1
+#Accept: application/json
+#Content-Type: application/json
+#Authorization:
+
