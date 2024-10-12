@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('counterparties_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('counterparties_id')->constrained('counterparties')->onDelete('cascade');
+//            $table->foreignId('counterparties_id')->constrained('counterparties')->onDelete('cascade');
             //Ответственный менеджер
             //Информация о входящих платежах по заказу (дата, сумма, статус)
             $table->string('order_number')->unique();
