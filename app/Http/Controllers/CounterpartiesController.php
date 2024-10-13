@@ -11,15 +11,18 @@ use App\Models\Counterparties;
 use App\Models\CounterpartiesOrders;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CounterpartiesController extends Controller
 {
     private const PER_PAGE = 20;
     private Counterparties $counterparties;
+    private CounterpartiesOrders $counterpartiesOrders;
 
-    public function __construct(Counterparties $counterparties)
+    public function __construct(Counterparties $counterparties, CounterpartiesOrders $counterpartiesOrders)
     {
         $this->counterparties = $counterparties;
+        $this->counterpartiesOrders = $counterpartiesOrders;
     }
 
     public function list(Request $request): JsonResponse
@@ -45,7 +48,8 @@ class CounterpartiesController extends Controller
 
     public function order_list(): JsonResponse
     {
-        $orders = CounterpartiesOrders::all();
+        $orders = $this->counterpartiesOrders::all();
+
 //        $orders = $query->paginate(self::PER_PAGE);
 
         return new JsonResponse(
@@ -54,7 +58,7 @@ class CounterpartiesController extends Controller
 //                'deal_static_type' => ['1' => Deal::KIND_WITH_OWNER, '2' => Deal::KIND_WITH_PROXY],
 //                'limit' => self::PER_PAGE,
 //                'total' => $orders->total(),
-                'url'   => route('orders.list')
+                'url'   => route('counterparties_orders.list')
             ]
         );
     }

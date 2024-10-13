@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /** @property string $name */
 /** @property string $email */
@@ -28,7 +29,7 @@ use Laravel\Sanctum\HasApiTokens;
 /** @method find(int $id) */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     public const ROLE_ADMIN = 1;
     public const ROLE_MANAGER = 2;

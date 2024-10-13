@@ -1,10 +1,17 @@
 import './bootstrap';
 import 'flowbite';
 
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+
 import {createApp} from 'vue'
 import {createRouter, createWebHashHistory} from 'vue-router'
 
 import App from './components/App.vue'
+
+import Dashboard from './components/Dashboard/Index.vue'
+
 import UsersList from "./components/users/UsersList.vue";
 import UserCreateForm from "./components/users/UserCreateForm.vue";
 import UserEditForm from "./components/users/UserEditForm.vue";
@@ -19,10 +26,10 @@ import CounterpartiesDetail from "./components/Counterparties/CounterpartiesDeta
 import CounterpartiesCreateForm from "./components/Counterparties/CounterpartiesCreateForm.vue";
 import CounterpartiesEditForm from "./components/Counterparties/CounterpartiesEditForm.vue";
 
-import OrderList from "./components/CounterpartiesOrders/OrdersList.vue";
-import OrderDetail from "./components/CounterpartiesOrders/OrderDetail.vue";
-import OrderCreateForm from "./components/CounterpartiesOrders/OrderCreateForm.vue";
-import OrderEditForm from "./components/CounterpartiesOrders/OrderEditForm.vue";
+import OrderCounterpartiesList from "./components/CounterpartiesOrders/OrdersList.vue";
+import OrderCounterpartiesDetail from "./components/CounterpartiesOrders/OrderDetail.vue";
+import OrderCounterpartiesCreateForm from "./components/CounterpartiesOrders/OrderCreateForm.vue";
+import OrderCounterpartiesEditForm from "./components/CounterpartiesOrders/OrderEditForm.vue";
 
 import BranchesList from "./components/branches/BranchesList.vue";
 import BranchCreateForm from "./components/branches/BranchCreateForm.vue";
@@ -44,7 +51,7 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            component: UsersList
+            component: Dashboard
         },
         //Пользователи
         {
@@ -104,27 +111,37 @@ const router = createRouter({
             path: '/counterparties/:id',
             component: CounterpartiesEditForm
         },
-        //Заказы
+        //Заказы Контрагенты
         {
-            name: 'ordersList',
-            path: '/orders',
-            component: OrderList
+            name: 'ordersCounterpartiesList',
+            path: '/counterparties/orders',
+            component: OrderCounterpartiesList
         },
         {
-            name: 'DetailOrder',
-            path: '/orders/detail/:id',
-            component: OrderDetail
+            name: 'DetailCounterpartiesOrder',
+            path: '/counterparties/orders/detail/:id',
+            component: OrderCounterpartiesDetail
         },
         {
-            name: 'createOrder',
-            path: '/orders/create',
-            component: OrderCreateForm
+            name: 'createCounterpartiesOrder',
+            path: '/counterparties/orders/create',
+            component: OrderCounterpartiesCreateForm
         },
         {
-            name: 'editOrder',
-            path: '/orders/:id',
-            component: OrderEditForm
+            name: 'editCounterpartiesOrder',
+            path: '/counterparties/orders/:id',
+            component: OrderCounterpartiesEditForm
         },
+
+
+
+
+
+
+
+
+
+
         //Филиалы
         {
             name: 'listBranches',

@@ -1,11 +1,12 @@
 <template>
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <div class="px-6 py-6 lg:px-8">
-            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Добавление поставщика</h3>
+
             <Alert :errors="errors"/>
             <Success :message="message"/>
+
             <form @submit="store">
-                <div class="grid md:grid-cols-3 md:gap-6">
+                <div class="grid md:grid-cols-3 md:gap-6 mt-5">
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Фамилия" v-model:value="provider.lastName" type="text"/>
                     </div>

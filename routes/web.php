@@ -33,8 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => 'providers'], function () {
-        Route::get('/', [ProviderController::class, 'list']);
-        Route::get('/orders', [ProviderController::class, 'order_list'])->name('orders.list');
+        Route::get('/', [ProviderController::class, 'list'])->name('providers.list');
+        Route::get('/orders', [ProviderController::class, 'order_list'])->name('providers_orders.list');
         Route::get('/{id}', [ProviderController::class, 'show']);
 //        Route::get('/detail/{id}', [ProviderController::class, 'detail_show']);
         Route::post('/', [ProviderController::class, 'store']);
@@ -44,12 +44,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'counterparties'], function () {
         Route::get('/', [CounterpartiesController::class, 'list'])->name('counterparties.list');
-        Route::get('/orders', [CounterpartiesController::class, 'order_list'])->name('orders.list');
         Route::post('/', [CounterpartiesController::class, 'store']);
         Route::get('/{id}', [CounterpartiesController::class, 'show']);
         Route::get('/detail/{id}', [CounterpartiesController::class, 'detail_show']);
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'delete']);
+
+        Route::get('/orders', [CounterpartiesController::class, 'order_list'])->name('counterparties_orders.list');
     });
     Route::group(['prefix' => 'orders'], function () {
 

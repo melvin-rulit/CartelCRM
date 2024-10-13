@@ -37,7 +37,7 @@ class ProviderController extends Controller
 //                'deal_static_type' => ['1' => Deal::KIND_WITH_OWNER, '2' => Deal::KIND_WITH_PROXY],
 //                'limit' => self::PER_PAGE,
 //                'total' => $orders->total(),
-                'url'   => route('orders.list')
+                'url'   => route('providers_orders.list')
             ]
         );
     }

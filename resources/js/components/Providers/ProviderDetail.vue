@@ -1,7 +1,7 @@
 <template>
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <div class="px-6 py-6 lg:px-8">
-            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Детальная карточка поставщика
+        <div class="px-6 py-1 lg:px-8">
+            <h3 class="text-2xl font-extrabold dark:text-white mb-4">Детальная карточка поставщика
             </h3>
             <Alert :errors="errors"/>
             <Success :message="message"/>
@@ -118,8 +118,12 @@
             </table>
 
                 <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <router-link to="/providers" type="button"
-                                 class="text-sm font-semibold leading-6 text-gray-900">Назад
+                    <router-link :to="{path: '/providers'}">
+                        <button class="text-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 text-sm leading-none py-2 px-2 rounded hover:bg-gray-200 focus:outline-none">
+                            <svg fill="none" height="25" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
+                            </svg>
+                        </button>
                     </router-link>
                 </div>
 
