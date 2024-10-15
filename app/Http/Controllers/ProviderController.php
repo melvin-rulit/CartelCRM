@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateProxyRequest;
+use App\Http\Requests\Providers\CreateProviderRequest;
 use App\Http\Resources\Providers\Orders\OrderResource;
 use App\Http\Resources\Providers\ProvidersResource;
 use App\Models\Providers;
@@ -44,20 +44,21 @@ class ProviderController extends Controller
 
 
 
-    public function store(CreateProxyRequest $request): JsonResponse
+    public function store(CreateProviderRequest $request): JsonResponse
     {
         $provider = $this->providers->newInstance();
 
-        $provider->delegate_id = $request->getDelegateId();
-//        $proxy->owner_id = $request->getOwnerId();
-//        $proxy->number = $request->getNumber();
-//        $proxy->valid_until = $request->getValidUntil();
-//        $proxy->issued_by = $request->getIssuedBy();
-//        $proxy->issued_number = $request->getIssuedNumber();
+        $provider->first_name = $request->getFirstName();
+        $provider->middle_name = $request->getMiddleName();
+        $provider->last_name = $request->getLastName();
+        $provider->phone = $request->getPhone();
+        $provider->city = $request->getCity();
+        $provider->telegram_login = $request->getTelegramLogin();
 
         $provider->save();
 
-        return new JsonResponse(['proxy' => ProvidersResource::make($provider)]);
+        return new JsonResponse(['provider' => ProvidersResource::make($provider)]);
+//        return new JsonResponse($request->getFirstName());
     }
 
     public function show(int $id): JsonResponse

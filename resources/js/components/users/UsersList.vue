@@ -199,11 +199,10 @@
 
 
 <template>
-<!--    <div class="container">-->
-    <div class="">
+    <div class="table-container">
 
         <!-- Первая строка: поиск, выпадающий список для количества строк, кнопка фильтр -->
-        <div class="header">
+        <div class="table-header">
             <Icon icon="ic:baseline-search" class="bottom-icon" />
             <input
                 class="form-control"
@@ -623,15 +622,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.container {
+.table-container {
     width: 100%;
     background-color: #fff;
     box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
     border: 1px solid hsl(215, 50%, 95%);
     border-radius: 6px;
     overflow: hidden;
+    margin: 1em;
 
-    .header {
+    .table-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
