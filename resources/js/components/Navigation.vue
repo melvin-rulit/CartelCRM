@@ -159,7 +159,7 @@
 
 <template>
 <aside class="sidebar">
-<a href="/" class="logo"><img src="@/assets/ico/logo.svg" alt="logo"></a>
+<!--<a href="/" class="logo"><img src="@/assets/ico/logo.svg" alt="logo"></a>-->
 <!--    <img src="{{ asset('assets/ico/logo.svg') }}" alt="logo">-->
 <!--    <img :src="logo" alt="logo">-->
 <nav>
