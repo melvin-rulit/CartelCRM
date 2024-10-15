@@ -194,7 +194,7 @@
 <!--                <div class="content">-->
 <!--                  -->
 <!--                </div>-->
-                <Body/>
+<!--                <Body/>-->
 <!--                <Footer/>-->
             </div>
 
