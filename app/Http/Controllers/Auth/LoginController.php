@@ -73,13 +73,16 @@ class LoginController extends Controller
                 $user->first_login = false;
                 $user->save();
 
-                if ($user->first_name === null OR $user->middle_name === null OR $user->last_name === null OR $user->birthday === null
-                OR $user->passport_series === null OR $user->passport_give === null OR $user->passport_number === null OR $user->passport_issuedBy === null
-                OR $user->passport_issuedByDate === null OR $user->registration_address === null OR $user->live_adress === null OR $user->phone_number === null
-                OR $user->telegram === null){
+                if (auth()->user()->getRoleNames()->first() !== 'admin'){
+                    if ($user->first_name === null OR $user->middle_name === null OR $user->last_name === null OR $user->birthday === null
+                        OR $user->passport_series === null OR $user->passport_give === null OR $user->passport_number === null OR $user->passport_issuedBy === null
+                        OR $user->passport_issuedByDate === null OR $user->registration_address === null OR $user->live_adress === null OR $user->phone_number === null
+                        OR $user->telegram === null){
 
-                    return redirect('/#/users/' . Auth::id());
+                        return redirect('/#/users/' . Auth::id());
+                    }
                 }
+
             }
 
             return $this->sendLoginResponse($request);
