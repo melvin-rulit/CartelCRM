@@ -12,6 +12,7 @@ export class CounterpartiesService {
         let url = `${this.serverUrl}/counterparties/${id}`;
         return axios.get(url)
     }
+
     static store(user) {
         let url = `${this.serverUrl}/counterparties`;
         return axios.post(url, user)

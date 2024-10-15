@@ -6,15 +6,16 @@
             <Success :message="message" />
 
             <form @submit="store">
+
                 <div class="grid md:grid-cols-3 md:gap-6 mt-5">
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Фамилия" v-model:value="counterparties.lastName" type="text"/>
-                    </div>
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Имя" v-model:value="counterparties.firstName" type="text"/>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Отчество" v-model:value="counterparties.middleName" type="text"/>
+                    </div>
+                    <div class="relative z-0 w-full mb-6 group">
+                        <TextInput title="Фамилия" v-model:value="counterparties.lastName" type="text"/>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Город" v-model:value="counterparties.city" type="text"/>
@@ -59,7 +60,6 @@ export default {
         return {
             loading: false,
             userRoles: [],
-            branches: [],
             counterparties: {
                 'firstName': '',
                 'middleName': '',
@@ -74,16 +74,15 @@ export default {
     },
     created: async function () {
         // UserService.getRoles().then(response => this.userRoles = response.data.roles)
-        // BranchService.getBranches().then(response => this.branches = response.data.branches)
     },
     methods: {
         store: async function (event) {
             event.preventDefault()
             this.errors = null
-            CounterpartiesService.store(this.user)
+            CounterpartiesService.store(this.counterparties)
                 .then(response => {
                     this.counterparties = response.data.counterparties
-                    this.$router.push({name: 'listCounterparties'})
+                    // this.$router.push({name: 'listCounterparties'})
                 })
                 .catch(error => {
                     this.errors = error.response.data.message

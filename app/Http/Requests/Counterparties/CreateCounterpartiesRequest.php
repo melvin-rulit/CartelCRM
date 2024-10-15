@@ -23,20 +23,12 @@ class CreateCounterpartiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'               => 'required|email|unique:users',
-            'password'            => 'required|min:6',
-            'roleId'              => 'required|numeric',
-            'branchId'            => 'required|numeric',
-            'firstName'           => 'required',
-            'middleName'          => '',
-            'lastName'            => 'required',
-            'birthday'            => 'required',
-            'passportSeries'      => 'required',
-            'passportNumber'      => 'required',
-            'passportNotes'       => 'required',
-            'registrationAddress' => 'required',
-            'phoneNumber'         => 'required',
-            'comment'             => ''
+            'firstName' => 'required',
+            'middleName' => 'required',
+            'lastName' => 'required',
+            'phone' => 'required',
+            'city' => 'required',
+            'telegram_login' => 'required',
         ];
     }
 
@@ -66,7 +58,7 @@ class CreateCounterpartiesRequest extends FormRequest
 
     public function getMiddleName(): string
     {
-        return $this->input('middleName') ?? '';
+        return $this->input('middleName');
     }
 
     public function getLastName(): string
@@ -74,18 +66,18 @@ class CreateCounterpartiesRequest extends FormRequest
         return $this->input('lastName');
     }
 
+    public function getPhone(): string
+    {
+        return $this->input('phone');
+    }
+
     public function getCity(): string
     {
         return $this->input('city');
     }
 
-    public function getPhone(): string
-    {
-        return preg_replace('|\D|Ui', '', $this->input('phone'));
-    }
-
     public function getTelegramLogin(): string
     {
-        return $this->input('telegram_login') ?? '';
+        return $this->input('telegram_login');
     }
 }
