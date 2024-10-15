@@ -22,10 +22,10 @@ export class ProvideService {
     //     return axios.get(url);
     // }
     //
-    // static store(proxy) {
-    //     let url = `${this.serverUrl}/proxies`;
-    //     return axios.post(url, proxy)
-    // }
+    static store(proxy) {
+        let url = `${this.serverUrl}/providers`;
+        return axios.post(url, proxy)
+    }
     //
     // static update(proxy) {
     //     let url = `${this.serverUrl}/proxies/${proxy.id}`;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\NotUse\Branch;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -46,7 +47,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'enabled',
-//        'branch_id',
+        'first_login',
     ];
 
     /**
@@ -70,10 +71,10 @@ class User extends Authenticatable
         'enabled'           => 'boolean'
     ];
 
-    public function branch()
-    {
-        return $this->hasOne(Branch::class, 'id', 'branch_id');
-    }
+//    public function branch()
+//    {
+//        return $this->hasOne(Branch::class, 'id', 'branch_id');
+//    }
 
     public static function getRoleName(int $id): string
     {
@@ -105,13 +106,13 @@ class User extends Authenticatable
         return $this->role_id === self::ROLE_INVESTOR;
     }
 
-    public function getBranchId(): ?int
-    {
-        return $this->branch_id;
-    }
+//    public function getBranchId(): ?int
+//    {
+//        return $this->branch_id;
+//    }
 
     public function getFullName(): string
     {
-        return sprintf('%s %s %s', $this->last_name, $this->first_name, $this->middle_name);
+        return sprintf('%s %s %s',  $this->first_name, $this->middle_name, $this->last_name);
     }
 }

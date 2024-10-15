@@ -4,17 +4,18 @@
 
             <Alert :errors="errors"/>
             <Success :message="message"/>
-
+<h1>Создание провайдера</h1>
             <form @submit="store">
                 <div class="grid md:grid-cols-3 md:gap-6 mt-5">
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Фамилия" v-model:value="provider.lastName" type="text"/>
-                    </div>
+
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Имя" v-model:value="provider.firstName" type="text"/>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Отчество" v-model:value="provider.middleName" type="text"/>
+                    </div>
+                    <div class="relative z-0 w-full mb-6 group">
+                        <TextInput title="Фамилия" v-model:value="provider.lastName" type="text"/>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Город" v-model:value="provider.city" type="text"/>
@@ -50,7 +51,6 @@ import Select from "../forms/Select.vue";
 import Textarea from "../forms/Textarea.vue";
 import NumberInput from "../forms/NumberInput.vue";
 import DateInput from "../forms/DateInput.vue";
-import {UserService} from "../../services/UserService";
 import {ProvideService} from "../../services/ProvideService";
 
 export default {
@@ -60,34 +60,33 @@ export default {
         return {
             loading: false,
             provider: {
-                delegateId: null,
-                ownerId: null,
-                number: null,
-                validUntil: null,
-                issuedBy: null,
-                issuedNumber: null
+                firstName: null,
+                middleName: null,
+                lastName: null,
+                city: null,
+                phone: null,
+                telegram_login: null
             },
-            delegates: [],
-            owners: [],
+
             errors: null,
             submitted: false,
             message: null
         }
     },
     mounted() {
-        UserService.getManagersList()
-            .then(response => this.delegates = response.data.managers)
-        UserService.getAdminsList()
-            .then(response => this.owners = response.data.admins)
+        // UserService.getManagersList()
+        //     .then(response => this.delegates = response.data.managers)
+        // UserService.getAdminsList()
+        //     .then(response => this.owners = response.data.admins)
     },
     methods: {
         store: async function (event) {
             event.preventDefault()
             this.errors = null
-            ProvideService.store(this.proxy)
+            ProvideService.store(this.provider)
                 .then(response => {
-                    this.proxy = response.data.proxy
-                    this.$router.push({name: 'proxiesList'})
+                    this.provider = response.data.provider
+                    // this.$router.push({name: 'proxiesList'})
                 })
                 .catch(error => {
                     this.errors = error.response.data.message

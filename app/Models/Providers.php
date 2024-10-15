@@ -11,6 +11,6 @@ class Providers extends Model
 
     public function getFullName(): string
     {
-        return sprintf('%s %s %s', $this->last_name, $this->first_name, $this->middle_name);
+        return sprintf('%s %s %s',  $this->first_name, $this->middle_name, $this->last_name);
     }
 }

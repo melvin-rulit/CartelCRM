@@ -34,18 +34,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'providers'], function () {
         Route::get('/', [ProviderController::class, 'list'])->name('providers.list');
-        Route::get('/orders', [ProviderController::class, 'order_list'])->name('providers_orders.list');
         Route::get('/{id}', [ProviderController::class, 'show']);
 //        Route::get('/detail/{id}', [ProviderController::class, 'detail_show']);
         Route::post('/', [ProviderController::class, 'store']);
         Route::put('/{id}', [ProviderController::class, 'update']);
         Route::delete('/{id}', [ProviderController::class, 'delete']);
+
+        Route::get('/orders', [ProviderController::class, 'order_list'])->name('providers_orders.list');
     });
 
     Route::group(['prefix' => 'counterparties'], function () {
         Route::get('/', [CounterpartiesController::class, 'list'])->name('counterparties.list');
-        Route::post('/', [CounterpartiesController::class, 'store']);
         Route::get('/{id}', [CounterpartiesController::class, 'show']);
+        Route::post('/', [CounterpartiesController::class, 'store']);
         Route::get('/detail/{id}', [CounterpartiesController::class, 'detail_show']);
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'delete']);
@@ -68,73 +69,73 @@ Route::group(['middleware' => 'auth'], function () {
 //        Route::put('/{id}', [OrderController::class, 'update']);
     });
 
-    Route::group(['prefix' => 'clients'], function () {
-        Route::get('/', [ClientController::class, 'index']);
-        Route::post('/', [ClientController::class, 'store']);
-        Route::get('/{id}', [ClientController::class, 'show']);
-        Route::put('/{id}', [ClientController::class, 'update']);
-        Route::delete('/{id}', [ClientController::class, 'delete']);
-        Route::post('/{id}/upload', [ClientController::class, 'upload']);
-        Route::delete('/{id}/delete-file/{fileId}', [ClientController::class, 'deleteFile']);
-    });
-
-    Route::group(['prefix' => 'companies'], function () {
-        Route::get('/', [CompanyController::class, 'index']);
-        Route::post('/', [CompanyController::class, 'store']);
-        Route::get('/{id}', [CompanyController::class, 'show']);
-        Route::put('/{id}', [CompanyController::class, 'update']);
-    });
-
-    Route::group(['prefix' => 'branches'], function () {
-        Route::get('/', [BranchController::class, 'list']);
-        Route::get('/dict', [BranchController::class, 'dict']);
-        Route::post('/', [BranchController::class, 'store']);
-        Route::get('/{id}', [BranchController::class, 'show']);
-        Route::put('/{id}', [BranchController::class, 'update']);
-        Route::delete('/{id}', [BranchController::class, 'delete']);
-    });
-
-    Route::group(['prefix' => 'actives'], function () {
-        Route::get('/', [ActiveController::class, 'list']);
-        Route::get('/{id}/credits', [ActiveController::class, 'credits']);
-        Route::post('/', [ActiveController::class, 'store']);
-        Route::get('/{id}', [ActiveController::class, 'show']);
-        Route::put('/{id}', [ActiveController::class, 'update']);
-        Route::delete('/{id}', [ActiveController::class, 'delete']);
-    });
-
-    Route::group(['prefix' => 'operations'], function () {
-        Route::get('/', [OperationController::class, 'index']);
-        Route::get('/active', [OperationController::class, 'active']);
-        Route::get('/types', [OperationController::class, 'types']);
-        Route::post('/', [OperationController::class, 'store']);
-        Route::get('/{id}', [OperationController::class, 'show']);
-        Route::put('/{id}', [OperationController::class, 'update']);
-    });
-
-    Route::group(['prefix' => 'payments'], function () {
-        Route::get('/types', [PaymentController::class, 'types']);
-        Route::get('/{dealId}', [PaymentController::class, 'index']);
-        Route::post('/', [PaymentController::class, 'store']);
-        Route::put('/{id}', [PaymentController::class, 'update']);
-        Route::delete('/{id}', [PaymentController::class, 'delete']);
-    });
-
-
-
-    Route::group(['prefix' => 'sources'], function () {
-        Route::get('/', [SourceController::class, 'index']);
-        Route::post('/', [SourceController::class, 'store']);
-        Route::get('/{id}', [SourceController::class, 'show'])->withTrashed();
-        Route::put('/{id}', [SourceController::class, 'update']);
-    });
-
-    Route::group(['prefix' => 'stats'], function () {
+    Route::group(['prefix' => 'store'], function () {
         Route::get('/payments', [StatsController::class, 'finOperationsStats']);
         Route::get('/actives', [StatsController::class, 'activesStats']);
         Route::post('/payments/export', [StatsController::class, 'exportPayments']);
         Route::post('/actives/export', [StatsController::class, 'exportActives']);
     });
+
+//    Route::group(['prefix' => 'clients'], function () {
+//        Route::get('/', [ClientController::class, 'index']);
+//        Route::post('/', [ClientController::class, 'store']);
+//        Route::get('/{id}', [ClientController::class, 'show']);
+//        Route::put('/{id}', [ClientController::class, 'update']);
+//        Route::delete('/{id}', [ClientController::class, 'delete']);
+//        Route::post('/{id}/upload', [ClientController::class, 'upload']);
+//        Route::delete('/{id}/delete-file/{fileId}', [ClientController::class, 'deleteFile']);
+//    });
+//
+//    Route::group(['prefix' => 'companies'], function () {
+//        Route::get('/', [CompanyController::class, 'index']);
+//        Route::post('/', [CompanyController::class, 'store']);
+//        Route::get('/{id}', [CompanyController::class, 'show']);
+//        Route::put('/{id}', [CompanyController::class, 'update']);
+//    });
+//
+//    Route::group(['prefix' => 'branches'], function () {
+//        Route::get('/', [BranchController::class, 'list']);
+//        Route::get('/dict', [BranchController::class, 'dict']);
+//        Route::post('/', [BranchController::class, 'store']);
+//        Route::get('/{id}', [BranchController::class, 'show']);
+//        Route::put('/{id}', [BranchController::class, 'update']);
+//        Route::delete('/{id}', [BranchController::class, 'delete']);
+//    });
+//
+//    Route::group(['prefix' => 'actives'], function () {
+//        Route::get('/', [ActiveController::class, 'list']);
+//        Route::get('/{id}/credits', [ActiveController::class, 'credits']);
+//        Route::post('/', [ActiveController::class, 'store']);
+//        Route::get('/{id}', [ActiveController::class, 'show']);
+//        Route::put('/{id}', [ActiveController::class, 'update']);
+//        Route::delete('/{id}', [ActiveController::class, 'delete']);
+//    });
+//
+//    Route::group(['prefix' => 'operations'], function () {
+//        Route::get('/', [OperationController::class, 'index']);
+//        Route::get('/active', [OperationController::class, 'active']);
+//        Route::get('/types', [OperationController::class, 'types']);
+//        Route::post('/', [OperationController::class, 'store']);
+//        Route::get('/{id}', [OperationController::class, 'show']);
+//        Route::put('/{id}', [OperationController::class, 'update']);
+//    });
+//
+//    Route::group(['prefix' => 'payments'], function () {
+//        Route::get('/types', [PaymentController::class, 'types']);
+//        Route::get('/{dealId}', [PaymentController::class, 'index']);
+//        Route::post('/', [PaymentController::class, 'store']);
+//        Route::put('/{id}', [PaymentController::class, 'update']);
+//        Route::delete('/{id}', [PaymentController::class, 'delete']);
+//    });
+//
+//    Route::group(['prefix' => 'sources'], function () {
+//        Route::get('/', [SourceController::class, 'index']);
+//        Route::post('/', [SourceController::class, 'store']);
+//        Route::get('/{id}', [SourceController::class, 'show'])->withTrashed();
+//        Route::put('/{id}', [SourceController::class, 'update']);
+//    });
+
+
 
     Route::get('/', [IndexController::class, 'index'])->name('dashboard');
 

@@ -54,9 +54,9 @@
                 <div class="relative z-0 w-full mb-6 group">
                     <TextInput title="Адрес регистрации" v-model:value="user.registrationAddress" type="text"/>
                 </div>
-                <div class="relative z-0 w-full mb-6 group">
-                    <Textarea title="Комментарий" v-model:value="user.comment"/>
-                </div>
+<!--                <div class="relative z-0 w-full mb-6 group">-->
+<!--                    <Textarea title="Комментарий" v-model:value="user.comment"/>-->
+<!--                </div>-->
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <router-link to="/users" type="button"
                                  class="text-sm font-semibold leading-6 text-gray-900">Отмена
@@ -113,7 +113,6 @@ export default {
     },
     created: async function () {
         UserService.getRoles().then(response => this.userRoles = response.data.roles)
-        BranchService.getBranches().then(response => this.branches = response.data.branches)
     },
     methods: {
         store: async function (event) {

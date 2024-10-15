@@ -16,24 +16,26 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                  => $this->resource->id,
-            'name'                => $this->resource->getFullName(),
-            'firstName'           => $this->resource->first_name,
-            'middleName'          => $this->resource->middle_name,
-            'lastName'            => $this->resource->last_name,
-            'birthday'            => $this->resource->birthday?->format('Y-m-d'),
-//            'passportSeries'      => $this->resource->passport_series,
-//            'passportNumber'      => $this->resource->passport_number,
-//            'passportNotes'       => $this->resource->passport_notes,
-//            'registrationAddress' => $this->resource->registration_address,
-//            'phoneNumber'         => $this->resource->phone_number,
-//            'comment'             => $this->resource->comment,
-            'email'               => $this->resource->email,
+            'id' => $this->resource->id,
+            'full_name' => $this->resource->getFullName(),
+            'first_name' => $this->resource->first_name,
+            'middle_name' => $this->resource->middle_name,
+            'last_name' => $this->resource->last_name,
+            'birthday' => $this->resource->birthday?->format('d-m-Y'),
+            'email' => $this->resource->email,
+            'passport_series' => $this->resource->passport_series,
+            'passport_give' => $this->resource->passport_give,
+            'passport_number' => $this->resource->passport_number,
+            'passport_issuedBy' => $this->resource->passport_issuedBy,
+            'passport_issuedByDate' => $this->resource->passport_issuedByDate,
+            'registration_address' => $this->resource->registration_address,
+            'live_adress' => $this->resource->live_adress,
+            'phone_number' => $this->resource->phone_number,
+            'telegram' => $this->resource->telegram,
+            'password_see' => $this->resource->password_see,
+
 //            'roleId'              => $this->resource->role_id,
-//            'branchId'            => $this->resource->branch_id,
-//            'branch'              => BranchResource::make($this->resource->branch),
 //            'role'                => User::getRoleName($this->resource->role_id),
-            'enabled'             => $this->resource->enabled,
         ];
     }
 }

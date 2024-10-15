@@ -8,6 +8,8 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -49,23 +51,26 @@ class UserController extends Controller
     {
         $user = $this->users->newInstance();
 
-        $user->email = $request->getEmail();
-        $user->password = \Hash::make($request->getPassword());
-        $user->role_id = $request->getRoleId();
-        $user->enabled = $request->isEnabled();
-        $user->branch_id = $request->getBranchId();
-
         $user->first_name = $request->getFirstName();
         $user->middle_name = $request->getMiddleName();
         $user->last_name = $request->getLastName();
         $user->birthday = $request->getBirthday();
+        $user->email = $request->getEmail();
+        $user->password = \Hash::make($request->getPassword());
+        $user->password_see = $request->getPassword();
         $user->passport_series = $request->getPassportSeries();
+        $user->passport_give = $request->getPassportGive();
         $user->passport_number = $request->getPassportNumber();
-        $user->passport_notes = $request->getPassportNotes();
+        $user->passport_issuedBy = $request->getPassportIssuedBy();
+        $user->passport_issuedByDate = $request->getPassportIssuedByData();
         $user->registration_address = $request->getRegistrationAddress();
+        $user->live_adress  = $request->getLiveAddress();
         $user->phone_number = $request->getPhone();
-        $user->comment = $request->getComment();
+        $user->telegram  = $request->getTelegram();
 
+//        $user->branch_id = $request->getBranchId();
+//        $user->role_id = $request->getRoleId();
+//        $user->enabled = $request->isEnabled();
         $user->save();
 
         return new JsonResponse(['user' => UserResource::make($user)]);
@@ -130,7 +135,7 @@ class UserController extends Controller
 
     public function current(): JsonResponse
     {
-        return new JsonResponse(['user' => UserResource::make(auth()->user())]);
+        return new JsonResponse(['user' => UserResource::make(auth()->user()), 'role' => auth()->user()->getRoleNames()->first()]);
     }
 
     public function managersList(): JsonResponse
@@ -171,13 +176,17 @@ class UserController extends Controller
 
     public function getRoles()
     {
+        $roles = Role::all();
         return new JsonResponse(
+//            [
+//                'roles' => [
+//                    ['id' => User::ROLE_ADMIN, 'name' => 'Администратор'],
+//                    ['id' => User::ROLE_MANAGER, 'name' => 'Менеджер'],
+//                    ['id' => User::ROLE_INVESTOR, 'name' => 'Инвестор'],
+//                ]
+//            ]
             [
-                'roles' => [
-                    ['id' => User::ROLE_ADMIN, 'name' => 'Администратор'],
-                    ['id' => User::ROLE_MANAGER, 'name' => 'Менеджер'],
-                    ['id' => User::ROLE_INVESTOR, 'name' => 'Инвестор'],
-                ]
+                'roles' => $roles
             ]
         );
     }
