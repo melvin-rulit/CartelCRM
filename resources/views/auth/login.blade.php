@@ -2,65 +2,94 @@
 
 @section('content')
 
-    <section>
-{{--    <div class="container">--}}
-        <div class="flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
-        <div class="row justify-content-center">
-            <div class="col-12">
+    <section class="login-section">
+        <div class="form-container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="heading text-center">Вход в <b>CRM</b> систему <b>Cartel</b></h1>
 
-                <!-- Heading -->
-                <h1 class="display-4 text-center mb-3">
-                    Вход в crm систему Cartel
-                </h1>
+                    <!-- Форма -->
+                    <form id="loginForm" action="{{ route('login') }}" method="post">
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="name@Email адрес" required />
+                        </div>
 
-                <!-- Subheading -->
-                <p class="text-muted text-center mb-5">
-                    Бесплатный доступ к нашей панели.
-                </p>
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Пароль" required />
+                        </div>
 
-                <!-- Форма -->
-                <form action="{{ route('login') }}" method="post">
-                    {{ csrf_field() }}
+                        <button type="submit" class=" btn-primary">
+                            Войти
+                        </button>
+                    </form>
 
-                    <!-- Email address -->
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email адрес</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="name@address.com" required>
+                    <div id="errors" class="alert alert-danger" style="display: none;">
+                        <ul id="error-list"></ul>
                     </div>
-
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label for="password" class="form-label">Пароль</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="••••••••" required>
-                    </div>
-
-                    <!-- Submit -->
-                    <button type="submit" class="btn btn-lg w-100 btn-primary mb-3 mt-3">
-                        Войти
-                    </button>
-
-                    <!-- Forgot Password -->
-                    <p class="text-center">
-                        <a href="{{ route('password.request') }}" class="text-muted">Забыли пароль?</a>
-                    </p>
-                </form>
-
-                <!-- Ошибки -->
-                @if($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
+                </div>
             </div>
-        </div> <!-- / .row -->
-    </div> <!-- / .container -->
-
+        </div>
     </section>
+
+{{--    <section>--}}
+{{--    <div class="container">--}}
+{{--        <div class="flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">--}}
+{{--        <div class="row justify-content-center">--}}
+{{--            <div class="col-12">--}}
+
+{{--                <!-- Heading -->--}}
+{{--                <h1 class="display-4 text-center mb-3">--}}
+{{--                    Вход в crm систему Cartel--}}
+{{--                </h1>--}}
+
+{{--                <!-- Subheading -->--}}
+{{--                <p class="text-muted text-center mb-5">--}}
+{{--                    Бесплатный доступ к нашей панели.--}}
+{{--                </p>--}}
+
+{{--                <!-- Форма -->--}}
+{{--                <form action="{{ route('login') }}" method="post">--}}
+{{--                    {{ csrf_field() }}--}}
+
+{{--                    <!-- Email address -->--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="email" class="form-label">Email адрес</label>--}}
+{{--                        <input type="email" name="email" id="email" class="form-control" placeholder="name@address.com" required>--}}
+{{--                    </div>--}}
+
+{{--                    <!-- Password -->--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="password" class="form-label">Пароль</label>--}}
+{{--                        <input type="password" name="password" id="password" class="form-control" placeholder="••••••••" required>--}}
+{{--                    </div>--}}
+
+{{--                    <!-- Submit -->--}}
+{{--                    <button type="submit" class="btn btn-lg w-100 btn-primary mb-3 mt-3">--}}
+{{--                        Войти--}}
+{{--                    </button>--}}
+
+{{--                    <!-- Forgot Password -->--}}
+{{--                    <p class="text-center">--}}
+{{--                        <a href="{{ route('password.request') }}" class="text-muted">Забыли пароль?</a>--}}
+{{--                    </p>--}}
+{{--                </form>--}}
+
+{{--                <!-- Ошибки -->--}}
+{{--                @if($errors->any())--}}
+{{--                    <div class="alert alert-danger">--}}
+{{--                        <ul>--}}
+{{--                            @foreach($errors->all() as $error)--}}
+{{--                                <li>{{ $error }}</li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+
+{{--            </div>--}}
+{{--        </div> <!-- / .row -->--}}
+{{--    </div> <!-- / .container -->--}}
+
+{{--    </section>--}}
 
 
 
