@@ -230,7 +230,6 @@ const router = createRouter({
             component: StatsActives
         }
     ],
-    linkActiveClass: 'bg-gray-200'
 })
 
 createApp(App).use(router).mount('#app')

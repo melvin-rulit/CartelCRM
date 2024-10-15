@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -54,12 +56,12 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->input('email'))->first();
 
-        if (!$user || !$user->isEnabled()) {
-            $this->incrementLoginAttempts($request);
-            throw ValidationException::withMessages([
-                $this->username() => 'Ваша учетная запись отключена, вход на сайт недоступен. Обратитесь к администратору.',
-            ]);
-        }
+//        if (!$user || !$user->isEnabled()) {
+//            $this->incrementLoginAttempts($request);
+//            throw ValidationException::withMessages([
+//                $this->username() => 'Ваша учетная запись отключена, вход на сайт недоступен. Обратитесь к администратору.',
+//            ]);
+//        }
 
 
         if ($this->attemptLogin($request)) {
@@ -67,14 +69,18 @@ class LoginController extends Controller
                 $request->session()->put('auth.password_confirmed_at', time());
             }
 
-//            if ($user->first_login) {
-//                // Обновляем флаг на false, чтобы он больше не считался первым входом
-//                $user->first_login = false;
-//                $user->save();
-//
-//                // Перенаправляем на страницу /user_create
-//                return redirect('/user_create');
-//            }
+            if ($user->first_login) {
+                $user->first_login = false;
+                $user->save();
+
+                if ($user->first_name === null OR $user->middle_name === null OR $user->last_name === null OR $user->birthday === null
+                OR $user->passport_series === null OR $user->passport_give === null OR $user->passport_number === null OR $user->passport_issuedBy === null
+                OR $user->passport_issuedByDate === null OR $user->registration_address === null OR $user->live_adress === null OR $user->phone_number === null
+                OR $user->telegram === null){
+
+                    return redirect('/#/users/' . Auth::id());
+                }
+            }
 
             return $this->sendLoginResponse($request);
         }

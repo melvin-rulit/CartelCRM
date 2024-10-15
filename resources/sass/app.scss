@@ -7,12 +7,13 @@
 // Bootstrap
 //@import 'bootstrap/scss/bootstrap';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+//@tailwind base;
+//@tailwind components;
+//@tailwind utilities;
 
 // resources/sass/app.scss
-//@import './libs.bundle';
-//@import './theme.bundle';
+@import './libs.bundle';
+@import './theme.bundle';
 @import './login_style.css';
+@import './main.css';
 

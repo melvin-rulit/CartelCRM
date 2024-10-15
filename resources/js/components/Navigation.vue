@@ -159,8 +159,8 @@
 
 <template>
 <aside class="sidebar">
-<!--<a href="/" class="logo"><img src="@/assets/ico/logo.svg" alt="logo"></a>-->
-<!--    <img src="{{ asset('assets/ico/logo.svg') }}" alt="logo">-->
+<a href="/" class="logo"><img src="images/logo/logo.svg" alt="logo"></a>
+<!--    <img src="{{ asset('assets/logo/logo.svg') }}" alt="logo">-->
 <!--    <img :src="logo" alt="logo">-->
 <nav>
     <ul>
@@ -183,13 +183,17 @@
     <div class="bottom-icons">
         <Icon icon="mdi:bell-outline" class="bottom-icon" />
         <div class="avatar"></div>
-        <Icon icon="ic:baseline-search" class="bottom-icon" />
+        <Icon @click="logout" icon="ic:baseline-search" class="bottom-icon" />
     </div>
 </div>
 </aside>
             <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
 
-            <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+<!--            <div id="main-content" class="main-content relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">-->
+            <div id="main-content" class="main-content relative h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+<!--                <div class="content">-->
+<!--                  -->
+<!--                </div>-->
                 <Body/>
                 <Footer/>
             </div>
@@ -222,6 +226,20 @@ export default {
             this.role = response.data.role
         })
     },
+    methods: {
+        logout: function (event) {
+            event.preventDefault()
+            axios.post('/logout', {})
+                .then(response => {
+                    if (response.status === 200) {
+                        document.location.href = '/login';
+                    }
+                })
+                .catch(error => {
+                    console.error('Logout error:', error);
+                });
+        },
+    }
 };
 </script>
 
