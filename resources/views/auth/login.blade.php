@@ -10,6 +10,7 @@
 
                     <!-- Форма -->
                     <form id="loginForm" action="{{ route('login') }}" method="post">
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <input type="email" name="email" id="email" class="form-control" placeholder="name@Email адрес" required />
                         </div>
@@ -18,7 +19,7 @@
                             <input type="password" name="password" id="password" class="form-control" placeholder="Пароль" required />
                         </div>
 
-                        <button type="submit" class=" btn-primary">
+                        <button type="submit" class="btn btn-primary">
                             Войти
                         </button>
                     </form>
