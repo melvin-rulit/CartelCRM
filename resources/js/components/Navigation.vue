@@ -167,10 +167,10 @@
 
         <li><router-link to="/dashboard"><Icon class="ico" icon="lucide:home" /> Панель управления</router-link></li>
         <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/users"><Icon class="ico" icon="lucide:users" /> Пользователи</router-link></li>
-        <li v-show="this.role === 'cashier' || this.role === 'admin' || this.role === 'manager'"><router-link to="/suppliers"><Icon class="ico" icon="lucide:truck" /> Поставщики</router-link></li>
-        <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/supplier-orders"><Icon class="ico" icon="lucide:shopping-cart" /> Заказы поставщикам</router-link></li>
-        <li v-show="this.role === 'cashier' || this.role === 'admin' || this.role === 'manager'"><router-link to="/contractors"><Icon class="ico" icon="lucide:briefcase" /> Контрагенты</router-link></li>
-        <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/contractor-orders"><Icon class="ico" icon="lucide:file-text" /> Заказы контрагентов</router-link></li>
+        <li v-show="this.role === 'cashier' || this.role === 'admin' || this.role === 'manager'"><router-link to="/providers"><Icon class="ico" icon="lucide:truck" /> Поставщики</router-link></li>
+        <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/providers/orders"><Icon class="ico" icon="lucide:shopping-cart" /> Заказы поставщикам</router-link></li>
+        <li v-show="this.role === 'cashier' || this.role === 'admin' || this.role === 'counterparties'"><router-link to="/counterparties"><Icon class="ico" icon="lucide:briefcase" /> Контрагенты</router-link></li>
+        <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/counterparties/orders"><Icon class="ico" icon="lucide:file-text" /> Заказы контрагентов</router-link></li>
         <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/warehouses"><Icon class="ico" icon="lucide:package" /> Склады</router-link></li>
         <li v-show="this.role === 'admin' || this.role === 'manager' || this.role === 'courier'"><router-link to="/funding-sources"><Icon class="ico" icon="lucide:hand-coins" /> Курьеры</router-link></li>
         <li v-show="this.role === 'admin' || this.role === 'cashier'"><router-link to="/branches"><Icon class="ico" icon="lucide:waypoints" /> Кассир</router-link></li>
@@ -190,12 +190,12 @@
             <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
 
 <!--            <div id="main-content" class="main-content relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">-->
-            <div id="main-content" class="main-content relative h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+            <div id="main-content" class="relative h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
 <!--                <div class="content">-->
 <!--                  -->
 <!--                </div>-->
                 <Body/>
-                <Footer/>
+<!--                <Footer/>-->
             </div>
 
 
