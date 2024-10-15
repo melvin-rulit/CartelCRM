@@ -15,21 +15,30 @@ import Dashboard from './components/Dashboard/Index.vue'
 import UsersList from "./components/users/UsersList.vue";
 import UserCreateForm from "./components/users/UserCreateForm.vue";
 import UserEditForm from "./components/users/UserEditForm.vue";
-
+//Поставщики
 import ProvidersList from "./components/Providers/ProvidersList.vue";
 import ProviderDetail from "./components/Providers/ProviderDetail.vue";
 import ProviderCreateForm from "./components/Providers/ProviderCreateForm.vue";
 import ProviderEditForm from "./components/Providers/ProviderEditForm.vue";
-
+//Заказы Поставщикам
+import OrderProviderList from "./components/Providers/ProvidersOrders/OrdersList.vue";
+import OrderProviderDetail from "./components/Counterparties/CounterpartiesOrders/OrderDetail.vue";
+import OrderCounterpartiesCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
+import OrderCounterpartiesEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
+//Контрагенты
 import CounterpartiesList from "./components/Counterparties/CounterpartiesList.vue";
 import CounterpartiesDetail from "./components/Counterparties/CounterpartiesDetail.vue";
 import CounterpartiesCreateForm from "./components/Counterparties/CounterpartiesCreateForm.vue";
 import CounterpartiesEditForm from "./components/Counterparties/CounterpartiesEditForm.vue";
+//Заказы Контрагентам
+import OrderCounterpartiesList from "./components/Counterparties/CounterpartiesOrders/OrdersList.vue";
+import OrderCounterpartiesDetail from "./components/Counterparties/CounterpartiesOrders/OrderDetail.vue";
+import OrderProviderCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
+import OrderProviderEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
+//Склад
+import StatsPayments from "./components/Store/StatsPayments.vue";
+import StatsActives from "./components/Store/StatsActives.vue";
 
-import OrderCounterpartiesList from "./components/CounterpartiesOrders/OrdersList.vue";
-import OrderCounterpartiesDetail from "./components/CounterpartiesOrders/OrderDetail.vue";
-import OrderCounterpartiesCreateForm from "./components/CounterpartiesOrders/OrderCreateForm.vue";
-import OrderCounterpartiesEditForm from "./components/CounterpartiesOrders/OrderEditForm.vue";
 
 import BranchesList from "./components/branches/BranchesList.vue";
 import BranchCreateForm from "./components/branches/BranchCreateForm.vue";
@@ -38,13 +47,10 @@ import ActivesList from "./components/actives/ActivesList.vue";
 import ActiveCreateForm from "./components/actives/ActiveCreateForm.vue";
 import ActiveEditForm from "./components/actives/ActiveEditForm.vue";
 
-
-
 import SourcesList from "./components/sourcees/SourcesList.vue";
 import SourceCreateForm from "./components/sourcees/SourceCreateForm.vue";
 import SourceEditForm from "./components/sourcees/SourceEditForm.vue";
-import StatsPayments from "./components/stats/StatsPayments.vue";
-import StatsActives from "./components/stats/StatsActives.vue";
+
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -90,6 +96,27 @@ const router = createRouter({
             path: '/providers/:id',
             component: ProviderEditForm
         },
+        //Заказы Поставщикам
+        {
+            name: 'ordersProviderList',
+            path: '/providers/orders',
+            component: OrderProviderList
+        },
+        {
+            name: 'DetailProviderOrder',
+            path: '/providers/orders/detail/:id',
+            component: OrderProviderDetail
+        },
+        {
+            name: 'createProviderOrder',
+            path: '/providers/orders/create',
+            component: OrderProviderCreateForm
+        },
+        {
+            name: 'editProviderOrder',
+            path: '/providers/orders/:id',
+            component: OrderProviderEditForm
+        },
         //Контрагенты
         {
             name: 'listCounterparties',
@@ -111,7 +138,7 @@ const router = createRouter({
             path: '/counterparties/:id',
             component: CounterpartiesEditForm
         },
-        //Заказы Контрагенты
+        //Заказы Контрагентам
         {
             name: 'ordersCounterpartiesList',
             path: '/counterparties/orders',
@@ -193,13 +220,13 @@ const router = createRouter({
         //Отчет по финансовым операциям
         {
             name: 'statsPayments',
-            path: '/stats-payments',
+            path: '/Store-payments',
             component: StatsPayments
         },
         //Отчет по остаточной стоимости актива
         {
             name: 'statsActives',
-            path: '/stats-actives',
+            path: '/Store-actives',
             component: StatsActives
         }
     ],
