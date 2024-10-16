@@ -36,7 +36,7 @@ export default {
     min-height: 100vh;
 
     .main-content {
-        margin-left: 250px;
+        margin-left: 290px;
         flex: 1;
         display: flex;
         flex-direction: column;
