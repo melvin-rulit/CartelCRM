@@ -262,74 +262,23 @@
         <table>
             <thead>
             <tr>
-                <th class="checkbox"><input type="checkbox" @change="toggleSelectAll" v-model="selectAll" /></th>
+                <th class="checkbox">
+                    <input type="checkbox" @change="toggleSelectAll" v-model="selectAll" />
+                </th>
                 <th v-for="(column, index) in columns" :key="index">{{ column }}</th>
+                <th>ФИО</th>
+                <th>Дата рождения</th>
+                <th>Email-адрес</th>
+                <th>Серия паспорта</th>
+                <th>Номер паспорта</th>
+                <th>Кем выдан паспорт</th>
+                <th>Дата выдачи паспорта</th>
+                <th>Адрес регистрации</th>
+                <th>Фактическое место жительства</th>
+                <th>Телефон контактный</th>
+                <th>Логин в телеграм</th>
+                <th>Пароль</th>
             </tr>
-                    <tr tabindex="0" class="focus:outline-none h-14 border border-gray-100 rounded divide-x">
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-700 mr-2">ФИО</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Дата рождения</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Email-адрес</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Серия паспорта</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Номер паспорта</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Кем выдан паспорт</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Дата выдачи паспорта</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Адрес регистрации</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Фактическое место жительства</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Телефон контактный</p>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Логин в телеграм</p>
-                            </div>
-                        </td>
-                        <td v-show="this.role === 'admin'" class="text-center">
-                            <div class="flex items-center justify-center">
-                                <p class="text-base font-semibold leading-none text-gray-600 ml-2">Пароль</p>
-                            </div>
-                        </td>
-<!--                        <td class="">-->
-
-<!--                        </td>-->
-                    </tr>
             </thead>
 
             <!-- Строки с данными -->
