@@ -19,7 +19,7 @@
                             <input type="password" name="password" id="password" class="form-control" placeholder="Пароль" required />
                         </div>
 
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary pd-button pt-button">
                             Войти
                         </button>
                     </form>
