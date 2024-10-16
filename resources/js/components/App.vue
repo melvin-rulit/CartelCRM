@@ -41,6 +41,7 @@ export default {
         display: flex;
         flex-direction: column;
         background-color: #f4f4f4;
+        padding: 1em;
 
         .content {
             padding: 20px;
