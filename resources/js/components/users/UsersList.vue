@@ -192,15 +192,15 @@
         </table>
 
         <!-- Пагинация -->
-        <div class="table-footer">
-            <button @click="goToPreviousPage" :disabled="currentPage === 1"><Icon icon="ic:round-arrow-back" class="logo" />Назад</button>
-            <div class="pagination-numbers">
-<!--                <button v-for="page in totalPagesArray" :key="page" :class="{ active: page === currentPage }" @click="goToPage(page)">-->
-<!--                    {{ page }}-->
-<!--                </button>-->
-            </div>
-            <button @click="goToNextPage" :disabled="currentPage === totalPages">Вперед<Icon icon="ic:round-arrow-forward" class="logo" /></button>
-        </div>
+<!--        <div class="table-footer">-->
+<!--            <button @click="goToPreviousPage" :disabled="currentPage === 1"><Icon icon="ic:round-arrow-back" class="logo" />Назад</button>-->
+<!--            <div class="pagination-numbers">-->
+<!--&lt;!&ndash;                <button v-for="page in totalPagesArray" :key="page" :class="{ active: page === currentPage }" @click="goToPage(page)">&ndash;&gt;-->
+<!--&lt;!&ndash;                    {{ page }}&ndash;&gt;-->
+<!--&lt;!&ndash;                </button>&ndash;&gt;-->
+<!--            </div>-->
+<!--            <button @click="goToNextPage" :disabled="currentPage === totalPages">Вперед<Icon icon="ic:round-arrow-forward" class="logo" /></button>-->
+<!--        </div>-->
     </div>
 </template>
 
