@@ -64,18 +64,18 @@ class CounterpartiesController extends Controller
     }
     public function store(CreateCounterpartiesRequest $request): JsonResponse
     {
-        $user = $this->users->newInstance();
+        $Counterpart = $this->counterparties->newInstance();
 
-        $user->first_name = $request->getFirstName();
-        $user->middle_name = $request->getMiddleName();
-        $user->last_name = $request->getLastName();
-        $user->city = $request->getCity();
-        $user->phone = $request->getPhone();
-        $user->telegram_login = $request->getTelegramLogin();
+        $Counterpart->first_name = $request->getFirstName();
+        $Counterpart->middle_name = $request->getMiddleName();
+        $Counterpart->last_name = $request->getLastName();
+        $Counterpart->phone = $request->getPhone();
+        $Counterpart->city = $request->getCity();
+        $Counterpart->telegram_login = $request->getTelegramLogin();
 
-        $user->save();
+        $Counterpart->save();
 
-        return new JsonResponse(['counterparties' => CounterpartiesResource::make($user)]);
+        return new JsonResponse(['counterparties' => CounterpartiesResource::make($Counterpart)]);
     }
 
     public function show(int $id): JsonResponse
