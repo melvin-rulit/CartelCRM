@@ -89,3 +89,13 @@ input[type="checkbox"]:checked::before {
   align-items: center;
   justify-content: center;
 }
+hr {
+    border: unset;
+    border-bottom: 1px solid #e3ebf6;
+    width: 100%;
+    margin: 0 0 20px;
+}
+
+h1 {
+    margin: 20px 0;
+}
