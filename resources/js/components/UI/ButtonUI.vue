@@ -11,7 +11,7 @@ export default {
     // Текст кнопки, обязательный параметр
     buttonText: {
       type: String,
-      required: true,
+      required: false,
     },
     // Цвет по умолчанию
     color: {
@@ -94,7 +94,7 @@ button {
   &.grey-button {
     background: #0d121c40;
     border-color: #b9b9b950;
-    transition: background-image 1s, border-color 0.5s; 
+    transition: background-image 1s, border-color 0.5s;
     &:hover {
       border-color: #b9b9b990;
       background-image: radial-gradient(15em circle at 50% 60px,#b9b9b950,transparent 40%);
