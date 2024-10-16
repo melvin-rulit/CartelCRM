@@ -373,174 +373,12 @@
 <!--}-->
 <!--</script>-->
 
-<!--<style lang="scss" scoped>-->
-<!--.container {-->
-<!--    width: 100%;-->
-<!--    background-color: #fff;-->
-<!--    box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);-->
-<!--    border: 1px solid hsl(215, 50%, 95%);-->
-<!--    border-radius: 6px;-->
-<!--    overflow: hidden;-->
-
-<!--    .header {-->
-<!--        display: flex;-->
-<!--        align-items: center;-->
-<!--        justify-content: space-between;-->
-<!--        color: #b1c2d9;-->
-<!--        padding: 0 1em;-->
-
-<!--        .form-control {-->
-<!--            border: none;-->
-<!--            width: 100%;-->
-<!--            outline: none;-->
-<!--            padding: 1.5em 1em 1.5em 0.5em;-->
-<!--            border-radius: 6px;-->
-<!--            &::placeholder {-->
-<!--                color: #b1c2d9;-->
-<!--            }-->
-<!--        }-->
-
-<!--        select {-->
-<!--            cursor: pointer;-->
-<!--            margin: 0 1em;-->
-<!--            padding: 0.5em;-->
-<!--            border: none;-->
-<!--            font-size: 12px;-->
-<!--            color: black;-->
-<!--            background-color: unset;-->
-<!--        }-->
-
-<!--        .bottom-icon {-->
-<!--            font-size: 18px;-->
-<!--            margin-right: 0;-->
-<!--        }-->
-
-<!--        .ico {-->
-<!--            font-size: 16px;-->
-<!--            margin-right: 0.4em;-->
-<!--        }-->
-<!--    }-->
-
-<!--    table {-->
-<!--        width: 100%;-->
-<!--        border-collapse: collapse;-->
-
-<!--        thead {-->
-<!--            background-color: #f9fbfd;-->
-<!--            color: #95aac9;-->
-<!--            text-transform: uppercase;-->
-<!--            font-size: 0.6rem;-->
-<!--            font-weight: 600;-->
-<!--            letter-spacing: 0.05em;-->
-<!--            border-top: 1px solid #edf2f9;-->
-
-<!--            .checkbox {-->
-<!--                text-align: center;-->
-<!--            }-->
-
-<!--            th {-->
-<!--                padding: 1em;-->
-<!--                border-bottom: 1px solid #edf2f9;-->
-<!--                vertical-align: middle; // Добавлено-->
-<!--                &:first-child {-->
-<!--                    width: 3%;-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
-
-<!--        tbody {-->
-<!--            tr {-->
-<!--                transition: background-color 0.3s;-->
-
-<!--                &:hover {-->
-<!--                    background-color: #f1f3f5;-->
-<!--                }-->
-
-<!--                td {-->
-<!--                    padding: 0.75em;-->
-<!--                    border-top: 1px solid #edf2f9;-->
-<!--                    text-align: left;-->
-<!--                    vertical-align: middle; // Добавлено-->
-
-<!--                    &:first-child {-->
-<!--                        text-align: center;-->
-<!--                        width: 3%;-->
-<!--                    }-->
-
-<!--                    input[type="checkbox"] {-->
-<!--                        cursor: pointer;-->
-<!--                        height: 1rem;-->
-<!--                        width: 1rem;-->
-<!--                        margin: 0;-->
-<!--                    }-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
-<!--    }-->
-
-<!--    .table-footer {-->
-<!--        display: flex;-->
-<!--        justify-content: space-between;-->
-<!--        align-items: center;-->
-<!--        // padding: 1em;-->
-<!--        background-color: #f9fbfd;-->
-<!--        border-top: 1px solid #edf2f9;-->
-
-<!--        button {-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            padding: 1.3em 3em;-->
-<!--            border: unset;-->
-<!--            border-left: 1px solid #edf2f9;-->
-<!--            border-right: 1px solid #edf2f9;-->
-<!--            background-color: #ffffff;-->
-<!--            color: #b1c2d9;-->
-<!--            cursor: pointer;-->
-<!--            transition: 0.3s;-->
-<!--            &:disabled {-->
-<!--                cursor: unset;-->
-<!--            }-->
-
-<!--            &:disabled:hover {-->
-<!--                color: #b1c2d9;-->
-<!--            }-->
-
-<!--            &:hover {-->
-<!--                transition: 0.3s;-->
-<!--                color: black;-->
-<!--            }-->
-
-<!--            .ico {-->
-<!--                width: 2em;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .pagination-numbers {-->
-<!--            display: flex;-->
-<!--            gap: 0.5em;-->
-
-<!--            button {-->
-<!--                padding: 0.5em;-->
-<!--                background-color: #f9fbfd;-->
-<!--                border: none;-->
-<!--                color: #b1c2d9;-->
-<!--                cursor: pointer;-->
-
-<!--                &.active {-->
-<!--                    color: black;-->
-<!--                }-->
-
-<!--                &:hover {-->
-<!--                    color: black;-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
-<!--    }-->
-<!--}-->
-<!--</style>-->
 
 <template>
     <div>
+        <Header title="Пользователи" />
+        <hr>
+
         <Table
             :data="employees"
             :columns="columns"
@@ -550,10 +388,13 @@
 </template>
 
 <script>
+import {UserService} from "../../services/UserService";
 import Table from '../forms/Table.vue';
+import Header from "../Header.vue";
 
 export default {
     components: {
+        Header,
         Table,
     },
     data() {
@@ -579,5 +420,22 @@ export default {
             ],
         };
     },
+    methods: {
+        update:  function () {
+            this.loading = true
+            UserService.currentUser().then(response => {
+                this.role = response.data.role
+            })
+            UserService.getUsers(this.page, this.query)
+                .then(response => {
+                    console.log(response);
+                    this.users = response.data.users
+                    // this.limit = response.data.limit
+                    // this.total = response.data.total
+                })
+                .catch(error => this.errors = error.data.message || error)
+                .finally(() => this.loading = false)
+        },
+    }
 };
 </script>
