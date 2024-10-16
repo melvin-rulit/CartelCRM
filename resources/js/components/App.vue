@@ -1,10 +1,23 @@
 <template>
-<!--    <Header/>-->
-    <Navigation/>
-    <div class="conta">
 
-        <Body/>
+    <div class="layout">
+        <!-- Боковая панель -->
+        <Navigation/>
+
+        <!-- Основной контент -->
+        <div class="main-content">
+            <Header />
+            <div class="conta">
+                <Body/>
+            </div>
+        </div>
     </div>
+<!--    <Header/>-->
+
+<!--    <div class="conta">-->
+
+<!--        <Body/>-->
+<!--    </div>-->
 <!--    <Footer/>-->
 </template>
 
