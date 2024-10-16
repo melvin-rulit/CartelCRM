@@ -337,16 +337,16 @@
 <!--                                            <p class="text-sm leading-none text-gray-600 ml-2">{{ user.live_adress }}</p>-->
 <!--                                        </div>-->
 <!--                                    </td>-->
-<!--                                    <td class="text-center">-->
-<!--                                        <div class="flex items-center justify-center">-->
-<!--                                            <p class="text-sm leading-none text-gray-600 ml-2">{{ user.phone_number }}</p>-->
-<!--                                        </div>-->
-<!--                                    </td>-->
-<!--                                    <td class="text-center">-->
-<!--                                        <div class="flex items-center justify-center">-->
-<!--                                            <p class="text-sm leading-none text-gray-600 ml-2">{{ user.telegram }}</p>-->
-<!--                                        </div>-->
-<!--                                    </td>-->
+                                    <td class="text-center">
+                                        <div class="flex items-center justify-center">
+                                            <p class="text-sm leading-none text-gray-600 ml-2">{{ user.phone_number }}</p>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="flex items-center justify-center">
+                                            <p class="text-sm leading-none text-gray-600 ml-2">{{ user.telegram }}</p>
+                                        </div>
+                                    </td>
 <!--                                    <td v-show="this.role === 'admin'" class="text-center">-->
 <!--                                        <div class="flex items-center justify-center">-->
 <!--                                            <p class="text-sm leading-none text-gray-600 ml-2">{{ user.password_see }}</p>-->
