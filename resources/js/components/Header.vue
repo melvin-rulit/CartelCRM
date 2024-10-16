@@ -3,21 +3,21 @@
         <div class="px-3 py-1 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start">
-                    <button id="toggleSidebarMobile" @click="toggle" aria-expanded="true" aria-controls="sidebar"
-                            class="p-2 text-gray-600 rounded cursor-pointer lg:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        <svg id="toggleSidebarMobileHamburger" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
-                        <svg id="toggleSidebarMobileClose" class="hidden w-6 h-6" fill="currentColor"
-                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
+<!--                    <button id="toggleSidebarMobile" @click="toggle" aria-expanded="true" aria-controls="sidebar"-->
+<!--                            class="p-2 text-gray-600 rounded cursor-pointer lg:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">-->
+<!--                        <svg id="toggleSidebarMobileHamburger" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"-->
+<!--                             xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <path fill-rule="evenodd"-->
+<!--                                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"-->
+<!--                                  clip-rule="evenodd"></path>-->
+<!--                        </svg>-->
+<!--                        <svg id="toggleSidebarMobileClose" class="hidden w-6 h-6" fill="currentColor"-->
+<!--                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <path fill-rule="evenodd"-->
+<!--                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"-->
+<!--                                  clip-rule="evenodd"></path>-->
+<!--                        </svg>-->
+<!--                    </button>-->
 <!--                                        <div class="flex items-center">-->
 <!--                                            <div>-->
 <!--                                                <button type="button"-->
@@ -61,29 +61,29 @@
 
 
 
-                    <div class="flex items-center justify-between">
-                        <h3 v-if="isThisRouteUsers" class="text-2xl font-extrabold dark:text-white md:ml-56">Список пользователей</h3>
-                        <h3 v-if="isThisRouteProviders" class="text-2xl font-extrabold dark:text-white md:ml-56">Список поставщиков</h3>
-                        <h3 v-if="isThisRouteProvidersDetail" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Детальная информация поставщика</h3>
-                        <h3 v-if="isThisRouteProvidersCreate" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Добавление поставщика</h3>
-                        <h3 v-if="isThisRouteProvidersEdit" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Редактирование постовщика</h3>
+<!--                    <div class="flex items-center justify-between">-->
+<!--                        <h3 v-if="isThisRouteUsers" class="text-2xl font-extrabold dark:text-white md:ml-56">Список пользователей</h3>-->
+<!--                        <h3 v-if="isThisRouteProviders" class="text-2xl font-extrabold dark:text-white md:ml-56">Список поставщиков</h3>-->
+<!--                        <h3 v-if="isThisRouteProvidersDetail" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Детальная информация поставщика</h3>-->
+<!--                        <h3 v-if="isThisRouteProvidersCreate" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Добавление поставщика</h3>-->
+<!--                        <h3 v-if="isThisRouteProvidersEdit" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Редактирование постовщика</h3>-->
 
-                        <h3 v-if="isThisRouteCounterparties" class="text-2xl font-extrabold dark:text-white md:ml-56">Список контрагентов</h3>
-                        <h3 v-if="isThisRouteCounterpartiesDetail" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Детальная информация контрагента</h3>
-                        <h3 v-if="isThisRouteCounterpartiesCreate" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Добавление контрагента</h3>
-                        <h3 v-if="isThisRouteCounterpartiesEdit" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Редактирование контрагента</h3>
+<!--                        <h3 v-if="isThisRouteCounterparties" class="text-2xl font-extrabold dark:text-white md:ml-56">Список контрагентов</h3>-->
+<!--                        <h3 v-if="isThisRouteCounterpartiesDetail" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Детальная информация контрагента</h3>-->
+<!--                        <h3 v-if="isThisRouteCounterpartiesCreate" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Добавление контрагента</h3>-->
+<!--                        <h3 v-if="isThisRouteCounterpartiesEdit" class="text-2xl font-extrabold dark:text-white md:ml-56 py-4">Редактирование контрагента</h3>-->
 
 
 
-                        <form v-if="!isThisRouteProvidersCreate & !isThisRouteCounterpartiesCreate & !isThisRouteProvidersDetail &
-                        !isThisRouteCounterpartiesDetail & !isThisRouteProvidersEdit & !isThisRouteCounterpartiesEdit" class="flex-grow ml-4"> <!-- Добавлен класс ml-4 для отступа -->
-                            <div class="grid md:grid-cols-2 md:gap-6 rounded-full p-3">
-                                <div class="relative z-0 w-50 group rounded-full">
-                                    <TextInput @keyup="update()" v-model:value="query" title="" type="text" :placeholder="'Поиск'"/>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+<!--                        <form v-if="!isThisRouteProvidersCreate & !isThisRouteCounterpartiesCreate & !isThisRouteProvidersDetail &-->
+<!--                        !isThisRouteCounterpartiesDetail & !isThisRouteProvidersEdit & !isThisRouteCounterpartiesEdit" class="flex-grow ml-4"> &lt;!&ndash; Добавлен класс ml-4 для отступа &ndash;&gt;-->
+<!--                            <div class="grid md:grid-cols-2 md:gap-6 rounded-full p-3">-->
+<!--                                <div class="relative z-0 w-50 group rounded-full">-->
+<!--                                    <TextInput @keyup="update()" v-model:value="query" title="" type="text" :placeholder="'Поиск'"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
 
 
 
@@ -99,20 +99,20 @@
 
 
                 </div>
-                <div  class="flex items-center">
+<!--                <div  class="flex items-center">-->
 
-                    <router-link v-if="isThisRouteProviders" to="/providers/create"
-                                 class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-500 hover:bg-indigo-600 focus:outline-none rounded"
-                                 type="button">
-                        <p class="text-sm font-medium leading-none text-white">Добавить поставщика</p>
-                    </router-link>
-                    <router-link v-if="isThisRouteCounterparties" to="/counterparties/create"
-                                 class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded"
-                                 type="button">
-                        <p class="text-sm font-medium leading-none text-white">Добавить контрагента</p>
-                    </router-link>
+<!--                    <router-link v-if="isThisRouteProviders" to="/providers/create"-->
+<!--                                 class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-500 hover:bg-indigo-600 focus:outline-none rounded"-->
+<!--                                 type="button">-->
+<!--                        <p class="text-sm font-medium leading-none text-white">Добавить поставщика</p>-->
+<!--                    </router-link>-->
+<!--                    <router-link v-if="isThisRouteCounterparties" to="/counterparties/create"-->
+<!--                                 class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded"-->
+<!--                                 type="button">-->
+<!--                        <p class="text-sm font-medium leading-none text-white">Добавить контрагента</p>-->
+<!--                    </router-link>-->
 
-                </div>
+<!--                </div>-->
 
             </div>
         </div>
