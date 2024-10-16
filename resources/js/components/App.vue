@@ -44,7 +44,7 @@ export default {
         padding: 1em;
 
         .content {
-            padding: 20px;
+            padding: 20px 0;
         }
     }
 }

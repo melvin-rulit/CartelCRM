@@ -250,7 +250,7 @@ export default {
     max-height: 100vh;
     background-color: #ffffff;
     color: #fff;
-    padding: 20px;
+    padding: 0 20px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
