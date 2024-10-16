@@ -183,7 +183,7 @@
     <div class="bottom-icons">
         <Icon icon="mdi:bell-outline" class="bottom-icon" />
         <div class="avatar"></div>
-        <Icon @click="logout" icon="ic:baseline-search" class="bottom-icon" />
+        <Icon @click="logout" icon="ci:exit" class="bottom-icon" />
     </div>
 </div>
 </aside>
