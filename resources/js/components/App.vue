@@ -6,8 +6,8 @@
 
         <!-- Основной контент -->
         <div class="main-content">
-            <Header />
-            <div class="conta">
+<!--            <Header />-->
+            <div class="content">
                 <Body/>
             </div>
         </div>
@@ -30,11 +30,22 @@ export default {
     components: {Body, Navigation, Header}
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.layout {
+    display: flex;
+    min-height: 100vh;
 
-.conta{
-    margin-left: 250px;
-    margin-right: 2em;
+    .main-content {
+        margin-left: 250px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: #f4f4f4;
+
+        .content {
+            padding: 20px;
+        }
+    }
 }
+</style>
 
-</style>/
