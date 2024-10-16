@@ -63,7 +63,7 @@
             <thead>
             <tr>
                 <th class="checkbox"><input type="checkbox" @change="toggleSelectAll" v-model="selectAll"/></th>
-                <th v-for="(column, index) in columns" :key="index">{{ column }}</th>
+                <th v-for="(column, index) in columns" :key="index">{{ column.label }}</th>
             </tr>
             </thead>
 
@@ -71,7 +71,7 @@
             <tbody>
             <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
                 <td><input type="checkbox" v-model="selectedRows" :value="row"/></td>
-                <td v-for="(column, index) in columns" :key="index">{{ row[column] }}</td>
+                <td v-for="(column, index) in columns" :key="index">{{ row[column.key] }}</td>
             </tr>
             </tbody>
         </table>
