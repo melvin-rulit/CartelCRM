@@ -11,7 +11,7 @@
         <li v-show="this.role === 'cashier' || this.role === 'admin' || this.role === 'counterparties'"><router-link to="/counterparties"><Icon class="ico" icon="lucide:briefcase" /> Контрагенты</router-link></li>
         <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/counterparties/orders"><Icon class="ico" icon="lucide:file-text" /> Заказы контрагентов</router-link></li>
         <li v-show="this.role === 'admin' || this.role === 'manager'"><router-link to="/store"><Icon class="ico" icon="lucide:package" /> Склады</router-link></li>
-        <li v-show="this.role === 'admin' || this.role === 'manager' || this.role === 'courier'"><router-link to="/funding-sources"><Icon class="ico" icon="streamline:give-gift" /> Курьеры</router-link></li>
+        <li v-show="this.role === 'admin' || this.role === 'manager' || this.role === 'courier'"><router-link to="/courier"><Icon class="ico" icon="streamline:give-gift" /> Курьеры</router-link></li>
         <li v-show="this.role === 'admin' || this.role === 'cashier'"><router-link to="/cashier"><Icon class="ico" icon="hugeicons:cashier" /> Кассир</router-link></li>
         <li v-show="this.role === 'admin'"><router-link to="/Investments"><Icon class="ico" icon="lucide:archive-restore" /> Инвестиции</router-link></li>
         <li v-show="this.role === 'admin'"><router-link to="/working"><Icon class="ico" icon="lucide:pie-chart" /> График работы</router-link></li>
