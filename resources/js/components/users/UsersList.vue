@@ -289,6 +289,11 @@
 
                                     <td class="text-center">
                                         <div class="flex items-center justify-center">
+                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ user.id }}</p>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="flex items-center justify-center">
                                             <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ user.full_name }}</p>
                                         </div>
                                     </td>
@@ -377,13 +382,13 @@
 
                                 </tr>
                                 </tbody>
-<!--            <tbody>-->
+            <tbody>
 
-<!--&lt;!&ndash;            <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">&ndash;&gt;-->
-<!--&lt;!&ndash;                <td><input type="checkbox" v-model="selectedRows" :value="row" /></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td v-for="(column, index) in columns" :key="index">{{ row[column] }}</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            </tr>&ndash;&gt;-->
-<!--            </tbody>-->
+            <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
+                <td><input type="checkbox" v-model="selectedRows" :value="row" /></td>
+<!--                <td v-for="(column, index) in columns" :key="index">{{ row[column] }}</td>-->
+            </tr>
+            </tbody>
         </table>
 
         <!-- Пагинация -->
