@@ -50,7 +50,6 @@
         <!-- Основной контент -->
         <div class="main-content">
             <div class="content">
-<!--                <slot></slot> &lt;!&ndash; Здесь рендерится контент страниц &ndash;&gt;-->
                 <router-view />
             </div>
         </div>
