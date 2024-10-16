@@ -69,7 +69,7 @@
 
             <!-- Строки с данными -->
             <tbody>
-            <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
+            <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">
                 <td><input type="checkbox" v-model="selectedRows" :value="row"/></td>
                 <td v-for="(column, index) in columns" :key="index">{{ row[column.key] }}</td>
             </tr>
@@ -111,10 +111,13 @@ export default {
             required: true,
         },
         rowsPerPageOptions: {
-            // type: Array,
             type: Object,
             default: () => [10, 25, 50, 100],
         },
+        path: {
+            type: String,
+            required: true
+        }
     },
     data() {
         return {
@@ -205,6 +208,10 @@ export default {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
             }
+        },
+        goToDetails: function(id) {
+            // this.$router.push({ path: '/providers/' + id });
+            this.$router.push({ path: `${this.path}${id}` });
         },
     },
     watch: {

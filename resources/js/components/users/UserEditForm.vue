@@ -24,9 +24,7 @@
                     <div class="relative z-0 w-full mb-6 group">
                         <Select name="roleId" v-model:value="user.roleId" title="Роль" :values="userRoles"/>
                     </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <Select name="branchId" v-model:value="user.branchId" title="Филиал" :values="branches"/>
-                    </div>
+
                     <div class="relative z-0 w-full mb-6 group">
                         <TextInput title="Email" v-model:value="user.email" type="email"/>
                     </div>
@@ -78,7 +76,6 @@ import Alert from "../forms/Alert.vue";
 import Success from "../forms/Success.vue";
 import Select from "../forms/Select.vue";
 import Checkbox from "../forms/Checkbox.vue";
-import {BranchService} from "../../services/BranchService";
 import DateInput from "../forms/DateInput.vue";
 import Textarea from "../forms/Textarea.vue";
 
@@ -90,7 +87,6 @@ export default {
             loading: false,
             id: this.$route.params.id,
             userRoles: [],
-            branches: [],
             user: {
                 'firstName': '',
                 'middleName': '',
@@ -119,9 +115,7 @@ export default {
             .catch(error => {
                 this.errors = error.response.data.message
             })
-        UserService.getRoles().then(response => this.userRoles = response.data.roles)
-        BranchService.getBranches()
-            .then(response => this.branches = response.data.branches)
+        // UserService.getRoles().then(response => this.userRoles = response.data.roles)
     },
     methods: {
         update: async function (event) {
