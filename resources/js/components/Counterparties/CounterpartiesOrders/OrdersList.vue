@@ -7,7 +7,7 @@
             :data="orders"
             :columns="columns"
             :rowsPerPageOptions="[5, 10, 25]"
-            :path="'/counterparties/'"
+            :path="'/counterparties/order/detail/'"
         />
     </div>
 </template>

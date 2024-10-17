@@ -51,23 +51,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{id}', [UserController::class, 'delete']);
         Route::get('/detail/{id}', [CounterpartiesController::class, 'detail_show']);
 
+        Route::get('/order/detail/{id}', [CounterpartiesController::class, 'order_detail_show'])->name('counterparties_orders.detail');
         Route::get('/orders', [CounterpartiesController::class, 'order_list'])->name('counterparties_orders.list');
     });
-    Route::group(['prefix' => 'orders'], function () {
 
-        Route::get('/{id}', [OrderController::class, 'show']);
-        Route::get('/detail/{id}', [OrderController::class, 'detail_show']);
-//        Route::get('/types', [OrderController::class, 'types']);
-//        Route::get('/kinds', [OrderController::class, 'kinds']);
-//        Route::get('/contract/{dealId}', [OrderController::class, 'contract']);
-//        Route::get('/act/{dealId}', [OrderController::class, 'act']);
-//        Route::get('/payments/{dealId}', [OrderController::class, 'payments']);
-//        Route::post('/', [OrderController::class, 'store']);
-//        Route::get('/active/{id}', [OrderController::class, 'activeDeals']);
-//        Route::put('/arhive/{id}', [OrderController::class, 'arhiveDeals']);
-//        Route::delete('/{id}', [OrderController::class, 'delete']);
-//        Route::put('/{id}', [OrderController::class, 'update']);
-    });
+//    Route::group(['prefix' => 'orders'], function () {
+//
+//        Route::get('/{id}', [OrderController::class, 'show']);
+//        Route::get('/detail/{id}', [OrderController::class, 'detail_show']);
+////        Route::get('/types', [OrderController::class, 'types']);
+////        Route::get('/kinds', [OrderController::class, 'kinds']);
+////        Route::get('/contract/{dealId}', [OrderController::class, 'contract']);
+////        Route::get('/act/{dealId}', [OrderController::class, 'act']);
+////        Route::get('/payments/{dealId}', [OrderController::class, 'payments']);
+////        Route::post('/', [OrderController::class, 'store']);
+////        Route::get('/active/{id}', [OrderController::class, 'activeDeals']);
+////        Route::put('/arhive/{id}', [OrderController::class, 'arhiveDeals']);
+////        Route::delete('/{id}', [OrderController::class, 'delete']);
+////        Route::put('/{id}', [OrderController::class, 'update']);
+//    });
 
     Route::group(['prefix' => 'store'], function () {
         Route::get('/payments', [StatsController::class, 'finOperationsStats']);

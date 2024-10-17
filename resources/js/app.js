@@ -146,7 +146,7 @@ const router = createRouter({
         },
         {
             name: 'DetailCounterpartiesOrder',
-            path: '/counterparties/orders/detail/:id',
+            path: '/counterparties/order/detail/:id',
             component: OrderCounterpartiesDetail
         },
         {
