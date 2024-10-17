@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'providers'], function () {
         Route::get('/', [ProviderController::class, 'list'])->name('providers.list');
-        Route::get('/{id}', [ProviderController::class, 'show']);
+//        Route::get('/{id}', [ProviderController::class, 'show']);
 //        Route::get('/detail/{id}', [ProviderController::class, 'detail_show']);
         Route::post('/', [ProviderController::class, 'store']);
         Route::put('/{id}', [ProviderController::class, 'update']);
