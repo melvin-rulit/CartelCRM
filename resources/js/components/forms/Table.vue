@@ -70,7 +70,7 @@
             <!-- Строки с данными -->
             <tbody>
             <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">
-                <td><input type="checkbox" v-model="selectedRows" :value="row"/></td>
+                <td><input type="checkbox" v-model="selectedRows" :value="row" @click.stop /></td>
                 <td v-for="(column, index) in columns" :key="index">{{ getValue(row, column.key) }}</td>
             </tr>
             </tbody>
