@@ -431,7 +431,7 @@ export default {
 
                 &.active {
                     color: black;
-                    border: 1px solid #007bff;
+                    border: 1px solid #edf2f9;
                     border-radius: 4px;
                 }
 
