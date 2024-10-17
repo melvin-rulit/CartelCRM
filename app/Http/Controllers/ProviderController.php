@@ -30,8 +30,7 @@ class ProviderController extends Controller
 
     public function order_list(): JsonResponse
     {
-        $orders = ProvidersOrders::all();
-//        $orders = $this->providers::all();;
+        $orders = $this->providersOrder::all();
 //        $orders = $query->paginate(self::PER_PAGE);
 
         return new JsonResponse(
@@ -73,6 +72,16 @@ class ProviderController extends Controller
         }
 
         return new JsonResponse(['provider' => ProvidersResource::make($providers)]);
+    }
+    public function order_detail_show(int $id): JsonResponse
+    {
+        $counterpart_order = $this->providersOrder::find($id);
+
+        if (!$counterpart_order) {
+            return $this->error('Заказ не найден');
+        }
+
+        return new JsonResponse(['order' => OrderResource::make($counterpart_order)]);
     }
 //
 //    public function update(UpdateProxyRequest $request, int $id): JsonResponse

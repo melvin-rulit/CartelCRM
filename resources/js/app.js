@@ -22,9 +22,10 @@ import ProviderCreateForm from "./components/Providers/ProviderCreateForm.vue";
 import ProviderEditForm from "./components/Providers/ProviderEditForm.vue";
 //Заказы Поставщикам
 import OrderProviderList from "./components/Providers/ProvidersOrders/OrdersList.vue";
-import OrderProviderDetail from "./components/Counterparties/CounterpartiesOrders/OrderDetail.vue";
-import OrderCounterpartiesCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
-import OrderCounterpartiesEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
+import OrderProviderDetail from "./components/Providers/ProvidersOrders/OrderDetail.vue";
+import OrderProviderCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
+import OrderProviderEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
+
 //Контрагенты
 import CounterpartiesList from "./components/Counterparties/CounterpartiesList.vue";
 import CounterpartiesDetail from "./components/Counterparties/CounterpartiesDetail.vue";
@@ -33,8 +34,8 @@ import CounterpartiesEditForm from "./components/Counterparties/CounterpartiesEd
 //Заказы Контрагентам
 import OrderCounterpartiesList from "./components/Counterparties/CounterpartiesOrders/OrdersList.vue";
 import OrderCounterpartiesDetail from "./components/Counterparties/CounterpartiesOrders/OrderDetail.vue";
-import OrderProviderCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
-import OrderProviderEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
+import OrderCounterpartiesCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
+import OrderCounterpartiesEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
 //Склад
 import StatsPayments from "./components/Store/StatsPayments.vue";
 import StatsActives from "./components/Store/StatsActives.vue";
@@ -104,7 +105,7 @@ const router = createRouter({
         },
         {
             name: 'DetailProviderOrder',
-            path: '/providers/orders/detail/:id',
+            path: '/providers/order/detail/:id',
             component: OrderProviderDetail
         },
         {

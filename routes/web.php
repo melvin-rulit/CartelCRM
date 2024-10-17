@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/detail/{id}', [ProviderController::class, 'detail_show']);
 
         Route::get('/orders', [ProviderController::class, 'order_list'])->name('providers_orders.list');
+        Route::get('/order/detail/{id}', [ProviderController::class, 'order_detail_show'])->name('providers_orders.detail');
     });
 
     Route::group(['prefix' => 'counterparties'], function () {
@@ -51,8 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{id}', [UserController::class, 'delete']);
         Route::get('/detail/{id}', [CounterpartiesController::class, 'detail_show']);
 
-        Route::get('/order/detail/{id}', [CounterpartiesController::class, 'order_detail_show'])->name('counterparties_orders.detail');
         Route::get('/orders', [CounterpartiesController::class, 'order_list'])->name('counterparties_orders.list');
+        Route::get('/order/detail/{id}', [CounterpartiesController::class, 'order_detail_show'])->name('counterparties_orders.detail');
     });
 
 //    Route::group(['prefix' => 'orders'], function () {

@@ -16,6 +16,10 @@ export class ProvideService {
         let url = `${this.serverUrl}/providers/orders/?page=` + page + `&query=` + query;
         return axios.get(url);
     }
+    static getOrderById(id){
+        let url = `${this.serverUrl}/providers/order/detail/${id}`;
+        return axios.get(url);
+    }
 
     // static dict(){
     //     let url = `${this.serverUrl}/proxies/dict`;
