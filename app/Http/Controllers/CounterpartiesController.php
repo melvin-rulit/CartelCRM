@@ -54,7 +54,7 @@ class CounterpartiesController extends Controller
 
         return new JsonResponse(
             [
-                'orders' => OrderResource::collection($orders),
+//                'orders' => OrderResource::collection($orders),
 //                'deal_static_type' => ['1' => Deal::KIND_WITH_OWNER, '2' => Deal::KIND_WITH_PROXY],
 //                'limit' => self::PER_PAGE,
 //                'total' => $orders->total(),
