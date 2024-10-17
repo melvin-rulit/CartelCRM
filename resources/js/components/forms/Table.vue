@@ -1,9 +1,5 @@
 <template>
     <div class="container">
-        <div>
-            <h4>Результаты поиска:</h4>
-            <pre>{{ filteredData }}</pre>
-        </div>
         <!-- Первая строка: поиск, выпадающий список для количества строк, кнопка фильтр -->
         <div class="header">
             <Icon icon="ic:baseline-search" class="bottom-icon"/>
