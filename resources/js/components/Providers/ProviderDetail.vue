@@ -196,10 +196,6 @@ export default {
     },
 
     methods: {
-        // goToOrder(id) {
-        //     this.$router.push({ path: '/orders/detail/' + id });
-        // },
-
         update: async function (event) {
             ProvideService.getById(this.id)
                 .then(response => this.provider = response.data.provider)

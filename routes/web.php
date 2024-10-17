@@ -47,9 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', [CounterpartiesController::class, 'list'])->name('counterparties.list');
 //        Route::get('/{id}', [CounterpartiesController::class, 'show']);
         Route::post('/', [CounterpartiesController::class, 'store']);
-        Route::get('/detail/{id}', [CounterpartiesController::class, 'detail_show']);
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'delete']);
+        Route::get('/detail/{id}', [CounterpartiesController::class, 'detail_show']);
 
         Route::get('/orders', [CounterpartiesController::class, 'order_list'])->name('counterparties_orders.list');
     });

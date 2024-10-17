@@ -78,7 +78,7 @@ class CounterpartiesController extends Controller
         return new JsonResponse(['counterparties' => CounterpartiesResource::make($Counterpart)]);
     }
 
-    public function show(int $id): JsonResponse
+    public function detail_show(int $id): JsonResponse
     {
         $counterpart = Counterparties::find($id);
 //        $user = $this->users->find($id);

@@ -7,7 +7,7 @@
             :data="counterparties"
             :columns="columns"
             :rowsPerPageOptions="[5, 10, 25]"
-            :path="'/counterparties/'"
+            :path="'/counterparties/detail/'"
         />
     </div>
 </template>

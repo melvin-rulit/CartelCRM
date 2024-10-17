@@ -9,7 +9,7 @@ export class CounterpartiesService {
     }
 
     static getById(id) {
-        let url = `${this.serverUrl}/counterparties/${id}`;
+        let url = `${this.serverUrl}/counterparties/detail/${id}`;
         return axios.get(url)
     }
 
