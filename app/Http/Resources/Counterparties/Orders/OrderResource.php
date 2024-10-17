@@ -4,6 +4,7 @@ namespace App\Http\Resources\Counterparties\Orders;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Counterparties\CounterpartiesResource;
 
 class OrderResource extends JsonResource
 {
@@ -16,6 +17,7 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
+            'counterpart' => CounterpartiesResource::make($this->resource->counterparties),
             'order_number' => $this->resource->order_number,
             'order_date' => $this->resource->order_date,
             'status' => $this->resource->status,
