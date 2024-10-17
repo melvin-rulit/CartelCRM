@@ -12,10 +12,12 @@ use Illuminate\Http\JsonResponse;
 class ProviderController extends Controller
 {
     private Providers $providers;
+    private ProvidersOrders $providersOrder;
 
-    public function __construct(Providers $providers)
+    public function __construct(Providers $providers, ProvidersOrders $providersOrder)
     {
         $this->providers = $providers;
+        $this->providersOrder = $providersOrder;
     }
 
     public function list(): JsonResponse
@@ -29,6 +31,7 @@ class ProviderController extends Controller
     public function order_list(): JsonResponse
     {
         $orders = ProvidersOrders::all();
+//        $orders = $this->providers::all();;
 //        $orders = $query->paginate(self::PER_PAGE);
 
         return new JsonResponse(
