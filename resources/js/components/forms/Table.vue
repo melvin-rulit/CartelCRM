@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <div>
+            <h4>Результаты поиска:</h4>
+            <pre>{{ filteredData }}</pre>
+        </div>
         <!-- Первая строка: поиск, выпадающий список для количества строк, кнопка фильтр -->
         <div class="header">
             <Icon icon="ic:baseline-search" class="bottom-icon"/>
@@ -161,16 +165,25 @@ export default {
         },
     },
     methods: {
-        handleSearch() {
-            this.filteredData = this.data.filter((row) =>
-                this.columns.some((col) =>
-                    String(row[col])
-                        .toLowerCase()
-                        .includes(this.searchQuery.toLowerCase())
-                )
-            );
-            this.currentPage = 1; // сбрасываем на первую страницу после поиска
-        },
+
+            handleSearch() {
+                this.filteredData = this.data.filter((row) => {
+                    // Проверяем, что строка поиска не пустая
+                    if (this.searchQuery.trim() === "") {
+                        return true; // Если пустая, возвращаем все данные
+                    }
+
+                    // Проверяем каждое поле, по которому хотим осуществить поиск
+                    return this.columns.some((col) => {
+                        const value = this.getValue(row, col.key);
+                        return String(value)
+                            .toLowerCase()
+                            .includes(this.searchQuery.toLowerCase());
+                    });
+                });
+                this.currentPage = 1; // Сбрасываем на первую страницу после поиска
+            },
+
         handleRowsChange() {
             this.currentPage = 1; // сбрасываем на первую страницу при изменении количества строк
         },
