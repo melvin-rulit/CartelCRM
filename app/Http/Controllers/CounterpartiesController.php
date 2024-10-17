@@ -88,6 +88,16 @@ class CounterpartiesController extends Controller
 
         return new JsonResponse(['counterparties' => CounterpartiesResource::make($counterpart)]);
     }
+    public function order_detail_show(int $id): JsonResponse
+    {
+        $counterpart_order = CounterpartiesOrders::find($id);
+
+        if (!$counterpart_order) {
+            return $this->error('Заказ не найден не найден');
+        }
+
+        return new JsonResponse(['order' => OrderResource::make($counterpart_order)]);
+    }
 
     public function update(UpdateUserRequest $request, int $id): JsonResponse
     {
