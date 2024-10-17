@@ -71,7 +71,7 @@
             <tbody>
             <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">
                 <td><input type="checkbox" v-model="selectedRows" :value="row"/></td>
-                <td v-for="(column, index) in columns" :key="index">{{ row[column.key] }}</td>
+                <td v-for="(column, index) in columns" :key="index">{{ getValue(row, column.key) }}</td>
             </tr>
             </tbody>
         </table>
@@ -210,8 +210,11 @@ export default {
             }
         },
         goToDetails: function(id) {
-            // this.$router.push({ path: '/providers/' + id });
             this.$router.push({ path: `${this.path}${id}` });
+        },
+        getValue(row, key) {
+            const keys = key.split('.'); // Разделяем ключи по точке
+            return keys.reduce((obj, key) => (obj ? obj[key] : ''), row); // Извлекаем значение
         },
     },
     watch: {
