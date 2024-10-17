@@ -15,4 +15,9 @@ class CounterpartiesOrders extends Model
         return $this->hasOne(CounterpartiesOrders::class, 'id', 'counterparties_id');
     }
 
+    public function getFullName(): string
+    {
+        return sprintf('%s %s %s',  $this->first_name, $this->middle_name, $this->last_name);
+    }
+
 }
