@@ -10,6 +10,13 @@
                 type="text"
                 placeholder="Поиск"
             />
+
+            <select v-model="selectedStatus" >
+                <option v-for="status in statuses" :key="status.id" :value="status.label">
+                    {{ status.label }}
+                </option>
+            </select>
+
             <select v-model="rowsPerPage" @change="handleRowsChange">
                 <option
                     v-for="option in rowsPerPageOptions"
@@ -19,6 +26,7 @@
                     {{ option }} на стр.
                 </option>
             </select>
+
             <ButtonUI
                 color="white"
                 fontSize="11px"
@@ -68,12 +76,31 @@
             </thead>
 
             <!-- Строки с данными -->
+<!--            <tbody>-->
+<!--            <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">-->
+<!--                <td><input type="checkbox" v-model="selectedRows" :value="row" @click.stop /></td>-->
+<!--                <td v-for="(column, index) in columns" :key="index">{{ getValue(row, column.key) }}</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
             <tbody>
             <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">
                 <td><input type="checkbox" v-model="selectedRows" :value="row" @click.stop /></td>
-                <td v-for="(column, index) in columns" :key="index">{{ getValue(row, column.key) }}</td>
+                <td v-for="(column, index) in columns" :key="index">
+                    <!-- Добавляем условие для статуса -->
+                    <template v-if="column.key === 'order_status'">
+                        <select v-model="row.status" @change="handleStatusChange(row)" @click.stop>
+                            <option v-for="status in statuses" :key="status.id" :value="status.label">
+                                {{ status.label }}
+                            </option>
+                        </select>
+                    </template>
+                    <template v-else>
+                        {{ getValue(row, column.key) }}
+                    </template>
+                </td>
             </tr>
             </tbody>
+
         </table>
 
         <!-- Пагинация -->
@@ -141,6 +168,13 @@ export default {
                 {id: 8, label: 'Опция 8', value: 'option8'},
             ],
             selectedOptions: [], // Для выбранных чекбоксов
+            statuses: [
+                { id: 1, label: 'Все' },
+                { id: 2, label: 'Активные' },
+                { id: 3, label: 'Неактивные' },
+                { id: 4, label: 'Ожидающие' },
+            ],
+            selectedStatus: null, // для хранения выбранного статуса
         };
     },
     computed: {
@@ -224,6 +258,9 @@ export default {
         getValue(row, key) {
             const keys = key.split('.'); // Разделяем ключи по точке
             return keys.reduce((obj, key) => (obj ? obj[key] : ''), row); // Извлекаем значение
+        },
+        handleStatusChange(row) {
+                this.selectedStatus = row.status
         },
     },
     watch: {
@@ -386,7 +423,7 @@ export default {
             gap: 0.5em;
 
             button {
-                padding: 0.5em;
+                padding: 0.4em;
                 background-color: #f9fbfd;
                 border: none;
                 color: #b1c2d9;
@@ -396,7 +433,6 @@ export default {
                     color: black;
                     border: 1px solid #007bff;
                     border-radius: 4px;
-
                 }
 
                 &:hover {

@@ -151,22 +151,22 @@ export default {
             loading: false,
             id: this.$route.params.id,
             userRoles: [],
-            branches: [],
-            counterparties: {
-                'firstName': '',
-                'middleName': '',
-                'lastName': '',
-                'city': '',
-                'phone': '',
-                'telegram_login': '',
-            },
-            orders: {
-                'order_number': '',
-                'order_date': '',
-                'status': '',
-                'order_details': '',
-                'order_price': '',
-            },
+            order: [],
+            // counterparties: {
+            //     'firstName': '',
+            //     'middleName': '',
+            //     'lastName': '',
+            //     'city': '',
+            //     'phone': '',
+            //     'telegram_login': '',
+            // },
+            // orders: {
+            //     'order_number': '',
+            //     'order_date': '',
+            //     'status': '',
+            //     'order_details': '',
+            //     'order_price': '',
+            // },
             errors: null,
             submitted: false,
             message: null
@@ -175,15 +175,15 @@ export default {
     mounted() {
         this.update();
     },
-    created() {
-        // UserService.getRoles().then(response => this.userRoles = response.data.roles)
-        CounterpartiesService.getOrders()
-            .then(response => this.orders = response.data.orders)
-    },
+    // created() {
+    //     // UserService.getRoles().then(response => this.userRoles = response.data.roles)
+    //     CounterpartiesService.getOrders()
+    //         .then(response => this.orders = response.data.orders)
+    // },
     methods: {
         update: async function (event) {
-            CounterpartiesService.getById(this.id)
-                .then(response => this.counterparties = response.data.counterparties)
+            CounterpartiesService.getOrderById(this.id)
+                .then(response => this.order = response.data.order)
                 .catch(error => {
                     this.errors = error.response.data.message
                 })

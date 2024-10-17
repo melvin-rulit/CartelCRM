@@ -8,7 +8,7 @@ export class ProvideService {
         return axios.get(url);
     }
     static getById(id) {
-        let url = `${this.serverUrl}/providers/${id}`;
+        let url = `${this.serverUrl}/providers/detail/${id}`;
         return axios.get(url)
     }
 

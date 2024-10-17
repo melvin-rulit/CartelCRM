@@ -93,7 +93,7 @@ class CounterpartiesController extends Controller
         $counterpart_order = CounterpartiesOrders::find($id);
 
         if (!$counterpart_order) {
-            return $this->error('Заказ не найден не найден');
+            return $this->error('Заказ не найден');
         }
 
         return new JsonResponse(['order' => OrderResource::make($counterpart_order)]);

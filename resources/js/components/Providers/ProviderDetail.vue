@@ -136,6 +136,12 @@
         <Header title="Детальная информация о поставщике" />
         <hr>
 
+        <Table
+            :data="orders"
+            :columns="columns"
+            :rowsPerPageOptions="[5, 10, 25]"
+            :path="'/providers/order/detail/'"
+        />
     </div>
 </template>
 
@@ -159,7 +165,7 @@ export default {
             loading: false,
             id: this.$route.params.id,
             userRoles: [],
-            branches: [],
+            orders: [],
             provider: {
                 'firstName': '',
                 'middleName': '',
@@ -169,13 +175,20 @@ export default {
                 'telegram_login': '',
             },
 
-            orders: {
-                'order_number': '',
-                'order_date': '',
-                'status': '',
-                'order_details': '',
-                'order_price': '',
-            },
+            columns: [
+                { label: 'Номер заказа', key: 'order_number' },
+                { label: 'Дата заказа', key: 'order_date' },
+                { label: 'Состав заказа', key: 'order_details' },
+                { label: 'Сумма заказа', key: 'order_price' },
+                { label: 'Статус заказа', key: 'order_status' },
+            ],
+            // orders: {
+            //     'order_number': '',
+            //     'order_date': '',
+            //     'status': '',
+            //     'order_details': '',
+            //     'order_price': '',
+            // },
             errors: null,
             submitted: false,
             message: null
@@ -184,25 +197,22 @@ export default {
     mounted() {
         this.update();
     },
-    created() {
-        // ProvideService.getById(this.id)
-        //     .then(response => this.provider = response.data.provider)
-        //     .catch(error => {
-        //         this.errors = error.response.data.message
-        //     })
-
-        // ProvideService.getOrders()
-        //     .then(response => this.orders = response.data.orders)
-    },
-
     methods: {
         update: async function (event) {
             ProvideService.getById(this.id)
                 .then(response => this.provider = response.data.provider)
+                .then(response => this.orders = response.data.provider)
                 .catch(error => {
                     this.errors = error.response.data.message
                 })
                 .finally(() => this.loading = false)
+
+            // ProvideService.getOrders(this.id)
+            //     .then(response => this.orders = response.data.orders)
+            //     .catch(error => {
+            //         this.errors = error.response.data.message
+            //     })
+            //     .finally(() => this.loading = false)
         }
     }
 }
