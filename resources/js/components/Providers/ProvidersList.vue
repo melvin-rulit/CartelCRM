@@ -226,7 +226,7 @@
             :data="providers"
             :columns="columns"
             :rowsPerPageOptions="[5, 10, 25]"
-            :path="'/providers/'"
+            :path="'/providers/detail/'"
         />
     </div>
 </template>

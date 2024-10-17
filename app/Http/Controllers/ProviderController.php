@@ -64,7 +64,7 @@ class ProviderController extends Controller
 //        return new JsonResponse($request->getFirstName());
     }
 
-    public function show(int $id): JsonResponse
+    public function detail_show(int $id): JsonResponse
     {
         $providers = $this->providers->find($id);
 
