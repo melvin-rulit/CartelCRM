@@ -371,7 +371,7 @@ export default {
                 color: #b1c2d9;
             }
 
-            &:hover {
+                &:hover {
                 transition: 0.3s;
                 color: black;
             }
@@ -394,6 +394,9 @@ export default {
 
                 &.active {
                     color: black;
+                    border: 1px solid #007bff;
+                    border-radius: 4px;
+
                 }
 
                 &:hover {
