@@ -11,12 +11,6 @@
                 placeholder="Поиск"
             />
 
-            <select v-model="selectedStatus" >
-                <option v-for="status in statuses" :key="status.id" :value="status.label">
-                    {{ status.label }}
-                </option>
-            </select>
-
             <select v-model="rowsPerPage" @change="handleRowsChange">
                 <option
                     v-for="option in rowsPerPageOptions"
