@@ -37,7 +37,7 @@ export default {
             orders: [],
             columns: [
                 { label: 'Номер заказа', key: 'order_number' },
-                { label: 'ФИО контрагента', key: 'provider.full_name' },
+                { label: 'ФИО контрагента', key: 'counterpart.full_name' },
                 { label: 'Состав заказа', key: 'order_details' },
                 { label: 'Статус заказа', key: 'status' },
                 { label: 'Адрес доставки', key: 'delivery_address' },

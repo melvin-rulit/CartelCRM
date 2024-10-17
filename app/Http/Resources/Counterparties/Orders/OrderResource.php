@@ -17,7 +17,7 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'counterpart' => CounterpartiesResource::make($this->resource->counterparties),
+            'counterpart' => CounterpartiesResource::make($this->resource->counterpart),
             'order_number' => $this->resource->order_number,
             'order_date' => $this->resource->order_date,
             'status' => $this->resource->status,
