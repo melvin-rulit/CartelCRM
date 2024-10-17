@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header title="Заказы контрагентам" />
+        <Header title="Заказы контрагентов" />
         <hr>
 
         <Table
