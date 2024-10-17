@@ -181,10 +181,6 @@ export default {
             .then(response => this.orders = response.data.orders)
     },
     methods: {
-        goToOrder(id) {
-            this.$router.push({ path: '/orders/detail/' + id });
-        },
-
         update: async function (event) {
             CounterpartiesService.getById(this.id)
                 .then(response => this.counterparties = response.data.counterparties)

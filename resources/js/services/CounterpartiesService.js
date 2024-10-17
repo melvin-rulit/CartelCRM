@@ -29,7 +29,7 @@ export class CounterpartiesService {
     }
 
     static getOrders(page, query){
-        let url = `${this.serverUrl}/counterparties/orders/?page=` + page + `&query=` + query;
+        let url = `${this.serverUrl}/counterparties/orders/`;
         return axios.get(url);
     }
 

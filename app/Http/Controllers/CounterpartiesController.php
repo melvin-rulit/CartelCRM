@@ -81,7 +81,6 @@ class CounterpartiesController extends Controller
     public function detail_show(int $id): JsonResponse
     {
         $counterpart = Counterparties::find($id);
-//        $user = $this->users->find($id);
 
         if (!$counterpart) {
             return $this->error('Контрагент не найден');
