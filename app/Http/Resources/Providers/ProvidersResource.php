@@ -17,6 +17,7 @@ class ProvidersResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'full_name' => $this->resource->getFullName(),
+            'full_name_with_contacts' => $this->resource->getFullNameWithContacts(),
             'firstName' => $this->resource->first_name,
             'middleName' => $this->resource->middle_name,
             'lastName' => $this->resource->last_name,

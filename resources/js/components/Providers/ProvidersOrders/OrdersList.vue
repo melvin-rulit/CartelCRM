@@ -40,7 +40,7 @@ export default {
                 { label: 'Номер заказа', key: 'order_number' },
                 { label: 'Дата заказа', key: 'order_date' },
                 { label: 'Статус заказа', key: 'status' },
-                { label: 'ФИО поставщика', key: 'provider.full_name' },
+                { label: 'ФИО поставщика', key: 'provider.full_name_with_contacts' },
                 { label: 'Состав заказа', key: 'order_details' },
                 { label: 'Сумма заказа', key: 'order_price' },
             ],
