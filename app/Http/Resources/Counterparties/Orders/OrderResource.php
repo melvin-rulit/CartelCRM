@@ -21,6 +21,7 @@ class OrderResource extends JsonResource
             'status' => $this->resource->status,
             'order_details' => $this->resource->order_details,
             'order_price' => $this->resource->order_price,
+            'delivery_address' => $this->resource->delivery_address,
         ];
     }
 }
