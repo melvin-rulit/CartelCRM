@@ -70,18 +70,12 @@
             </thead>
 
             <!-- Строки с данными -->
-<!--            <tbody>-->
-<!--            <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">-->
-<!--                <td><input type="checkbox" v-model="selectedRows" :value="row" @click.stop /></td>-->
-<!--                <td v-for="(column, index) in columns" :key="index">{{ getValue(row, column.key) }}</td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
             <tbody>
             <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">
-                <td><input type="checkbox" v-model="selectedRows" :value="row" @click.stop /></td>
+                <td><input type="checkbox" v-model="selectedRows" :value="row" @click.stop/></td>
                 <td v-for="(column, index) in columns" :key="index">
                     <!-- Добавляем условие для статуса -->
-                    <template v-if="column.key === 'order_status'">
+                    <template v-if="column.key === 'status'">
                         <select v-model="row.status" @change="handleStatusChange(row)" @click.stop>
                             <option v-for="status in statuses" :key="status.id" :value="status.label">
                                 {{ status.label }}
@@ -163,10 +157,10 @@ export default {
             ],
             selectedOptions: [], // Для выбранных чекбоксов
             statuses: [
-                { id: 1, label: 'Все' },
-                { id: 2, label: 'Активные' },
-                { id: 3, label: 'Неактивные' },
-                { id: 4, label: 'Ожидающие' },
+                {id: 1, label: 'К оплате', value: 'for_payment'},
+                {id: 2, label: 'Выполнено', value: 'completed'},
+                // { id: 3, label: 'Неактивные' },
+                // { id: 4, label: 'Ожидающие' },
             ],
             selectedStatus: null, // для хранения выбранного статуса
         };
@@ -190,23 +184,23 @@ export default {
     },
     methods: {
 
-            handleSearch() {
-                this.filteredData = this.data.filter((row) => {
-                    // Проверяем, что строка поиска не пустая
-                    if (this.searchQuery.trim() === "") {
-                        return true; // Если пустая, возвращаем все данные
-                    }
+        handleSearch() {
+            this.filteredData = this.data.filter((row) => {
+                // Проверяем, что строка поиска не пустая
+                if (this.searchQuery.trim() === "") {
+                    return true; // Если пустая, возвращаем все данные
+                }
 
-                    // Проверяем каждое поле, по которому хотим осуществить поиск
-                    return this.columns.some((col) => {
-                        const value = this.getValue(row, col.key);
-                        return String(value)
-                            .toLowerCase()
-                            .includes(this.searchQuery.toLowerCase());
-                    });
+                // Проверяем каждое поле, по которому хотим осуществить поиск
+                return this.columns.some((col) => {
+                    const value = this.getValue(row, col.key);
+                    return String(value)
+                        .toLowerCase()
+                        .includes(this.searchQuery.toLowerCase());
                 });
-                this.currentPage = 1; // Сбрасываем на первую страницу после поиска
-            },
+            });
+            this.currentPage = 1; // Сбрасываем на первую страницу после поиска
+        },
 
         handleRowsChange() {
             this.currentPage = 1; // сбрасываем на первую страницу при изменении количества строк
@@ -246,15 +240,15 @@ export default {
                 this.currentPage++;
             }
         },
-        goToDetails: function(id) {
-            this.$router.push({ path: `${this.path}${id}` });
+        goToDetails: function (id) {
+            this.$router.push({path: `${this.path}${id}`});
         },
         getValue(row, key) {
             const keys = key.split('.'); // Разделяем ключи по точке
             return keys.reduce((obj, key) => (obj ? obj[key] : ''), row); // Извлекаем значение
         },
         handleStatusChange(row) {
-                this.selectedStatus = row.status
+            this.selectedStatus = row.status
         },
     },
     watch: {
@@ -402,7 +396,7 @@ export default {
                 color: #b1c2d9;
             }
 
-                &:hover {
+            &:hover {
                 transition: 0.3s;
                 color: black;
             }

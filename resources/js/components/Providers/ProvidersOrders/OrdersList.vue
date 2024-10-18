@@ -41,6 +41,7 @@ export default {
             },
             orders: [],
             columns: [
+                { label: 'Статус оплаты', key: 'is_paid' },
                 { label: 'Номер заказа', key: 'order_number' },
                 { label: 'Дата заказа', key: 'order_date' },
                 { label: 'Статус заказа', key: 'status' },
