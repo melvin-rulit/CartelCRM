@@ -1,12 +1,12 @@
 <template>
     <div>
-        <Header title="Заказы поставщикам">
-            <ButtonUI @click="goToAdd">Создать заказ</ButtonUI>
-            <ButtonUI @click="goToAdd">Добавить поставщика</ButtonUI>
+        <Header :title="order_create ? 'Заказы поставщикам' : 'Создание заказа поставщику'">
+            <ButtonUI @click="goToAdd('order')">Создать заказ</ButtonUI>
+            <ButtonUI @click="goToAdd('provider')">Добавить поставщика</ButtonUI>
         </Header>
         <hr>
 
-        <Table
+        <Table v-show="order_create"
             :data="orders"
             :columns="columns"
             :rowsPerPageOptions="[5, 10, 25]"
@@ -48,6 +48,7 @@ export default {
                 { label: 'Состав заказа', key: 'order_details' },
                 { label: 'Сумма заказа', key: 'order_price' },
             ],
+            order_create: true,
             errorMessage: null,
             query: null,
         }
@@ -66,8 +67,13 @@ export default {
                 .catch(error => this.errorMessage = error)
                 .finally(() => this.loading = false);
         },
-        goToAdd() {
-            this.$router.push({ path: '/providers/create'});
+        goToAdd(type) {
+            if (type === 'order') {
+                // this.$router.push({ path: '/providers/orders/create' });
+                this.order_create = false;
+            } else if (type === 'provider') {
+                this.$router.push({ path: '/providers/create' });
+            }
         },
     },
 
