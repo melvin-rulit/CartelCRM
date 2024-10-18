@@ -74,7 +74,13 @@
             <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" @click="goToDetails(row.id)">
                 <td><input type="checkbox" v-model="selectedRows" :value="row" @click.stop/></td>
                 <td v-for="(column, index) in columns" :key="index">
-                    <!-- Добавляем условие для статуса -->
+
+                    <template v-if="column.key === 'is_paid'">
+                <span class="paid" :class="{ 'paid-yes': row.is_paid, 'paid-no': !row.is_paid }">
+                    {{ row.is_paid}}
+                </span>
+                    </template>
+
                     <template v-if="column.key === 'status'">
                         <select v-model="row.status" @change="handleStatusChange(row)" @click.stop>
                             <option v-for="status in statuses" :key="status.id" :value="status.label">
@@ -243,7 +249,15 @@ export default {
         goToDetails: function (id) {
             this.$router.push({path: `${this.path}${id}`});
         },
+        // getValue(row, key) {
+        //     const keys = key.split('.'); // Разделяем ключи по точке
+        //     return keys.reduce((obj, key) => (obj ? obj[key] : ''), row); // Извлекаем значение
+        // },
         getValue(row, key) {
+            // Игнорируем ключ 'is_paid'
+            if (key === 'is_paid') {
+                return null; // игнорируем его
+            }
             const keys = key.split('.'); // Разделяем ключи по точке
             return keys.reduce((obj, key) => (obj ? obj[key] : ''), row); // Извлекаем значение
         },
@@ -355,6 +369,10 @@ export default {
                     &:first-child {
                         text-align: center;
                         width: 3%;
+                    }
+                    .paid {
+                        color: green;
+                        font-weight: bold;
                     }
 
                     input[type="checkbox"] {
