@@ -2,7 +2,12 @@
     <div class="container">
         <!-- Первая строка: поиск, выпадающий список для количества строк, кнопка фильтр -->
         <div class="header">
-            <Icon icon="ic:baseline-search" class="bottom-icon"/>
+            <template v-if="searchQuery">
+                <Icon icon="ooui:clear" @click="clearSearch" class="bottom-icon" />
+            </template>
+            <template v-else>
+                <Icon icon="ic:baseline-search" class="bottom-icon"/>
+            </template>
             <input
                 class="form-control"
                 v-model="searchQuery"
@@ -77,7 +82,6 @@
 
                     <template v-if="column.key === 'is_paid'">
                 <span :class="{ 'paid-yes': row.is_paid, 'paid-no': !row.is_paid}">
-<!--                    {{ row.is_paid}}-->
                     {{ row.is_paid ? 'Оплачен' : 'Не оплачен' }}
                 </span>
                     </template>
@@ -207,6 +211,10 @@ export default {
                 });
             });
             this.currentPage = 1; // Сбрасываем на первую страницу после поиска
+        },
+        clearSearch() {
+            this.searchQuery = ""; // Сбрасываем строку поиска
+            this.handleSearch();   // Обновляем данные
         },
 
         handleRowsChange() {

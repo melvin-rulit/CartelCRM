@@ -18,11 +18,11 @@ return new class extends Migration
             $table->date('order_date');
             $table->text('order_details')->nullable();
             $table->integer('order_price')->nullable();
-            $table->enum('status', ['pending', 'processing', 'completed', 'canceled'])->default('pending');
+            $table->enum('status', ['for_payment', 'processing', 'completed', 'canceled'])->default('pending');
+            $table->boolean('is_paid')->default(false);
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
