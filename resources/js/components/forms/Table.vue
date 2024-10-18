@@ -76,8 +76,9 @@
                 <td v-for="(column, index) in columns" :key="index">
 
                     <template v-if="column.key === 'is_paid'">
-                <span class="paid" :class="{ 'paid-yes': row.is_paid, 'paid-no': !row.is_paid }">
-                    {{ row.is_paid}}
+                <span :class="{ 'paid-yes': row.is_paid, 'paid-no': !row.is_paid}">
+<!--                    {{ row.is_paid}}-->
+                    {{ row.is_paid ? 'Оплачен' : 'Не оплачен' }}
                 </span>
                     </template>
 
@@ -370,8 +371,12 @@ export default {
                         text-align: center;
                         width: 3%;
                     }
-                    .paid {
+                    .paid-yes {
                         color: green;
+                        font-weight: bold;
+                    }
+                    .paid-no {
+                        color: red;
                         font-weight: bold;
                     }
 
