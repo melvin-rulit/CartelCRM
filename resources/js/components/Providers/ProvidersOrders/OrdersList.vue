@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Header title="Заказы поставщикам" />
+        <Header title="Заказы поставщикам">
+            <ButtonUI @click="goToAdd">Добавить поставщика</ButtonUI>
+        </Header>
         <hr>
 
         <Table
@@ -23,9 +25,10 @@ import Checkbox from "../../forms/Checkbox.vue";
 import {ProvideService} from "../../../services/ProvideService";
 import Header from "../../Header.vue";
 import Table from "../../forms/Table.vue";
+import ButtonUI from "../../UI/ButtonUI.vue";
 
 export default {
-  components: {Table, Header, Spinner, DateInput, Alert, TextInput, Success, Checkbox},
+  components: {ButtonUI, Table, Header, Spinner, DateInput, Alert, TextInput, Success, Checkbox},
     data: function () {
         return {
             loading: false,
@@ -61,6 +64,9 @@ export default {
                 })
                 .catch(error => this.errorMessage = error)
                 .finally(() => this.loading = false);
+        },
+        goToAdd() {
+            this.$router.push({ path: '/providers/create'});
         },
     },
 
