@@ -4,7 +4,7 @@
 
             <Alert :errors="errors"/>
             <Success :message="message"/>
-<h1>Создание провайдера</h1>
+<h1>Создание поставщика</h1>
             <form @submit="store">
                 <div class="grid md:grid-cols-3 md:gap-6 mt-5">
 
