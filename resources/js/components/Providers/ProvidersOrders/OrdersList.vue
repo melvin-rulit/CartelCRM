@@ -3,6 +3,7 @@
         <Header :title="order_create ? 'Заказы поставщикам' : 'Создание заказа поставщику'">
             <ButtonUI v-show="order_create" @click="goToAdd('order')">Создать заказ</ButtonUI>
             <ButtonUI v-if="!order_create" @click="cancelCreation">Отмена</ButtonUI>
+            <ButtonUI v-show="!order_create" @click="goToAdd('provider')">Добавить поставщика</ButtonUI>
         </Header>
         <hr>
         <Table v-show="order_create"
