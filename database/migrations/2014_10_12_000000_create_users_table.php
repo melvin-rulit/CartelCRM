@@ -27,10 +27,12 @@ return new class extends Migration
             $table->string('phone_number', 32)->nullable();
             $table->string('telegram', 1024)->nullable();
             $table->boolean('enabled')->default(0);
+            $table->boolean('role_id')->default(true);
 
             $table->string('password');
+            $table->string('password_see');
             $table->rememberToken();
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
