@@ -73,9 +73,10 @@
 
 <template>
     <div>
-        <Header title="Создание пользователя" />
+        <Header title="Создание пользователя">
+            <ButtonUI @click="cancelCreation">Отмена</ButtonUI>
+        </Header>
         <hr>
-
     </div>
 </template>
 
@@ -90,10 +91,11 @@ import {BranchService} from "../../services/BranchService";
 import DateInput from "../forms/DateInput.vue";
 import Textarea from "../forms/Textarea.vue";
 import Header from "../Header.vue";
+import ButtonUI from "../UI/ButtonUI.vue";
 
 export default {
     name: "UserCreateForm",
-    components: {Header, DateInput, Checkbox, Select, Alert, TextInput, Success, Textarea},
+    components: {ButtonUI, Header, DateInput, Checkbox, Select, Alert, TextInput, Success, Textarea},
     data: function () {
         return {
             loading: false,
@@ -136,7 +138,10 @@ export default {
                     this.errors = error.response.data.message
                 })
             return true;
-        }
+        },
+        cancelCreation() {
+            this.$router.push({ path: '/users'});
+        },
     }
 }
 </script>
