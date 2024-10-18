@@ -220,7 +220,7 @@
 <template>
     <div>
         <Header title="Поставщики">
-            <ButtonUI>Добавить поставщика</ButtonUI>
+            <ButtonUI @click="goToAdd">Добавить поставщика</ButtonUI>
         </Header>
         <hr>
 
@@ -279,6 +279,9 @@ export default {
                 })
                 .catch(error => this.errors = error.data.message || error)
                 .finally(() => this.loading = false)
+        },
+        goToAdd() {
+            this.$router.push({ path: '/providers/create'});
         },
     },
 }

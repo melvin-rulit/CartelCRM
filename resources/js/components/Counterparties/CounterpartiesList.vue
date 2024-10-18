@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header title="Контрагенты">
-            <ButtonUI>Добавить контрагента</ButtonUI>
+            <ButtonUI @click="goToAdd">Добавить контрагента</ButtonUI>
         </Header>
         <hr>
 
@@ -61,6 +61,9 @@ export default {
             })
                 .catch(error => this.errors = error.data.message || error)
                 .finally(() => this.loading = false)
+        },
+        goToAdd() {
+            this.$router.push({ path: '/counterparties/create'});
         },
 
         // deleteUser: function(id) {

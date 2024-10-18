@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header title="Пользователи">
-            <ButtonUI>Добавить пользователя</ButtonUI>
+            <ButtonUI @click="goToAdd">Добавить пользователя</ButtonUI>
         </Header>
         <hr>
 
@@ -59,6 +59,10 @@ export default {
                 })
                 .catch(error => this.errors = error.data.message || error)
                 .finally(() => this.loading = false)
+        },
+
+        goToAdd() {
+            this.$router.push({ path: '/users/create'});
         },
     }
 };
