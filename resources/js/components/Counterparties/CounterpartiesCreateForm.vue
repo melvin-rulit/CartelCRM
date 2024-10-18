@@ -102,7 +102,7 @@ export default {
             return true;
         },
         cancelCreation() {
-            this.$router.push({ path: '/counterparties'});
+            this.$router.push({ path: '/users'});
         },
     }
 }

@@ -126,7 +126,9 @@
 
 <template>
     <div>
-        <Header title="Детальная информация заказа" />
+        <Header title="Детальная информация заказа">
+            <ButtonUI @click="back">Назад</ButtonUI>
+        </Header>
         <hr>
     </div>
 </template>
@@ -142,10 +144,11 @@ import Textarea from "../../forms/Textarea.vue";
 import Header from "../../Header.vue";
 import Table from "../../forms/Table.vue";
 import {CounterpartiesService as CounterpartiesOrdersService} from "../../../services/CounterpartiesService";
+import ButtonUI from "../../UI/ButtonUI.vue";
 
 export default {
     name: "OrderDetail",
-    components: {Table, Header, Textarea, DateInput, Select, Alert, TextInput, Success, Checkbox},
+    components: {ButtonUI, Table, Header, Textarea, DateInput, Select, Alert, TextInput, Success, Checkbox},
     data: function () {
         return {
             loading: false,
@@ -173,6 +176,9 @@ export default {
                 .then(response => this.order = response.data.order)
                 .catch(error => this.errorMessage = error)
                 .finally(() => this.loading = false)
+        },
+        back() {
+            this.$router.push({ path: '/counterparties/orders' });
         },
 
     }

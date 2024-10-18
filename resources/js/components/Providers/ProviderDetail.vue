@@ -133,7 +133,9 @@
 
 <template>
     <div>
-        <Header title="Детальная информация о поставщике" />
+        <Header title="Детальная информация о поставщике">
+            <ButtonUI @click="back">Назад</ButtonUI>
+        </Header>
         <hr>
 
         <Table
@@ -156,10 +158,11 @@ import Textarea from "../forms/Textarea.vue";
 import {ProvideService} from "../../services/ProvideService";
 import Header from "../Header.vue";
 import Table from "../forms/Table.vue";
+import ButtonUI from "../UI/ButtonUI.vue";
 
 export default {
     name: "ProviderDetail",
-    components: {Table, Header, Textarea, DateInput, Select, Alert, TextOnly, Success, Checkbox},
+    components: {ButtonUI, Table, Header, Textarea, DateInput, Select, Alert, TextOnly, Success, Checkbox},
     data: function () {
         return {
             loading: false,
@@ -213,7 +216,11 @@ export default {
             //         this.errors = error.response.data.message
             //     })
             //     .finally(() => this.loading = false)
-        }
+
+        },
+        back() {
+            this.$router.push({ path: '/providers' });
+        },
     }
 }
 </script>
