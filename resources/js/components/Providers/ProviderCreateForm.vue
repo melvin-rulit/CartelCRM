@@ -1,45 +1,53 @@
+<!--<template>-->
+<!--    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">-->
+<!--        <div class="px-6 py-6 lg:px-8">-->
+
+<!--            <Alert :errors="errors"/>-->
+<!--            <Success :message="message"/>-->
+<!--<h1>Создание поставщика</h1>-->
+<!--            <form @submit="store">-->
+<!--                <div class="grid md:grid-cols-3 md:gap-6 mt-5">-->
+
+<!--                    <div class="relative z-0 w-full mb-6 group">-->
+<!--                        <TextInput title="Имя" v-model:value="provider.firstName" type="text"/>-->
+<!--                    </div>-->
+<!--                    <div class="relative z-0 w-full mb-6 group">-->
+<!--                        <TextInput title="Отчество" v-model:value="provider.middleName" type="text"/>-->
+<!--                    </div>-->
+<!--                    <div class="relative z-0 w-full mb-6 group">-->
+<!--                        <TextInput title="Фамилия" v-model:value="provider.lastName" type="text"/>-->
+<!--                    </div>-->
+<!--                    <div class="relative z-0 w-full mb-6 group">-->
+<!--                        <TextInput title="Город" v-model:value="provider.city" type="text"/>-->
+<!--                    </div>-->
+<!--                    <div class="relative z-0 w-full mb-6 group">-->
+<!--                        <TextInput title="Телефон" v-model:value="provider.phone" type="text"/>-->
+<!--                    </div>-->
+<!--                    <div class="relative z-0 w-full mb-6 group">-->
+<!--                        <TextInput title="Телеграм" v-model:value="provider.telegram_login" type="text"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="mt-6 flex items-center justify-end gap-x-6">-->
+<!--                    <router-link to="/providers" type="button"-->
+<!--                                 class="text-sm font-semibold leading-6 text-gray-900">Отмена-->
+<!--                    </router-link>-->
+<!--                    <button type="submit"-->
+<!--                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">-->
+<!--                        Сохранить-->
+<!--                    </button>-->
+<!--                </div>-->
+
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</template>-->
+
 <template>
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <div class="px-6 py-6 lg:px-8">
+    <div>
+        <Header title="Создание поставщика" />
+        <hr>
 
-            <Alert :errors="errors"/>
-            <Success :message="message"/>
-<h1>Создание поставщика</h1>
-            <form @submit="store">
-                <div class="grid md:grid-cols-3 md:gap-6 mt-5">
-
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Имя" v-model:value="provider.firstName" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Отчество" v-model:value="provider.middleName" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Фамилия" v-model:value="provider.lastName" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Город" v-model:value="provider.city" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Телефон" v-model:value="provider.phone" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Телеграм" v-model:value="provider.telegram_login" type="text"/>
-                    </div>
-                </div>
-
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <router-link to="/providers" type="button"
-                                 class="text-sm font-semibold leading-6 text-gray-900">Отмена
-                    </router-link>
-                    <button type="submit"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Сохранить
-                    </button>
-                </div>
-
-            </form>
-        </div>
     </div>
 </template>
 
@@ -52,10 +60,12 @@ import Textarea from "../forms/Textarea.vue";
 import NumberInput from "../forms/NumberInput.vue";
 import DateInput from "../forms/DateInput.vue";
 import {ProvideService} from "../../services/ProvideService";
+import Header from "../Header.vue";
+import Table from "../forms/Table.vue";
 
 export default {
     name: "ProxyCreateForm",
-    components: {DateInput, NumberInput, Textarea, Select, Alert, TextInput, Success},
+    components: {Table, Header, DateInput, NumberInput, Textarea, Select, Alert, TextInput, Success},
     data: function () {
         return {
             loading: false,
