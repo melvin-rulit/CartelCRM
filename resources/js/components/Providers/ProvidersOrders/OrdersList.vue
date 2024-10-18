@@ -2,7 +2,7 @@
     <div>
         <Header :title="order_create ? 'Заказы поставщикам' : 'Создание заказа поставщику'">
             <ButtonUI v-show="order_create" @click="goToAdd('order')">Создать заказ</ButtonUI>
-            <ButtonUI v-if="!order_create" @click="cancelOrderCreation">Отмена</ButtonUI>
+            <ButtonUI v-if="!order_create" @click="cancelCreation">Отмена</ButtonUI>
             <ButtonUI @click="goToAdd('provider')">Добавить поставщика</ButtonUI>
         </Header>
         <hr>
@@ -48,12 +48,16 @@ export default {
                 { label: 'Состав заказа', key: 'order_details' },
                 { label: 'Сумма заказа', key: 'order_price' },
             ],
+            previousRoute: '',
             order_create: true,
             errorMessage: null,
             query: null,
         }
     },
     name: "OrderList",
+    // mounted() {
+    //     this.previousRoute = this.$route.path; // сохраняем маршрут при монтировании
+    // },
     created: async function () {
         this.update()
     },
@@ -68,6 +72,8 @@ export default {
                 .finally(() => this.loading = false);
         },
         goToAdd(type) {
+            this.$store.dispatch('saveRoute', this.$route.path); // Сохраняем текущий маршрут
+            // this.$router.push({ path: type === 'provider' ? '/providers/create' : '/providers/orders/create' });
             if (type === 'order') {
                 // this.$router.push({ path: '/providers/orders/create' });
                 this.order_create = false;
@@ -75,7 +81,7 @@ export default {
                 this.$router.push({ path: '/providers/create' });
             }
         },
-        cancelOrderCreation() {
+        cancelCreation() {
             this.order_create = true;
         },
     },

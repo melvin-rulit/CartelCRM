@@ -281,6 +281,7 @@ export default {
                 .finally(() => this.loading = false)
         },
         goToAdd() {
+            this.$store.dispatch('saveRoute', this.$route.path); // Сохраняем текущий маршрут
             this.$router.push({ path: '/providers/create'});
         },
     },

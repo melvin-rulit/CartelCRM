@@ -45,7 +45,9 @@
 
 <template>
     <div>
-        <Header title="Создание поставщика" />
+        <Header title="Создание поставщика">
+            <ButtonUI @click="cancelCreation">Отмена</ButtonUI>
+        </Header>
         <hr>
 
     </div>
@@ -62,10 +64,11 @@ import DateInput from "../forms/DateInput.vue";
 import {ProvideService} from "../../services/ProvideService";
 import Header from "../Header.vue";
 import Table from "../forms/Table.vue";
+import ButtonUI from "../UI/ButtonUI.vue";
 
 export default {
     name: "ProxyCreateForm",
-    components: {Table, Header, DateInput, NumberInput, Textarea, Select, Alert, TextInput, Success},
+    components: {ButtonUI, Table, Header, DateInput, NumberInput, Textarea, Select, Alert, TextInput, Success},
     data: function () {
         return {
             loading: false,
@@ -101,7 +104,10 @@ export default {
                 .catch(error => {
                     this.errors = error.response.data.message
                 })
-        }
+        },
+        cancelCreation() {
+            this.$router.push({name: 'ordersProviderList'})
+        },
     }
 }
 </script>

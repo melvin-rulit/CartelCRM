@@ -7,6 +7,7 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[nam
 
 import {createApp} from 'vue'
 import {createRouter, createWebHashHistory} from 'vue-router'
+import store from './store'
 
 import App from './components/App.vue'
 
@@ -239,4 +240,4 @@ const router = createRouter({
     ],
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(store).mount('#app')
