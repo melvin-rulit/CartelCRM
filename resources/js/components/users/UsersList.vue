@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Header title="Пользователи" />
+        <Header title="Пользователи">
+            <ButtonUI>Добавить пользователя</ButtonUI>
+        </Header>
         <hr>
 
         <Table
@@ -16,9 +18,11 @@
 import {UserService} from "../../services/UserService";
 import Table from '../forms/Table.vue';
 import Header from "../Header.vue";
+import ButtonUI from "../UI/ButtonUI.vue";
 
 export default {
     components: {
+        ButtonUI,
         Header,
         Table,
     },
