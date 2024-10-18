@@ -1,6 +1,10 @@
 <template>
     <div class="header-container">
-        <h1>{{ title }}</h1> <slot></slot>
+        <h1>{{ title }}</h1>
+
+        <div class="button-container">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -226,9 +230,16 @@ export default {
 <!--</script>-->
 
 <style scoped>
+
 .header-container {
     display: flex;
     justify-content: space-between; /* Размещает заголовок и слот по краям */
     align-items: center; /* Центрует элементы по вертикали */
 }
+
+.button-container {
+    display: flex; /* Используем flex для кнопок */
+    gap: 10px; /* Пробел между кнопками */
+}
+
 </style>

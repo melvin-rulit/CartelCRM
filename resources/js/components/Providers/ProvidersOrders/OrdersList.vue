@@ -1,6 +1,7 @@
 <template>
     <div>
         <Header title="Заказы поставщикам">
+            <ButtonUI @click="goToAdd">Создать заказ</ButtonUI>
             <ButtonUI @click="goToAdd">Добавить поставщика</ButtonUI>
         </Header>
         <hr>
