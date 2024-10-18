@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="header-container">
         <h1>{{ title }}</h1> <slot></slot>
     </div>
 </template>
@@ -225,28 +225,10 @@ export default {
 <!--}-->
 <!--</script>-->
 
-<!--<style>-->
-<!--.custom-button {-->
-<!--  display: inline-block;-->
-<!--  position: relative;-->
-<!--  padding: 2px 25px 5px 8px;-->
-<!--  background-color: #b3d7ff; /* Primary button color */-->
-<!--  /*color: #fff; !* Text color *!*/-->
-<!--  border: none;-->
-<!--  border-radius: 4px;-->
-<!--  cursor: pointer;-->
-<!--  transition: background-color 0.3s ease;-->
-<!--}-->
-<!--.badge {-->
-<!--  position: absolute;-->
-<!--  top: 50%;-->
-<!--  right: 2px;-->
-<!--  transform: translate(0%, -50%);-->
-<!--  background-color: #f8f9fa; /* Badge background color */-->
-<!--  color: #000; /* Badge text color */-->
-<!--  padding: 4px 6px;-->
-<!--  /*border-radius: 50%;*/-->
-<!--  font-size: 12px;-->
-<!--  font-weight: bold;-->
-<!--}-->
-<!--</style>-->
+<style scoped>
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Размещает заголовок и слот по краям */
+    align-items: center; /* Центрует элементы по вертикали */
+}
+</style>

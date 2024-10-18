@@ -219,7 +219,9 @@
 
 <template>
     <div>
-        <Header title="Поставщики" />
+        <Header title="Поставщики">
+            <ButtonUI>Добавить поставщика</ButtonUI>
+        </Header>
         <hr>
 
         <Table
