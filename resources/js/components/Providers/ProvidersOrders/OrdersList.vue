@@ -1,11 +1,11 @@
 <template>
     <div>
         <Header :title="order_create ? 'Заказы поставщикам' : 'Создание заказа поставщику'">
-            <ButtonUI @click="goToAdd('order')">Создать заказ</ButtonUI>
+            <ButtonUI v-show="order_create" @click="goToAdd('order')">Создать заказ</ButtonUI>
+            <ButtonUI v-if="!order_create" @click="cancelOrderCreation">Отмена</ButtonUI>
             <ButtonUI @click="goToAdd('provider')">Добавить поставщика</ButtonUI>
         </Header>
         <hr>
-
         <Table v-show="order_create"
             :data="orders"
             :columns="columns"
@@ -74,6 +74,9 @@ export default {
             } else if (type === 'provider') {
                 this.$router.push({ path: '/providers/create' });
             }
+        },
+        cancelOrderCreation() {
+            this.order_create = true;
         },
     },
 
