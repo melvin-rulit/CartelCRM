@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Header title="Контрагенты" />
+        <Header title="Контрагенты">
+            <ButtonUI>Добавить контрагента</ButtonUI>
+        </Header>
         <hr>
 
         <Table
@@ -21,9 +23,10 @@ import Alert from "../forms/Alert.vue";
 import {CounterpartiesService} from "../../services/CounterpartiesService";
 import Header from "../Header.vue";
 import Table from "../forms/Table.vue";
+import ButtonUI from "../UI/ButtonUI.vue";
 
 export default {
-    components: {Table, Header, Alert, Spinner, TextInput, Pagination},
+    components: {ButtonUI, Table, Header, Alert, Spinner, TextInput, Pagination},
     data: function () {
         return {
             counterparties: [],
