@@ -9,7 +9,7 @@
             :data="users"
             :columns="columns"
             :rowsPerPageOptions="[5, 10, 25]"
-            :path="'/users/'"
+            :path="'/users/detail/'"
         />
     </div>
 </template>

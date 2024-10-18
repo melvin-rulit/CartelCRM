@@ -13,6 +13,7 @@ import App from './components/App.vue'
 import Dashboard from './components/Dashboard/Index.vue'
 
 import UsersList from "./components/users/UsersList.vue";
+import UserDetail from "./components/users/UserDetail.vue";
 import UserCreateForm from "./components/users/UserCreateForm.vue";
 import UserEditForm from "./components/users/UserEditForm.vue";
 //Поставщики
@@ -65,6 +66,11 @@ const router = createRouter({
             name: 'listUsers',
             path: '/users',
             component: UsersList
+        },
+        {
+            name: 'DetailUser',
+            path: '/users/detail/:id',
+            component: UserDetail
         },
         {
             name: 'createUser',
