@@ -419,7 +419,7 @@ export default {
     margin: auto;
 
     .user-settings {
-        max-width: 500px;
+        max-width: 600px;
         background-color: #ffffff;
         padding: 1.5em;
         margin: 1em auto 4em;
