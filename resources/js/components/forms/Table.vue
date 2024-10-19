@@ -293,6 +293,7 @@ export default {
     border: 1px solid hsl(215, 50%, 95%);
     border-radius: 6px;
     overflow: hidden;
+    user-select: none;
 
     .header {
         display: flex;
@@ -367,6 +368,7 @@ export default {
 
                 &:hover {
                     background-color: #f1f3f5;
+                    cursor: pointer;
                 }
 
                 td {

@@ -186,7 +186,7 @@ class UserController extends Controller
 //                ]
 //            ]
             [
-                'roles' => $roles
+                'roles' => $roles->pluck('name')
             ]
         );
     }
