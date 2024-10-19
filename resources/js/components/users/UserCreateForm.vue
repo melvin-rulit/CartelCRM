@@ -149,7 +149,6 @@
 <template>
     <div>
         <Header title="Создание пользователя">
-<!--            <ButtonUI type="submit">Сохранить</ButtonUI>-->
             <ButtonUI type="submit">Сохранить</ButtonUI>
             <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
         </Header>
@@ -268,8 +267,6 @@
                             </div>
                         </div>
 
-                        <hr>
-                        <div class="buttons"><ButtonUI type="submit">Сохранить</ButtonUI></div>
                     </form>
                 </div>
             </template>
@@ -288,7 +285,7 @@
                         </div>
 
                         <div class="form-row">
-                            <h3>Безопастность</h3>
+                            <h3>Пароль для пользователя</h3>
                             <hr>
                             <div class="form-group">
                                 <label for="new_password">Новый пароль</label>
@@ -300,11 +297,6 @@
                             </div>
                         </div>
 
-
-                        <hr>
-                        <div class="buttons">
-                            <ButtonUI type="submit">Сохранить</ButtonUI>
-                        </div>
                     </form>
                 </div>
             </template>
