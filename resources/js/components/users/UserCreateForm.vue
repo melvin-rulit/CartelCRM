@@ -192,30 +192,42 @@
                                 <label for="middle_name">Отчество</label>
                                 <input v-model="user.middle_name" id="middle_name" type="text" />
                             </div>
+                                                        <div class="form-group">
+                                                            <label for="birthday">Дата рождения</label>
+                                                            <input v-model="user.birthday" id="birthday" type="date" />
+                                                        </div>
                         </div>
 
                         <h3>Контактная информация</h3>
                         <hr>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="birthday">Дата рождения</label>
-                                <input v-model="user.birthday" id="birthday" type="date" />
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="birthday">Дата рождения</label>-->
+<!--                                <input v-model="user.birthday" id="birthday" type="date" />-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input v-model="user.email" id="email" type="email" />
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phone_number">Телефон</label>
-                                <input v-model="user.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
                             </div>
                             <div class="form-group">
                                 <label for="telegram">Telegram</label>
                                 <input v-model="user.telegram" id="telegram" type="text" />
                             </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone_number">Номер телефона</label>
+                                <input v-model="user.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Дополнительный номер</label>
+                                <input v-model="user.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="telegram">Telegram</label>-->
+<!--                                <input v-model="user.telegram" id="telegram" type="text" />-->
+<!--                            </div>-->
                         </div>
 
 <!--                        <hr>-->
@@ -253,7 +265,7 @@
                             </div>
                         </div>
 
-                        <h3>Адрес</h3>
+                        <h3>Адрес пользователя</h3>
                         <hr>
                         <div class="form-row">
                             <div class="form-group">
@@ -472,7 +484,7 @@ export default {
         .form-group {
             flex: 1;
             min-width: 200px;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
 
             label {
                 display: block;
