@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header title="Контрагенты">
+        <Header title="Список контрагентов">
             <ButtonUI @click="goToAdd">Добавить контрагента</ButtonUI>
         </Header>
         <hr>

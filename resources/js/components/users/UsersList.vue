@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header title="Пользователи">
+        <Header title="Список пользователей">
             <ButtonUI @click="goToAdd">Добавить пользователя</ButtonUI>
         </Header>
         <hr>

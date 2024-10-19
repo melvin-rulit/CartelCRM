@@ -219,7 +219,7 @@
 
 <template>
     <div>
-        <Header title="Поставщики">
+        <Header title="Список поставщиков">
             <ButtonUI @click="goToAdd">Добавить поставщика</ButtonUI>
         </Header>
         <hr>
