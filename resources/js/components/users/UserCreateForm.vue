@@ -415,7 +415,7 @@ export default {
 
 <style lang="scss" scoped>
 .content-user {
-    max-width: 1000px;
+    max-width: 1400px;
     margin: auto;
 
     .user-settings {

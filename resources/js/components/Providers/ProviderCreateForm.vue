@@ -46,7 +46,7 @@
 <template>
     <div>
         <Header title="Создание поставщика">
-            <ButtonUI @click="cancelCreation">Отмена</ButtonUI>
+            <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
         </Header>
         <hr>
 
