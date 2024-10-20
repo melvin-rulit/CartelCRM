@@ -1,151 +1,3 @@
-<!--<template>-->
-<!--    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">-->
-<!--        <div class="px-6 py-6 lg:px-8">-->
-<!--            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Добавление пользователя</h3>-->
-<!--            <Alert :errors="errors" />-->
-<!--            <Success :message="message" />-->
-<!--            <form @submit="store">-->
-<!--                <div class="grid md:grid-cols-3 md:gap-6">-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Фамилия пользователя" v-model:value="user.lastName" type="text"/>-->
-<!--                    </div>-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Имя пользователя" v-model:value="user.firstName" type="text"/>-->
-<!--                    </div>-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Отчество пользователя" v-model:value="user.middleName" type="text"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="relative z-0 w-full mb-6 group">-->
-<!--                    <Checkbox title="Пользователь активен?" name="enabled" v-model:checked="user.enabled"-->
-<!--                              :checked="user.enabled" type="checkbox"/>-->
-<!--                </div>-->
-<!--                <div class="grid md:grid-cols-5 md:gap-6">-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <Select name="roleId" v-model:value="user.roleId" title="Роль" :values="userRoles"/>-->
-<!--                    </div>-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <Select name="branchId" v-model:value="user.branchId" title="Филиал" :values="branches"/>-->
-<!--                    </div>-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Email" v-model:value="user.email" type="email"/>-->
-<!--                    </div>-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Номер телефона" v-model:value="user.phoneNumber" type="text"/>-->
-<!--                    </div>-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Пароль" v-model:value="user.password" type="password"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="relative z-0 w-100 mb-6 group">-->
-<!--                    <DateInput title="Дата рождения" v-model:value="user.birthday" type="date"/>-->
-<!--                </div>-->
-<!--                <div class="grid md:grid-cols-2 md:gap-6">-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Серия паспорта" v-model:value="user.passportSeries" type="text"/>-->
-<!--                    </div>-->
-<!--                    <div class="relative z-0 w-full mb-6 group">-->
-<!--                        <TextInput title="Номер паспорта" v-model:value="user.passportNumber" type="text"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="relative z-0 w-full mb-6 group">-->
-<!--                    <TextInput title="Кем выдан паспорт" v-model:value="user.passportNotes" type="text"/>-->
-<!--                </div>-->
-<!--                <div class="relative z-0 w-full mb-6 group">-->
-<!--                    <TextInput title="Адрес регистрации" v-model:value="user.registrationAddress" type="text"/>-->
-<!--                </div>-->
-<!--&lt;!&ndash;                <div class="relative z-0 w-full mb-6 group">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <Textarea title="Комментарий" v-model:value="user.comment"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--                <div class="mt-6 flex items-center justify-end gap-x-6">-->
-<!--                    <router-link to="/users" type="button"-->
-<!--                                 class="text-sm font-semibold leading-6 text-gray-900">Отмена-->
-<!--                    </router-link>-->
-<!--                    <button type="submit"-->
-<!--                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">-->
-<!--                        Сохранить-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</template>-->
-
-<!--<template>-->
-<!--    <div>-->
-<!--        <Header title="Создание пользователя">-->
-<!--            <ButtonUI @click="cancelCreation">Отмена</ButtonUI>-->
-<!--        </Header>-->
-<!--        <hr>-->
-<!--    </div>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--import {UserService} from "../../services/UserService";-->
-<!--import TextInput from "../forms/TextInput.vue";-->
-<!--import Alert from "../forms/Alert.vue";-->
-<!--import Select from "../forms/Select.vue";-->
-<!--import Success from "../forms/Success.vue";-->
-<!--import Checkbox from "../forms/Checkbox.vue";-->
-<!--import {BranchService} from "../../services/BranchService";-->
-<!--import DateInput from "../forms/DateInput.vue";-->
-<!--import Textarea from "../forms/Textarea.vue";-->
-<!--import Header from "../Header.vue";-->
-<!--import ButtonUI from "../UI/ButtonUI.vue";-->
-
-<!--export default {-->
-<!--    name: "UserCreateForm",-->
-<!--    components: {ButtonUI, Header, DateInput, Checkbox, Select, Alert, TextInput, Success, Textarea},-->
-<!--    data: function () {-->
-<!--        return {-->
-<!--            loading: false,-->
-<!--            userRoles: [],-->
-<!--            branches: [],-->
-<!--            user: {-->
-<!--                'firstName': '',-->
-<!--                'middleName': '',-->
-<!--                'lastName': '',-->
-<!--                'birthday': null,-->
-<!--                'passportSeries': '',-->
-<!--                'passportNumber': '',-->
-<!--                'passportNotes': '',-->
-<!--                'registrationAddress': '',-->
-<!--                'comment': '',-->
-<!--                'phoneNumber': '',-->
-<!--                'email': '',-->
-<!--                'enabled': '',-->
-<!--                'password': null,-->
-<!--                'roleId': 0,-->
-<!--                'branchId': 0-->
-<!--            },-->
-<!--            errors: null,-->
-<!--            message: null-->
-<!--        }-->
-<!--    },-->
-<!--    created: async function () {-->
-<!--        UserService.getRoles().then(response => this.userRoles = response.data.roles)-->
-<!--    },-->
-<!--    methods: {-->
-<!--        store: async function (event) {-->
-<!--            event.preventDefault()-->
-<!--            this.errors = null-->
-<!--            UserService.store(this.user)-->
-<!--                .then(response => {-->
-<!--                    this.user = response.data.user-->
-<!--                    this.$router.push({name: 'listUsers'})-->
-<!--                })-->
-<!--                .catch(error => {-->
-<!--                    this.errors = error.response.data.message-->
-<!--                })-->
-<!--            return true;-->
-<!--        },-->
-<!--        cancelCreation() {-->
-<!--            this.$router.push({ path: '/users'});-->
-<!--        },-->
-<!--    }-->
-<!--}-->
-<!--</script>-->
-
 <template>
 <!--    <Alert :errors="this.errorMessage"/>-->
     <div>
@@ -156,8 +8,6 @@
                 </div>
             </template>
 
-
-            <ButtonUI v-if="user.email || user.password || user.role" @click="store" type="submit">Сохранить</ButtonUI>
             <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
         </Header>
         <hr>
@@ -181,12 +31,12 @@
             </div>
         </div>
 
-        <PageNav :tabs="['Личные данные', 'Документы и адрес', 'Роли и вход']">
+        <PageNav :tabs="['Личные данные', 'Документы и адрес']">
             <template #tab-0>
                 <div class="user-personal-info">
                     <h3>Личные данные</h3>
                     <hr>
-                    <form @submit.prevent="store">
+                    <form>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="last_name">Фамилия</label>
@@ -209,14 +59,14 @@
                         <h3>Контактная информация</h3>
                         <hr>
                         <div class="form-row">
-<!--                            <div class="form-group">-->
-<!--                                <label for="birthday">Дата рождения</label>-->
-<!--                                <input v-model="user.birthday" id="birthday" type="date" />-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input v-model="user.email" id="email" type="email" />
                                 <span v-if="errorEmail" class="error-message">{{ errorEmail }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Номер телефона</label>
+                                <input v-model="user.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
                             </div>
                             <div class="form-group">
                                 <label for="telegram">Telegram</label>
@@ -224,25 +74,32 @@
                             </div>
                         </div>
 
+                        <h3>Вход для пользователя</h3>
+                        <hr>
+
                         <div class="form-row">
+
                             <div class="form-group">
-                                <label for="phone_number">Номер телефона</label>
-                                <input v-model="user.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
+                                <select v-model="user.role" id="role" class="role-select">
+                                    <option v-for="role in roles" :key="role.id" :value="role.id">{{  roleTranslations[role.name] }}</option>
+                                </select>
+                                <span v-if="!user.role" class="error-role">{{ "Укажите роль" }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="phone_number">Дополнительный номер</label>
-                                <input v-model="user.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
+                                <label for="new_password">Новый пароль</label>
+                                <input v-model="user.password " id="new_password" type="text" placeholder="Введите новый пароль" />
+                                <span v-if="errorPssword" class="error-message">{{ errorPssword }}</span>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="telegram">Telegram</label>-->
-<!--                                <input v-model="user.telegram" id="telegram" type="text" />-->
-<!--                            </div>-->
+                            <div class="form-group">
+                                <label for="confirm_password">Подтвердите пароль</label>
+                                <input v-model="user.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
+                            </div>
                         </div>
 
-<!--                        <hr>-->
-<!--                        <div class="buttons">-->
-<!--                            <ButtonUI type="submit">Сохранить</ButtonUI>-->
-<!--                        </div>-->
+                        <hr>
+                        <div class="buttons">
+                            <ButtonUI @click="store" type="submit">Сохранить</ButtonUI>
+                        </div>
                     </form>
                 </div>
             </template>
@@ -251,7 +108,7 @@
                 <div class="user-docs-address">
                     <h3>Паспортные данные</h3>
                     <hr>
-                    <form @submit.prevent="submitDocsAddress">
+                    <form @click="store">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="passport_series">Серия паспорта</label>
@@ -288,42 +145,14 @@
                             </div>
                         </div>
 
+                        <hr>
+                        <div class="buttons">
+                            <ButtonUI type="submit">Сохранить</ButtonUI>
+                        </div>
                     </form>
                 </div>
             </template>
 
-            <template #tab-2>
-                <div class="user-settings-info">
-                    <h3>Выбор роли</h3>
-                    <hr>
-                    <form @submit.prevent="submitSettings">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <select v-model="user.role" id="role" class="role-select">
-                                    <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
-                                </select>
-                                <span v-if="errorPssword || errorEmail" class="error-role">{{ "Укажите роль" }}</span>
-                            </div>
-
-                        </div>
-
-                        <div class="form-row">
-                            <h3>Пароль для пользователя</h3>
-                            <hr>
-                            <div class="form-group">
-                                <label for="new_password">Новый пароль</label>
-                                <input v-model="user.password " id="new_password" type="text" placeholder="Введите новый пароль" />
-                                <span v-if="errorPssword" class="error-message">{{ errorPssword }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm_password">Подтвердите пароль</label>
-                                <input v-model="user.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </template>
         </PageNav>
     </div>
 </template>
@@ -375,6 +204,7 @@ export default {
             },
             errorEmail: '',
             errorPssword: '',
+            isSaving: false,
         };
     },
     created: async function () {
@@ -407,25 +237,18 @@ export default {
         triggerAvatarUpload() {
             this.$refs.avatarInput.click();
         },
-        // submitPersonalInfo() {
-        //     console.log('Личные данные сохранены:', this.user);
-        //     // Логика для отправки личных данных на сервер
+
+        // submitSettings() {
+        //     if (this.password !== this.password_see) {
+        //         alert("Пароли не совпадают!");
+        //         return;
+        //     }
+        //     console.log('Настройки сохранены:', { role: this.user.role, password: this.newPassword });
+        //     // Логика для отправки настроек и нового пароля на сервер
         // },
-        submitDocsAddress() {
-            console.log('Документы и адрес сохранены:', this.user);
-            // Логика для отправки данных документов и адреса на сервер
-        },
-        submitSettings() {
-            if (this.password !== this.password_see) {
-                alert("Пароли не совпадают!");
-                return;
-            }
-            console.log('Настройки сохранены:', { role: this.user.role, password: this.newPassword });
-            // Логика для отправки настроек и нового пароля на сервер
-        },
         store: async function () {
-            console.log('Сохранение данных...');
-            this.errors = null
+            this.errorPssword = ''
+            this.errorEmail = ''
             UserService.store(this.user)
                 .then(response => {
                     this.user = response.data.user
@@ -435,7 +258,6 @@ export default {
                     this.errorEmail = error.response.data.errors.email[0]
                     this.errorPssword = error.response.data.errors.password[0]
                 })
-            return true;
         },
         cancelCreation() {
             this.$router.push({name: 'listUsers'})
@@ -515,7 +337,7 @@ export default {
         .form-group {
             flex: 1;
             min-width: 200px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
 
             label {
                 display: block;

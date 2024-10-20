@@ -73,6 +73,9 @@ class UserController extends Controller
 //        $user->enabled = $request->isEnabled();
         $user->save();
 
+            // Назначение роли новому пользователю
+            $user->assignRole($request->get('role'));
+
         return new JsonResponse(['user' => UserResource::make($user)]);
     }
 
@@ -186,7 +189,7 @@ class UserController extends Controller
 //                ]
 //            ]
             [
-                'roles' => $roles->pluck('name')
+                'roles' => $roles->toArray()
             ]
         );
     }
