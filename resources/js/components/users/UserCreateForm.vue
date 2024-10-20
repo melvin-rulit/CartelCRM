@@ -149,7 +149,7 @@
 <template>
     <div>
         <Header title="Создание пользователя">
-            <ButtonUI type="submit">Сохранить</ButtonUI>
+            <ButtonUI @click="store" type="submit">Сохранить</ButtonUI>
             <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
         </Header>
         <hr>
@@ -178,7 +178,7 @@
                 <div class="user-personal-info">
                     <h3>Личные данные</h3>
                     <hr>
-                    <form @submit.prevent="submitPersonalInfo">
+                    <form @submit.prevent="store">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="last_name">Фамилия</label>
@@ -301,11 +301,11 @@
                             <hr>
                             <div class="form-group">
                                 <label for="new_password">Новый пароль</label>
-                                <input v-model="password " id="new_password" type="text" placeholder="Введите новый пароль" />
+                                <input v-model="user.password " id="new_password" type="text" placeholder="Введите новый пароль" />
                             </div>
                             <div class="form-group">
                                 <label for="confirm_password">Подтвердите пароль</label>
-                                <input v-model="password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
+                                <input v-model="user.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
                             </div>
                         </div>
 
@@ -347,9 +347,10 @@ export default {
                 registration_address: '',
                 live_address: '',
                 role: '',
+                password : '',
+                password_see: '',
             },
-            password : '',
-            password_see: '',
+
             roles: [],
             roleTranslations: {
                 'admin': 'Администратор',
@@ -390,10 +391,10 @@ export default {
         triggerAvatarUpload() {
             this.$refs.avatarInput.click();
         },
-        submitPersonalInfo() {
-            console.log('Личные данные сохранены:', this.user);
-            // Логика для отправки личных данных на сервер
-        },
+        // submitPersonalInfo() {
+        //     console.log('Личные данные сохранены:', this.user);
+        //     // Логика для отправки личных данных на сервер
+        // },
         submitDocsAddress() {
             console.log('Документы и адрес сохранены:', this.user);
             // Логика для отправки данных документов и адреса на сервер
@@ -405,6 +406,19 @@ export default {
             }
             console.log('Настройки сохранены:', { role: this.user.role, password: this.newPassword });
             // Логика для отправки настроек и нового пароля на сервер
+        },
+        store: async function () {
+            console.log('Сохранение данных...');
+            this.errors = null
+            UserService.store(this.user)
+                .then(response => {
+                    this.user = response.data.user
+                    this.$router.push({name: 'listUsers'})
+                })
+                .catch(error => {
+                    this.errors = error.response.data.message
+                })
+            return true;
         },
         cancelCreation() {
             this.$router.push({name: 'listUsers'})
