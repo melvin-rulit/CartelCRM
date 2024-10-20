@@ -18,16 +18,19 @@
                     <form>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="last_name">Фамилия</label>
-                                <input v-model="provider.firstName" id="last_name" type="text" />
+                                <label for="first_name">Фамилия</label>
+                                <input v-model="provider.first_name" id="first_name" type="text" />
+                                <span v-if="errors" class="error-message">{{ errors.first_name[0] }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="first_name">Имя</label>
-                                <input v-model="provider.middleName" id="first_name" type="text" />
+                                <label for="middle_name">Имя</label>
+                                <input v-model="provider.middle_name" id="middle_name" type="text" />
+                                <span v-if="errors" class="error-message">{{ errors.middle_name[0] }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="middle_name">Отчество</label>
-                                <input v-model="provider.lastName" id="middle_name" type="text" />
+                                <label for="last_name">Отчество</label>
+                                <input v-model="provider.last_name" id="last_name" type="text" />
+                                <span v-if="errors" class="error-message">{{ errors.last_name[0] }}</span>
                             </div>
                         </div>
 
@@ -37,18 +40,20 @@
                             <div class="form-group">
                                 <label for="city">Город</label>
                                 <input v-model="provider.city" id="city" type="text" />
+                                <span v-if="errors" class="error-message">{{ errors.city[0] }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Номер телефона</label>
                                 <input v-model="provider.phone" id="phone" type="text" />
+                                <span v-if="errors" class="error-message">{{ errors.phone[0] }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Логин телеграм</label>
-                                <input v-model="provider.phone" id="phone" type="text" />
+                                <label for="telegram_login">Логин телеграм</label>
+                                <input v-model="provider.telegram_login" id="phone" type="text" />
+                                <span v-if="errors" class="error-message">{{ errors.telegram_login[0] }}</span>
                             </div>
                         </div>
 
-                        <hr>
                         <div class="buttons">
                             <ButtonUI @click="store" type="submit">Сохранить</ButtonUI>
                         </div>
@@ -82,9 +87,9 @@ export default {
         return {
             loading: false,
             provider: {
-                firstName: null,
-                middleName: null,
-                lastName: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
                 city: null,
                 phone: null,
                 telegram_login: null
@@ -96,10 +101,7 @@ export default {
         }
     },
     mounted() {
-        // UserService.getManagersList()
-        //     .then(response => this.delegates = response.data.managers)
-        // UserService.getAdminsList()
-        //     .then(response => this.owners = response.data.admins)
+
     },
     methods: {
         store: async function (event) {
@@ -108,10 +110,10 @@ export default {
             ProvideService.store(this.provider)
                 .then(response => {
                     this.provider = response.data.provider
-                    // this.$router.push({name: 'proxiesList'})
+                    this.$router.push({name: 'providersList'})
                 })
                 .catch(error => {
-                    this.errors = error.response.data.message
+                    this.errors = error.response.data.errors
                 })
         },
         cancelCreation() {
@@ -265,16 +267,8 @@ export default {
         }
     }
     .error-message {
-        color: #ff4d4d; /* Красный цвет текста */
-        //background-color: #ffe6e6; /* Светло-красный фон */
-        //border: 1px solid #ff4d4d; /* Красная граница */
-        //padding: 10px; /* Отступы вокруг текста */
-        //border-radius: 5px; /* Закругленные углы */
-        padding-top: 15px; /* Отступ сверху */
-    }
-    .error-role {
-        color: #ff4d4d; /* Красный цвет текста */
-        margin-left: 10px;
+        color: #ff4d4d;
+        font-size: 0.75em;
     }
 }
 </style>

@@ -23,22 +23,22 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-//            'firstName'           => '',
-//            'middleName'          => '',
-//            'lastName'            => '',
-//            'birthday'            => '',
-//            'email'               => 'required|email|unique:users',
-//            'password'            => 'required|min:6',
-//
-//            'passportGive'      => '',
-//            'passportSeries'      => '',
-//            'passportNumber'      => '',
-//            'passportIssuedBy'      => '',
-//            'passportIssuedByData'      => '',
-//            'registrationAddress' => '',
-//            'liveAddress' => '',
-//            'phoneNumber'         => '',
-//            'telegram'         => '',
+            'firstName'           => '',
+            'middleName'          => '',
+            'lastName'            => '',
+            'birthday'            => '',
+            'email'               => 'required|email|unique:users',
+            'password'            => 'required|min:6',
+
+            'passportGive'      => '',
+            'passportSeries'      => '',
+            'passportNumber'      => '',
+            'passportIssuedBy'      => '',
+            'passportIssuedByData'      => '',
+            'registrationAddress' => '',
+            'liveAddress' => '',
+            'phoneNumber'         => '',
+            'telegram'         => '',
         ];
     }
 

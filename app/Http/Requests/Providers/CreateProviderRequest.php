@@ -23,28 +23,40 @@ class CreateProviderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName' => 'required',
-            'middleName' => 'required',
-            'lastName' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
             'phone' => 'required',
             'city' => 'required',
             'telegram_login' => 'required',
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'first_name.required' => 'Поле должно быть заполнено',
+            'middle_name.required' => 'Поле  должно быть заполнено',
+            'last_name.required' => 'Поле  должно быть заполнено',
+            'phone.required' => 'Поле  должно быть заполнено',
+            'city.required' => 'Поле  должно быть заполнено',
+            'telegram_login.required' => 'Поле должно быть заполнено',
+        ];
+    }
+
     public function getFirstName(): string
     {
-        return $this->input('firstName');
+        return $this->input('first_name');
     }
 
     public function getMiddleName(): string
     {
-        return $this->input('middleName');
+        return $this->input('middle_name');
     }
 
     public function getLastName(): string
     {
-        return $this->input('lastName');
+        return $this->input('last_name');
     }
 
     public function getPhone(): string

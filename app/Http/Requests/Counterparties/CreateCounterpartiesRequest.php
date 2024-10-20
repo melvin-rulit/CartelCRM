@@ -23,9 +23,9 @@ class CreateCounterpartiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName' => 'required',
-            'middleName' => 'required',
-            'lastName' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
             'phone' => 'required',
             'city' => 'required',
             'telegram_login' => 'required',
@@ -35,35 +35,28 @@ class CreateCounterpartiesRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required'               => 'Поле "Email" должно быть заполнено',
-            'email.email'                  => 'Поле "Email" должно быть адресом электронной почты',
-            'email.unique'                 => 'Поле "Email" должно быть уникальным',
-            'password.required'            => 'Поле "Пароль" должно быть заполнено',
-            'password.min'                 => 'Поле "Пароль" должно быть не короче 6 символов',
-            'firstName.required'           => 'Поле "Имя пользователя" должно быть заполнено',
-            'lastName.required'            => 'Поле "Фамилия пользователя" должно быть заполнено',
-            'birthday.required'            => 'Поле "Дата роджения" должно быть заполнено',
-            'passportSeries.required'      => 'Поле "Серия паспорта" должно быть заполнено',
-            'passportNumber.required'      => 'Поле "Номер паспорта" должно быть заполнено',
-            'passportNotes.required'       => 'Поле "Кем выдан паспорт" должно быть заполнено',
-            'phoneNumber.required'         => 'Поле "Номер телефона" должно быть заполнено',
-            'registrationAddress.required' => 'Поле "Адрес регистрации" должно быть заполнено',
+            'first_name.required' => 'Поле должно быть заполнено',
+            'middle_name.required' => 'Поле  должно быть заполнено',
+            'last_name.required' => 'Поле  должно быть заполнено',
+            'phone.required' => 'Поле  должно быть заполнено',
+            'city.required' => 'Поле  должно быть заполнено',
+            'telegram_login.required' => 'Поле должно быть заполнено',
         ];
     }
 
     public function getFirstName(): string
     {
-        return $this->input('firstName');
+        return $this->input('first_name');
     }
 
     public function getMiddleName(): string
     {
-        return $this->input('middleName');
+        return $this->input('middle_name');
     }
 
     public function getLastName(): string
     {
-        return $this->input('lastName');
+        return $this->input('last_name');
     }
 
     public function getPhone(): string

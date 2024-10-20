@@ -144,7 +144,6 @@
                             </div>
                         </div>
 
-                        <hr>
                         <div class="buttons">
                             <ButtonUI type="submit">Сохранить</ButtonUI>
                         </div>
