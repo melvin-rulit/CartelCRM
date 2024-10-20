@@ -14,7 +14,7 @@ enum OrderStatusEnum: string
         return [
             self::ForPayment => 'К оплате',
             self::PENDING => 'В ожидании',
-            self::COMPLETED => 'Завершен',
+            self::COMPLETED => 'Выполнен',
             self::CANCELED => 'Отменен',
         ];
     }

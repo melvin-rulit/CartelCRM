@@ -14,8 +14,4 @@ class ProvidersOrders extends Model
         return $this->hasOne(Providers::class, 'id', 'provider_id');
     }
 
-//    public function provider()
-//    {
-//        return $this->belongsTo(Provider::class);
-//    }
 }

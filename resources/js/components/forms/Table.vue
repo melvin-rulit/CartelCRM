@@ -16,6 +16,20 @@
                 placeholder="Поиск"
             />
 
+<!--            <ButtonUI v-if="selectedRows.length > 0" @click="deleteSelected" fontSize="11px" fontWeight="300">-->
+<!--                {{ selectAll ? 'Удалить всех' : 'Удалить пользователя' }}-->
+<!--            </ButtonUI>-->
+
+            <ButtonUI
+                color="white"
+                fontSize="11px"
+                padding="5px 10px"
+                fontWeight="500"
+                v-if="selectedRows.length > 0" @click="deleteSelected"
+            >
+                {{ selectAll ? 'Удалить всех' : 'Удалить пользователя' }}
+            </ButtonUI>
+
             <select v-model="rowsPerPage" @change="handleRowsChange">
                 <option
                     v-for="option in rowsPerPageOptions"
@@ -26,43 +40,22 @@
                 </option>
             </select>
 
-            <ButtonUI
-                color="white"
-                fontSize="11px"
-                padding="5px 10px"
-                fontWeight="500"
-                @click="toggleFilterDropdown"
-            >
-                <Icon icon="jam:settings-alt" class="ico"/>
-                Фильтр
-            </ButtonUI>
-        </div>
+<!--            <ButtonUI-->
+<!--                color="white"-->
+<!--                fontSize="11px"-->
+<!--                padding="5px 10px"-->
+<!--                fontWeight="500"-->
+<!--                @click="togglePanel"-->
+<!--            >-->
+<!--                <Icon icon="jam:settings-alt" class="ico"/>-->
+<!--                Фильтр-->
+<!--            </ButtonUI>-->
 
-        <!-- Выпадающее окно фильтрации -->
-        <div v-if="isFilterDropdownVisible" class="filter-dropdown">
-            <h3>Фильтр</h3>
-            <div class="filter-item">
-                <label for="name-filter">Название</label>
-                <select v-model="nameSort">
-                    <option value="asc">По возрастанию</option>
-                    <option value="desc">По убыванию</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <label for="rating-filter">Рейтинг</label>
-                <select v-model="ratingSort">
-                    <option value="asc">По возрастанию</option>
-                    <option value="desc">По убыванию</option>
-                </select>
-            </div>
-            <div class="filter-checkboxes">
-                <h4>Выбор опций</h4>
-                <label v-for="option in checkboxOptions" :key="option.id">
-                    <input type="checkbox" v-model="selectedOptions" :value="option.value"/>
-                    {{ option.label }}
-                </label>
-            </div>
-            <ButtonUI @click="applyFilter">Применить</ButtonUI>
+            <button @click="togglePanel"></button>
+
+
+            <FilterPanel :isOpen="isPanelOpen" @close="togglePanel" />
+
         </div>
 
         <!-- Вторая строка: чекбокс выбора всех, настраиваемые заголовки колонок -->
@@ -83,6 +76,12 @@
                     <template v-if="column.key === 'is_paid'">
                 <span :class="{ 'paid-yes': row.is_paid, 'paid-no': !row.is_paid}">
                     {{ row.is_paid ? 'Оплачен' : 'Не оплачен' }}
+                </span>
+                    </template>
+
+                    <template v-if="column.key === 'order_successful'">
+                <span :class="{ 'order_successful': row.order_successful}">
+                    {{ row.order_successful ? 'Выполнен' : 'Не ыавыа' }}
                 </span>
                     </template>
 
@@ -124,9 +123,20 @@
 <script>
 import {Icon} from "@iconify/vue";
 import ButtonUI from "../UI/ButtonUI.vue";
+import FilterPanel from './SidePanel.vue';
+import { ref } from 'vue';
 
 export default {
-    components: {ButtonUI, Icon},
+    setup() {
+        const isPanelOpen = ref(false);
+
+        const togglePanel = () => {
+            isPanelOpen.value = !isPanelOpen.value;
+        };
+
+        return { isPanelOpen, togglePanel };
+    },
+    components: {ButtonUI, Icon, FilterPanel},
     props: {
         data: {
             type: Array,
@@ -147,6 +157,7 @@ export default {
     },
     data() {
         return {
+
             searchQuery: "",
             rowsPerPage: 10,
             filteredData: this.data,
@@ -220,21 +231,18 @@ export default {
         handleRowsChange() {
             this.currentPage = 1; // сбрасываем на первую страницу при изменении количества строк
         },
-        toggleFilterDropdown() {
-            this.isFilterDropdownVisible = !this.isFilterDropdownVisible; // Переключаем видимость выпадающего окна
-            console.log('Toggle filter dropdown', this.isFilterDropdownVisible);
-        },
-        applyFilter() {
-            // Логика для применения фильтров
-            // Например, сортировка по названию и рейтингу
-            this.filteredData = this.data.filter(row => {
-                return this.selectedOptions.includes(row.option); // Предполагается, что есть поле "option" в данных
-            });
 
-            // Здесь можно добавить логику сортировки по nameSort и ratingSort
-
-            this.isFilterDropdownVisible = false; // Закрываем выпадающее окно после применения фильтров
-        },
+        // applyFilter() {
+        //     // Логика для применения фильтров
+        //     // Например, сортировка по названию и рейтингу
+        //     this.filteredData = this.data.filter(row => {
+        //         return this.selectedOptions.includes(row.option); // Предполагается, что есть поле "option" в данных
+        //     });
+        //
+        //     // Здесь можно добавить логику сортировки по nameSort и ratingSort
+        //
+        //     this.isFilterDropdownVisible = false; // Закрываем выпадающее окно после применения фильтров
+        // },
         toggleSelectAll() {
             if (this.selectAll) {
                 this.selectedRows = [...this.paginatedData];
@@ -267,12 +275,18 @@ export default {
             if (key === 'is_paid') {
                 return null; // игнорируем его
             }
+            if (key === 'order_successful') {
+                return null; // игнорируем его
+            }
             const keys = key.split('.'); // Разделяем ключи по точке
             return keys.reduce((obj, key) => (obj ? obj[key] : ''), row); // Извлекаем значение
         },
         handleStatusChange(row) {
             this.selectedStatus = row.status
         },
+        // togglePanel() {
+        //     isPanelOpen.value = !isPanelOpen.value;
+        // },
     },
     watch: {
         data: {
@@ -387,6 +401,10 @@ export default {
                     }
                     .paid-no {
                         color: red;
+                        font-weight: bold;
+                    }
+                    .order_successful {
+                        color: green;
                         font-weight: bold;
                     }
 

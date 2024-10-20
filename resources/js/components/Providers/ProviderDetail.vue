@@ -63,7 +63,7 @@ export default {
         return {
             loading: false,
             id: this.$route.params.id,
-            // userRoles: [],
+
             orders: [],
             provider: {
                 'id': '',
@@ -74,19 +74,13 @@ export default {
             },
 
             columns: [
+                { label: 'Статус заказа', key: 'order_successful' },
                 { label: 'Номер заказа', key: 'order_number' },
                 { label: 'Дата заказа', key: 'order_date' },
                 { label: 'Состав заказа', key: 'order_details' },
                 { label: 'Сумма заказа', key: 'order_price' },
-                { label: 'Статус заказа', key: 'order_status' },
             ],
-            // orders: {
-            //     'order_number': '',
-            //     'order_date': '',
-            //     'status': '',
-            //     'order_details': '',
-            //     'order_price': '',
-            // },
+
             errors: null,
             submitted: false,
             message: null
