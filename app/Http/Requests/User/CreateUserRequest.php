@@ -23,22 +23,22 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName'           => '',
-            'middleName'          => '',
-            'lastName'            => '',
-            'birthday'            => '',
-            'email'               => 'required|email|unique:users',
-            'password'            => 'required|min:6',
-
-            'passportGive'      => '',
-            'passportSeries'      => '',
-            'passportNumber'      => '',
-            'passportIssuedBy'      => '',
-            'passportIssuedByData'      => '',
-            'registrationAddress' => '',
-            'liveAddress' => '',
-            'phoneNumber'         => '',
-            'telegram'         => '',
+//            'firstName'           => '',
+//            'middleName'          => '',
+//            'lastName'            => '',
+//            'birthday'            => '',
+//            'email'               => 'required|email|unique:users',
+//            'password'            => 'required|min:6',
+//
+//            'passportGive'      => '',
+//            'passportSeries'      => '',
+//            'passportNumber'      => '',
+//            'passportIssuedBy'      => '',
+//            'passportIssuedByData'      => '',
+//            'registrationAddress' => '',
+//            'liveAddress' => '',
+//            'phoneNumber'         => '',
+//            'telegram'         => '',
         ];
     }
 
@@ -61,19 +61,19 @@ class CreateUserRequest extends FormRequest
         ];
     }
 
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
-        return $this->input('firstName') ?? '';
+        return $this->input('firstName') ?? null;
     }
 
-    public function getMiddleName(): string
+    public function getMiddleName(): ?string
     {
-        return $this->input('middleName') ?? '';
+        return $this->input('middleName') ?? null;
     }
 
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
-        return $this->input('lastName') ?? '';
+        return $this->input('lastName') ?? null;
     }
 
     public function getBirthday(): ?string
@@ -101,44 +101,44 @@ class CreateUserRequest extends FormRequest
 //        return (bool)$this->input('enabled');
 //    }
 
-    public function getPassportGive(): string
+    public function getPassportGive(): ?string
     {
-        return $this->input('passportGive') ?? '';
+        return $this->input('passportGive') ?? null;
     }
-    public function getPassportSeries(): string
+    public function getPassportSeries(): ?string
     {
-        return $this->input('passportSeries') ?? '';
+        return $this->input('passportSeries') ?? null;
     }
-    public function getPassportNumber(): string
+    public function getPassportNumber(): ?string
     {
-        return $this->input('passportNumber') ?? '';
+        return $this->input('passportNumber') ?? null;
     }
-    public function getPassportIssuedBy(): string
+    public function getPassportIssuedBy(): ?string
     {
-        return $this->input('passportIssuedBy') ?? '';
-    }
-
-    public function getPassportIssuedByData(): string
-    {
-        return $this->input('passportIssuedByData') ?? '';
+        return $this->input('passportIssuedBy') ?? null;
     }
 
-    public function getRegistrationAddress(): string
+    public function getPassportIssuedByData(): ?string
     {
-        return $this->input('registrationAddress') ?? '';
+        return $this->input('passportIssuedByData') ?? null;
     }
 
-    public function getLiveAddress(): string
+    public function getRegistrationAddress(): ?string
     {
-        return $this->input('LiveAddress') ?? '';
+        return $this->input('registrationAddress') ?? null;
     }
 
-    public function getPhone(): string
+    public function getLiveAddress(): ?string
     {
-        return preg_replace('|\D|Ui', '', $this->input('phoneNumber'));
+        return $this->input('LiveAddress') ?? null;
     }
-    public function getTelegram(): string
+
+    public function getPhone(): ?string
     {
-        return preg_replace('|\D|Ui', '', $this->input('telegram'));
+        return preg_replace('|\D|Ui', '', $this->input('phoneNumber')) ?? null;
+    }
+    public function getTelegram(): ?string
+    {
+        return preg_replace('|\D|Ui', '', $this->input('telegram')) ?? null;
     }
 }
