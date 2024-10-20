@@ -123,7 +123,7 @@
 <script>
 import {Icon} from "@iconify/vue";
 import ButtonUI from "../UI/ButtonUI.vue";
-// import FilterPanel from './SidePanel.vue';
+import FilterPanel from './SidePanel.vue';
 import { ref } from 'vue';
 
 export default {
