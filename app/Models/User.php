@@ -43,11 +43,21 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'first_name',
+        'middle_name',
+        'last_name',
+        'birthday',
         'email',
         'password',
-        'role_id',
-        'enabled',
-        'first_login',
+        'passport_series',
+        'passport_give',
+        'passport_number',
+        'passport_issuedBy',
+        'passport_issuedByDate',
+        'registration_address',
+        'live_adress',
+        'phone_number',
+        'telegram',
+        'password_see',
     ];
 
     /**
