@@ -2,6 +2,10 @@
     <div class="header-container">
         <h2>{{ title }}</h2>
 
+        <div class="error-container">
+            <slot name="errors"></slot>
+        </div>
+
         <div class="button-container">
             <slot></slot>
         </div>
@@ -240,6 +244,11 @@ export default {
 .button-container {
     display: flex; /* Используем flex для кнопок */
     gap: 10px; /* Пробел между кнопками */
+}
+
+.error-container {
+    margin-top: 10px;
+    //color: red; /* Цвет для отображения ошибок */
 }
 
 </style>

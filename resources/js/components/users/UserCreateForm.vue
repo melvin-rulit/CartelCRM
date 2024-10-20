@@ -147,9 +147,17 @@
 <!--</script>-->
 
 <template>
+<!--    <Alert :errors="this.errorMessage"/>-->
     <div>
         <Header title="Создание пользователя">
-            <ButtonUI @click="store" type="submit">Сохранить</ButtonUI>
+            <template #errors>
+                <div v-if="!user.email || !user.password || !user.role">
+             При создании пользователя обязательно укажите email, пароль и роль
+                </div>
+            </template>
+
+
+            <ButtonUI v-if="user.email || user.password || user.role" @click="store" type="submit">Сохранить</ButtonUI>
             <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
         </Header>
         <hr>
@@ -208,6 +216,7 @@
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input v-model="user.email" id="email" type="email" />
+                                <span v-if="errorEmail" class="error-message">{{ errorEmail }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="telegram">Telegram</label>
@@ -293,7 +302,9 @@
                                 <select v-model="user.role" id="role" class="role-select">
                                     <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
                                 </select>
+                                <span v-if="errorPssword || errorEmail" class="error-role">{{ "Укажите роль" }}</span>
                             </div>
+
                         </div>
 
                         <div class="form-row">
@@ -302,6 +313,7 @@
                             <div class="form-group">
                                 <label for="new_password">Новый пароль</label>
                                 <input v-model="user.password " id="new_password" type="text" placeholder="Введите новый пароль" />
+                                <span v-if="errorPssword" class="error-message">{{ errorPssword }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="confirm_password">Подтвердите пароль</label>
@@ -321,9 +333,11 @@ import ButtonUI from "../UI/ButtonUI.vue";
 import PageNav from '../UI/PageNav.vue';
 import {UserService} from "../../services/UserService";
 import Header from "../Header.vue";
+import Alert from "../forms/Alert.vue";
 
 export default {
     components: {
+        Alert,
         Header,
         ButtonUI,
         PageNav,
@@ -359,6 +373,8 @@ export default {
                 'manager': 'Менеджер',
                 'guest': 'Гость',
             },
+            errorEmail: '',
+            errorPssword: '',
         };
     },
     created: async function () {
@@ -416,7 +432,8 @@ export default {
                     this.$router.push({name: 'listUsers'})
                 })
                 .catch(error => {
-                    this.errors = error.response.data.message
+                    this.errorEmail = error.response.data.errors.email[0]
+                    this.errorPssword = error.response.data.errors.password[0]
                 })
             return true;
         },
@@ -570,6 +587,17 @@ export default {
             }
         }
     }
-
+    .error-message {
+        color: #ff4d4d; /* Красный цвет текста */
+        //background-color: #ffe6e6; /* Светло-красный фон */
+        //border: 1px solid #ff4d4d; /* Красная граница */
+        //padding: 10px; /* Отступы вокруг текста */
+        //border-radius: 5px; /* Закругленные углы */
+        padding-top: 15px; /* Отступ сверху */
+    }
+    .error-role {
+        color: #ff4d4d; /* Красный цвет текста */
+        margin-left: 10px;
+    }
 }
 </style>
