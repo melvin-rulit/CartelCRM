@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Providers\CreateProviderRequest;
 use App\Http\Resources\Providers\Orders\OrderResource;
+use App\Http\Resources\Providers\Orders\SuccessfulOrderResource;
 use App\Http\Resources\Providers\ProvidersResource;
 use App\Models\Providers;
 use App\Models\ProvidersOrders;
@@ -39,12 +40,21 @@ class ProviderController extends Controller
 //                'deal_static_type' => ['1' => Deal::KIND_WITH_OWNER, '2' => Deal::KIND_WITH_PROXY],
 //                'limit' => self::PER_PAGE,
 //                'total' => $orders->total(),
-                'url'   => route('providers_orders.list')
+                'url' => route('providers_orders.list')
             ]
         );
     }
 
+    public function successful_orders($id): JsonResponse
+    {
+        $provider_orders = ProvidersOrders::where('provider_id', $id)->where('status', 'completed')->get();
 
+        if (!$provider_orders) {
+            return $this->error('Нет выполненных заказов');
+        }
+
+        return new JsonResponse(['orders' => SuccessfulOrderResource::collection($provider_orders)]);
+    }
 
     public function store(CreateProviderRequest $request): JsonResponse
     {
@@ -60,7 +70,6 @@ class ProviderController extends Controller
         $provider->save();
 
         return new JsonResponse(['provider' => ProvidersResource::make($provider)]);
-//        return new JsonResponse($request->getFirstName());
     }
 
     public function detail_show(int $id): JsonResponse
@@ -72,7 +81,9 @@ class ProviderController extends Controller
         }
 
         return new JsonResponse(['provider' => ProvidersResource::make($providers)]);
+
     }
+
     public function order_detail_show(int $id): JsonResponse
     {
         $counterpart_order = $this->providersOrder::find($id);
