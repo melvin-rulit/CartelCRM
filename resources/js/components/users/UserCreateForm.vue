@@ -95,7 +95,6 @@
                             </div>
                         </div>
 
-                        <hr>
                         <div class="buttons">
                             <ButtonUI @click="store" type="submit">Сохранить</ButtonUI>
                         </div>
@@ -408,16 +407,13 @@ export default {
         }
     }
     .error-message {
-        color: #ff4d4d; /* Красный цвет текста */
-        //background-color: #ffe6e6; /* Светло-красный фон */
-        //border: 1px solid #ff4d4d; /* Красная граница */
-        //padding: 10px; /* Отступы вокруг текста */
-        //border-radius: 5px; /* Закругленные углы */
-        padding-top: 15px; /* Отступ сверху */
+        color: #ff4d4d;
+        font-size: 0.75em;
     }
     .error-role {
         color: #ff4d4d; /* Красный цвет текста */
         margin-left: 10px;
+        font-size: 0.75em;
     }
 }
 </style>

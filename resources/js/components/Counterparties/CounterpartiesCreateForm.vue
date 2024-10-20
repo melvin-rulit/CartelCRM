@@ -111,7 +111,7 @@ export default {
                     this.$router.push({name: 'listCounterparties'})
                 })
                 .catch(error => {
-                    this.errors = error.response.data.message
+                    this.errors = error.response.data.errors
                 })
             return true;
         },

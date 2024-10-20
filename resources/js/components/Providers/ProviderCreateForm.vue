@@ -116,7 +116,7 @@ export default {
                 })
         },
         cancelCreation() {
-            this.$router.push({name: 'ordersProviderList'})
+            this.$router.push({name: 'providersList'})
         },
     }
 }

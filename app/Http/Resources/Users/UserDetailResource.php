@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Users;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class UserDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -33,6 +33,7 @@ class UserResource extends JsonResource
             'phone_number' => $this->resource->phone_number,
             'telegram' => $this->resource->telegram,
             'password_see' => $this->resource->password_see,
+            'role' => User::getRoleName($this->resource->id),
         ];
     }
 }

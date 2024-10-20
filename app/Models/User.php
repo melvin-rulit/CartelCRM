@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\RolesEnum;
 use App\Models\NotUse\Branch;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -81,20 +82,29 @@ class User extends Authenticatable
         'enabled'           => 'boolean'
     ];
 
-//    public function branch()
-//    {
-//        return $this->hasOne(Branch::class, 'id', 'branch_id');
-//    }
-
-    public static function getRoleName(int $id): string
+    public static function getRoleName(int $userId)
     {
-        return match ($id) {
-            1 => 'Администратор',
-            2 => 'Менеджер',
-            3 => 'Инвестор',
-            default => 'Не задана',
-        };
+        $user = User::find($userId);
+        if ($user) {
+            // Получаем первую роль пользователя
+            $role = $user->getRoleNames()->first();
+
+            // Если роль существует, возвращаем её русское название
+            if ($role && array_key_exists(strtolower($role), RolesEnum::labels())) {
+                return RolesEnum::labels()[strtolower($role)];
+            }
+        }
     }
+
+//    public static function getRoleName(int $id): string
+//    {
+//        return match ($id) {
+//            1 => 'Администратор',
+//            2 => 'Менеджер',
+//            3 => 'Инвестор',
+//            default => 'Не задана',
+//        };
+//    }
 
     public function isEnabled(): bool
     {
@@ -106,19 +116,14 @@ class User extends Authenticatable
         return $this->role_id === self::ROLE_ADMIN;
     }
 
-    public function isManager(): bool
-    {
-        return $this->role_id === self::ROLE_MANAGER;
-    }
-
-    public function isInvestor(): bool
-    {
-        return $this->role_id === self::ROLE_INVESTOR;
-    }
-
-//    public function getBranchId(): ?int
+//    public function isManager(): bool
 //    {
-//        return $this->branch_id;
+//        return $this->role_id === self::ROLE_MANAGER;
+//    }
+//
+//    public function isInvestor(): bool
+//    {
+//        return $this->role_id === self::ROLE_INVESTOR;
 //    }
 
     public function getFullName(): string

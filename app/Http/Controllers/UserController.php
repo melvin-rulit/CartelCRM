@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\Users\UserDetailResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -87,7 +88,7 @@ class UserController extends Controller
             return $this->error('Пользователь не найден');
         }
 
-        return new JsonResponse(['user' => UserResource::make($user)]);
+        return new JsonResponse(['user' => UserDetailResource::make($user)]);
     }
 
     public function update(UpdateUserRequest $request, int $id): JsonResponse
@@ -141,53 +142,46 @@ class UserController extends Controller
         return new JsonResponse(['user' => UserResource::make(auth()->user()), 'role' => auth()->user()->getRoleNames()->first()]);
     }
 
-    public function managersList(): JsonResponse
-    {
-        $managersList = [];
-        $managers = User::whereIn('role_id', [User::ROLE_MANAGER, User::ROLE_ADMIN])->get();
+//    public function managersList(): JsonResponse
+//    {
+//        $managersList = [];
+//        $managers = User::whereIn('role_id', [User::ROLE_MANAGER, User::ROLE_ADMIN])->get();
+//
+//        foreach ($managers as $manager) {
+//            $managersList[] = ['id' => $manager->id, 'name' => $manager->getFullName()];
+//        }
+//
+//        return new JsonResponse(['managers' => $managersList]);
+//    }
+//
+//    public function adminsList(): JsonResponse
+//    {
+//        $adminsList = [];
+//        $admins = User::whereIn('role_id', [User::ROLE_MANAGER, User::ROLE_ADMIN])->get();
+//
+//        foreach ($admins as $admin) {
+//            $adminsList[] = ['id' => $admin->id, 'name' => $admin->getFullName()];
+//        }
+//
+//        return new JsonResponse(['admins' => $adminsList]);
+//    }
+//
+//    public function investorsList(): JsonResponse
+//    {
+//        $adminsList = [];
+//        $investors = User::where('role_id', '=', User::ROLE_INVESTOR)->get();
+//
+//        foreach ($investors as $investor) {
+//            $adminsList[] = ['id' => $investor->id, 'name' => $investor->getFullName()];
+//        }
+//
+//        return new JsonResponse(['investors' => $adminsList]);
+//    }
 
-        foreach ($managers as $manager) {
-            $managersList[] = ['id' => $manager->id, 'name' => $manager->getFullName()];
-        }
-
-        return new JsonResponse(['managers' => $managersList]);
-    }
-
-    public function adminsList(): JsonResponse
-    {
-        $adminsList = [];
-        $admins = User::whereIn('role_id', [User::ROLE_MANAGER, User::ROLE_ADMIN])->get();
-
-        foreach ($admins as $admin) {
-            $adminsList[] = ['id' => $admin->id, 'name' => $admin->getFullName()];
-        }
-
-        return new JsonResponse(['admins' => $adminsList]);
-    }
-
-    public function investorsList(): JsonResponse
-    {
-        $adminsList = [];
-        $investors = User::where('role_id', '=', User::ROLE_INVESTOR)->get();
-
-        foreach ($investors as $investor) {
-            $adminsList[] = ['id' => $investor->id, 'name' => $investor->getFullName()];
-        }
-
-        return new JsonResponse(['investors' => $adminsList]);
-    }
-
-    public function getRoles()
+    public function getRoles(): JsonResponse
     {
         $roles = Role::all();
         return new JsonResponse(
-//            [
-//                'roles' => [
-//                    ['id' => User::ROLE_ADMIN, 'name' => 'Администратор'],
-//                    ['id' => User::ROLE_MANAGER, 'name' => 'Менеджер'],
-//                    ['id' => User::ROLE_INVESTOR, 'name' => 'Инвестор'],
-//                ]
-//            ]
             [
                 'roles' => $roles->toArray()
             ]
