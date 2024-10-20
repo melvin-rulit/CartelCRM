@@ -40,18 +40,18 @@
                 </option>
             </select>
 
-<!--            <ButtonUI-->
-<!--                color="white"-->
-<!--                fontSize="11px"-->
-<!--                padding="5px 10px"-->
-<!--                fontWeight="500"-->
-<!--                @click="togglePanel"-->
-<!--            >-->
-<!--                <Icon icon="jam:settings-alt" class="ico"/>-->
-<!--                Фильтр-->
-<!--            </ButtonUI>-->
+            <ButtonUI
+                color="white"
+                fontSize="11px"
+                padding="5px 10px"
+                fontWeight="500"
+                @click="togglePanel"
+            >
+                <Icon icon="jam:settings-alt" class="ico"/>
+                Фильтр
+            </ButtonUI>
 
-            <button @click="togglePanel"></button>
+<!--            <button @click="togglePanel"></button>-->
 
 
             <FilterPanel :isOpen="isPanelOpen" @close="togglePanel" />

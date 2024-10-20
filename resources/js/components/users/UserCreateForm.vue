@@ -1,5 +1,4 @@
 <template>
-<!--    <Alert :errors="this.errorMessage"/>-->
     <div>
         <Header title="Создание пользователя">
             <template #errors>
