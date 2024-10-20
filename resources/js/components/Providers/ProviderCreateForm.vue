@@ -9,11 +9,10 @@
 
     <div class="content-user">
 
-
         <PageNav :tabs="['Личные данные']">
             <template #tab-0>
                 <div class="user-personal-info">
-                    <h3>Личные данные</h3>
+                    <h3>Инициалы</h3>
                     <hr>
                     <form>
                         <div class="form-row">
@@ -175,9 +174,7 @@ export default {
         }
     }
 
-    .user-personal-info,
-    .user-docs-address,
-    .user-settings-info {
+    .user-personal-info{
         margin-top: 1.5em;
 
         h3 {
