@@ -227,7 +227,7 @@ export default {
 
         .buttons {
             display: flex;
-            justify-content: center;
+            justify-content: end;
             margin-top: 2em;
         }
     }
