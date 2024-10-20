@@ -1,6 +1,12 @@
 <template>
     <div>
         <Header title="Детальная информация о поставщике">
+            <template #errors>
+                <div v-show="!orders.length">
+                   Выполненных заказов нет
+                </div>
+
+            </template>
             <ButtonUI @click="back">Назад</ButtonUI>
         </Header>
         <hr>
