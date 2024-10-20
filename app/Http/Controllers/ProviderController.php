@@ -32,7 +32,6 @@ class ProviderController extends Controller
     public function order_list(): JsonResponse
     {
         $orders = $this->providersOrder::all();
-//        $orders = $query->paginate(self::PER_PAGE);
 
         return new JsonResponse(
             [

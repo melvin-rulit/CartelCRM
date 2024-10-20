@@ -86,7 +86,7 @@ class CounterpartiesController extends Controller
             return $this->error('Контрагент не найден');
         }
 
-        return new JsonResponse(['counterparties' => CounterpartiesResource::make($counterpart)]);
+        return new JsonResponse(['counterpart' => CounterpartiesResource::make($counterpart)]);
     }
     public function order_detail_show(int $id): JsonResponse
     {
@@ -97,6 +97,17 @@ class CounterpartiesController extends Controller
         }
 
         return new JsonResponse(['order' => OrderResource::make($counterpart_order)]);
+    }
+
+    public function counterpart_orders(int $id): JsonResponse
+    {
+        $counterpart_orders = CounterpartiesOrders::where('counterpart_id', $id)->get();
+
+        if (!$counterpart_orders) {
+            return response()->json(['message' => 'Нет заказов'], 404);
+        }
+
+        return new JsonResponse(['orders' => $counterpart_orders ]);
     }
 
     public function update(UpdateUserRequest $request, int $id): JsonResponse

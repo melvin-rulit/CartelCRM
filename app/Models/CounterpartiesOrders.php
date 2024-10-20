@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Resources\Counterparties\Orders\OrderResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CounterpartiesOrders extends Model
@@ -20,5 +22,10 @@ class CounterpartiesOrders extends Model
     {
         return sprintf('%s %s %s',  $this->first_name, $this->middle_name, $this->last_name);
     }
+
+//    public function orders(): HasMany
+//    {
+//        return $this->hasMany(OrderResource::class, 'counterpart_id');
+//    }
 
 }

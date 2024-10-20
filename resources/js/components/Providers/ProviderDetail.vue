@@ -19,19 +19,35 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="passport_series">ФИО</label>
-                            <input v-model="provider.full_name" id="passport_series" type="text" />
+                            <input v-model="provider.full_name" id="passport_series" type="text" readonly
+                                   @mousedown.prevent
+                                   @copy.prevent
+                                   @paste.prevent
+                                   @selectstart.prevent/>
                         </div>
                         <div class="form-group">
                             <label for="passport_number">Город</label>
-                            <input v-model="provider.city" id="passport_number" type="text" />
+                            <input v-model="provider.city" id="passport_number" type="text" readonly
+                                   @mousedown.prevent
+                                   @copy.prevent
+                                   @paste.prevent
+                                   @selectstart.prevent/>
                         </div>
                         <div class="form-group">
                             <label for="passport_give">Телефон</label>
-                            <input v-model="provider.phone" id="passport_give" type="text" />
+                            <input v-model="provider.phone" id="passport_give" type="text" readonly
+                                   @mousedown.prevent
+                                   @copy.prevent
+                                   @paste.prevent
+                                   @selectstart.prevent/>
                         </div>
                         <div class="form-group">
                             <label for="passport_issuedByDate">Логин в телеграм</label>
-                            <input v-model="provider.telegram_login" id="passport_issuedByDate" type="text" />
+                            <input v-model="provider.telegram_login" id="passport_issuedByDate" type="text" readonly
+                                   @mousedown.prevent
+                                   @copy.prevent
+                                   @paste.prevent
+                                   @selectstart.prevent/>
                         </div>
                     </div>
 
@@ -67,7 +83,6 @@ export default {
     components: {PageNav, ButtonUI, Table, Header, Textarea, DateInput, Select, Alert, TextOnly, Success, Checkbox},
     data: function () {
         return {
-            loading: false,
             id: this.$route.params.id,
 
             orders: [],
@@ -86,10 +101,6 @@ export default {
                 { label: 'Состав заказа', key: 'order_details' },
                 { label: 'Сумма заказа', key: 'order_price' },
             ],
-
-            errors: null,
-            submitted: false,
-            message: null
         }
     },
     mounted() {

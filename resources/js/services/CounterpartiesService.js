@@ -32,6 +32,10 @@ export class CounterpartiesService {
         let url = `${this.serverUrl}/counterparties/orders/`;
         return axios.get(url);
     }
+    static getOrdersForCounterpart(id){
+        let url = `${this.serverUrl}/counterparties/counterpart_orders/${id}`;
+        return axios.get(url);
+    }
     static getOrderById(id){
         let url = `${this.serverUrl}/counterparties/order/detail/${id}`;
         return axios.get(url);

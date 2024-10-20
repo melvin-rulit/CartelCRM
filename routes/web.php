@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/detail/{id}', [CounterpartiesController::class, 'detail_show']);
 
         Route::get('/orders', [CounterpartiesController::class, 'order_list'])->name('counterparties_orders.list');
+        Route::get('/counterpart_orders/{id}', [CounterpartiesController::class, 'counterpart_orders'])->name('providers_successful_orders.list');
         Route::get('/order/detail/{id}', [CounterpartiesController::class, 'order_detail_show'])->name('counterparties_orders.detail');
     });
 

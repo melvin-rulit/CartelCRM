@@ -31,19 +31,35 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="last_name">Фамилия</label>
-                                    <input v-model="user.last_name" id="last_name" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.last_name" id="last_name" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                                 <div class="form-group">
                                     <label for="first_name">Имя</label>
-                                    <input v-model="user.first_name" id="first_name" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.first_name" id="first_name" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                                 <div class="form-group">
                                     <label for="middle_name">Отчество</label>
-                                    <input v-model="user.middle_name" id="middle_name" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.middle_name" id="middle_name" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                                 <div class="form-group">
                                     <label for="birthday">Дата рождения</label>
-                                    <input v-model="user.birthday" id="birthday" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.birthday" id="birthday" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                             </div>
 
@@ -52,17 +68,28 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input v-model="user.email" id="email" type="email" disabled/>
-                                    <span v-if="errorEmail" class="error-message">{{ errorEmail }}</span>
+                                    <input v-model="user.email" id="email" type="email" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone_number">Номер телефона</label>
                                     <input v-model="user.phone_number" id="phone_number" type="tel"
-                                           placeholder="Не заданно" disabled/>
+                                           placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                                 <div class="form-group">
                                     <label for="telegram">Telegram</label>
-                                    <input v-model="user.telegram" id="telegram" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.telegram" id="telegram" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                             </div>
 
@@ -89,22 +116,38 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="passport_series">Серия паспорта</label>
-                                    <input v-model="user.passport_series" id="passport_series" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.passport_series" id="passport_series" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent>
                                 </div>
                                 <div class="form-group">
                                     <label for="passport_number">Номер паспорта</label>
-                                    <input v-model="user.passport_number" id="passport_number" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.passport_number" id="passport_number" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="passport_give">Кем выдан паспорт</label>
-                                    <input v-model="user.passport_give" id="passport_give" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.passport_give" id="passport_give" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                                 <div class="form-group">
                                     <label for="passport_issuedByDate">Дата выдачи паспорта</label>
-                                    <input v-model="user.passport_issuedByDate" id="passport_issuedByDate" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.passport_issuedByDate" id="passport_issuedByDate" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                             </div>
 
@@ -113,12 +156,20 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="registration_address">Адрес регистрации</label>
-                                    <input v-model="user.registration_address" id="registration_address" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.registration_address" id="registration_address" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="live_address">Адрес проживания</label>
-                                    <input v-model="user.live_address" id="live_address" type="text" placeholder="Не заданно" disabled/>
+                                    <input v-model="user.live_address" id="live_address" type="text" placeholder="Не заданно" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
                                 </div>
                             </div>
 
@@ -185,6 +236,7 @@ export default {
 .content-user {
     max-width: 1400px;
     margin: auto;
+    user-select: none;
 
     .user-settings {
         max-width: 600px;

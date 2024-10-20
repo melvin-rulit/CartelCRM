@@ -81,16 +81,25 @@
 
                     <template v-if="column.key === 'order_successful'">
                 <span :class="{ 'order_successful': row.order_successful}">
-                    {{ row.order_successful ? 'Выполнен' : 'Не ыавыа' }}
+                    {{ row.order_successful ? 'Выполнен' : 'Не выполнен' }}
                 </span>
                     </template>
 
                     <template v-if="column.key === 'status'">
-                        <select v-model="row.status" @change="handleStatusChange(row)" @click.stop>
-                            <option v-for="status in statuses" :key="status.id" :value="status.label">
-                                {{ status.label }}
-                            </option>
-                        </select>
+
+<!--                        <select v-model="row.status" @change="handleStatusChange(row)" @click.stop>-->
+<!--                            <option v-for="status in statuses" :key="status.id" :value="status.value">-->
+<!--                                {{ status.label }}-->
+<!--                            </option>-->
+<!--                        </select>-->
+                        <div v-if="row.status && statuses.length > 0">
+                            <select v-model="row.status" @change="handleStatusChange(row)" @click.stop>
+                                <option v-for="status in statuses" :key="status.id" :value="status.value">
+                                    {{ status.label }}
+                                </option>
+                            </select>
+                        </div>
+
                     </template>
                     <template v-else>
                         {{ getValue(row, column.key) }}
