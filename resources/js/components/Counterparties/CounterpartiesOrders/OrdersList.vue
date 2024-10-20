@@ -1,9 +1,12 @@
 <template>
     <div>
-        <Header title="Заказы контрагентов" />
+        <Header :title="order_create ? 'Заказы контрагентов' : 'Создание заказа контрагенту'">
+            <ButtonUI v-show="order_create" @click="goToAdd('order')">Создать заказ</ButtonUI>
+            <ButtonUI v-if="!order_create" @click="cancelCreation" color="red">Отмена</ButtonUI>
+        </Header>
         <hr>
 
-        <Table
+        <Table v-show="order_create"
             :data="orders"
             :columns="columns"
             :rowsPerPageOptions="[5, 10, 25]"
@@ -22,9 +25,10 @@ import Checkbox from "../../forms/Checkbox.vue";
 import {CounterpartiesService} from "../../../services/CounterpartiesService";
 import Header from "../../Header.vue";
 import Table from "../../forms/Table.vue";
+import ButtonUI from "../../UI/ButtonUI.vue";
 
 export default {
-  components: {Table, Header, Spinner, DateInput, Alert, TextInput, Success, Checkbox},
+  components: {ButtonUI, Table, Header, Spinner, DateInput, Alert, TextInput, Success, Checkbox},
     data: function () {
         return {
             loading: false,
@@ -43,6 +47,7 @@ export default {
                 { label: 'Адрес доставки', key: 'delivery_address' },
                 { label: 'Сумма заказа', key: 'order_price' },
             ],
+            order_create: true,
             errorMessage: null,
             query: null,
         }
@@ -58,6 +63,20 @@ export default {
                 .then(response => this.orders = response.data.orders)
                 .catch(error => this.errorMessage = error)
                 .finally(() => this.loading = false)
+        },
+        goToAdd(type) {
+            this.$store.dispatch('saveRoute', this.$route.path); // Сохраняем текущий маршрут
+            // this.$router.push({ path: type === 'provider' ? '/providers/create' : '/providers/orders/create' });
+            if (type === 'order') {
+                // this.$router.push({ path: '/providers/orders/create' });
+                this.order_create = false;
+            } else if (type === 'provider') {
+                this.$router.push({ path: '/providers/create' });
+            }
+        },
+
+        cancelCreation() {
+            this.order_create = true;
         },
 
         deleteDeal: function(id) {
