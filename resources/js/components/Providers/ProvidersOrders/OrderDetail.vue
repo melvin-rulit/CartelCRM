@@ -15,20 +15,24 @@
         <form>
             <div class="form-row">
                 <div class="form-group">
-                    <label for="last_name">Номер заказа</label>
-                    <input v-model="order.order_number" id="last_name" type="text" />
+                    <label for="order_number">Номер заказа</label>
+                    <input v-model="order.order_number" id="order_number" type="text" />
                 </div>
                 <div class="form-group">
-                    <label for="first_name">Дата заказа</label>
-                    <input v-model="order.first_name" id="first_name" type="text" />
+                    <label for="order_date">Дата заказа</label>
+                    <input v-model="order.order_date" id="order_date" type="text" />
                 </div>
                 <div class="form-group">
-                    <label for="middle_name">Статус заказа</label>
-                    <input v-model="order.middle_name" id="middle_name" type="text" />
+                    <label for="status">Статус заказа</label>
+                    <select v-model="order.status" id="status" class="role-select">
+                        <option v-for="status in statuses" :key="status.id" :value="status.value">
+                            {{ status.label }}
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="birthday">Ответственный менеджер</label>
-                    <input v-model="order.manager" id="birthday" type="text" />
+                    <label for="full_name">Ответственный менеджер</label>
+                    <input v-model="order.manager.full_name" id="full_name" type="text" />
                 </div>
                 <div class="form-group">
                     <label for="birthday">Исходящие платежы по заказу</label>
@@ -59,8 +63,8 @@
             <div class="form-row">
 
                 <div class="form-group">
-                    <label for="new_password">Дата поступления на склад</label>
-                    <input v-model="order.password " id="new_password" type="text" placeholder="Введите новый пароль" />
+                    <label for="order_date_in_store">Дата поступления на склад</label>
+                    <input v-model="order.order_date_in_store" id="order_date_in_store" type="text" />
 
                 </div>
                 <div class="form-group">
@@ -112,6 +116,12 @@ export default {
                 { label: 'Серийный номер', key: '' },
                 { label: 'Цена вход', key: '' },
                 { label: 'Цена продажи', key: '' },
+            ],
+            statuses: [
+                {id: 1, label: 'К оплате', value: 'for_payment'},
+                {id: 2, label: 'Выполнен', value: 'Выполнен'},
+                // { id: 3, label: 'Неактивные' },
+                // { id: 4, label: 'Ожидающие' },
             ],
 
         }
@@ -238,6 +248,25 @@ export default {
 
                 &::placeholder {
                     color: #b1c2d9;
+                }
+            }
+
+            select {
+                width: 250px;
+                padding: 0.5em;
+                //margin-left: 9px;
+                border: 1px solid #e3ebf6;
+                border-radius: 5px;
+                background-color: #fff;
+                font-size: 14px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                option {
+                    padding: 0.5em;
                 }
             }
         }
