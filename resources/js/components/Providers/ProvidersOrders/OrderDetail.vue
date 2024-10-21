@@ -88,12 +88,12 @@
             <h3>   Состав заказа</h3>
             <hr>
 
-<!--                <Table-->
-<!--                    :data="order"-->
-<!--                    :columns="columns"-->
-<!--                    :rowsPerPageOptions="[5, 10, 25]"-->
-<!--                    :path="'/providers/detail/'"-->
-<!--                />-->
+                <Table
+                    :data="order.order_sostavs"
+                    :columns="columns"
+                    :rowsPerPageOptions="[5, 10, 25]"
+                    :path="'/providers/detail/'"
+                />
         </form>
     </div>
 
@@ -126,16 +126,16 @@ export default {
             },
             managers: [],
             columns: [
-                { label: 'Номер позиции', key: 'full_name' },
-                { label: 'Бренд', key: 'city' },
+                { label: 'Номер позиции', key: 'id' },
+                { label: 'Бренд', key: 'brand' },
                 { label: 'Модель', key: 'phone' },
-                { label: 'Состояние', key: 'telegram_login' },
-                { label: 'Параметры модели', key: '' },
-                { label: 'Цвет', key: '' },
-                { label: 'Страна', key: '' },
-                { label: 'Серийный номер', key: '' },
-                { label: 'Цена вход', key: '' },
-                { label: 'Цена продажи', key: '' },
+                { label: 'Состояние', key: 'state' },
+                { label: 'Параметры модели', key: 'params_model' },
+                { label: 'Цвет', key: 'color' },
+                { label: 'Страна', key: 'city' },
+                { label: 'Серийный номер', key: 'series_number' },
+                { label: 'Цена вход', key: 'prise' },
+                { label: 'Цена продажи', key: 'prise_pay' },
             ],
             statuses: [
                 {id: 1, label: 'К оплате', value: 'for_payment'},

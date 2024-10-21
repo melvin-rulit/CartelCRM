@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'order_details' => $this->resource->order_details,
             'order_price' => $this->resource->order_price,
             'manager' => UserResource::make($this->resource->manager),
+            'order_sostavs' => $this->resource->sostavs,
         ];
     }
 }
