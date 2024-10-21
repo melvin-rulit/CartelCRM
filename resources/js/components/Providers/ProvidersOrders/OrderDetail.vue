@@ -16,23 +16,23 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="last_name">Номер заказа</label>
-                    <input v-model="orders.last_name" id="last_name" type="text" />
+                    <input v-model="order.order_number" id="last_name" type="text" />
                 </div>
                 <div class="form-group">
                     <label for="first_name">Дата заказа</label>
-                    <input v-model="orders.first_name" id="first_name" type="text" />
+                    <input v-model="order.first_name" id="first_name" type="text" />
                 </div>
                 <div class="form-group">
                     <label for="middle_name">Статус заказа</label>
-                    <input v-model="orders.middle_name" id="middle_name" type="text" />
+                    <input v-model="order.middle_name" id="middle_name" type="text" />
                 </div>
                 <div class="form-group">
                     <label for="birthday">Ответственный менеджер</label>
-                    <input v-model="orders.manager" id="birthday" type="text" />
+                    <input v-model="order.manager" id="birthday" type="text" />
                 </div>
                 <div class="form-group">
                     <label for="birthday">Исходящие платежы по заказу</label>
-                    <input v-model="orders.birthday" id="birthday" type="text" />
+                    <input v-model="order.birthday" id="birthday" type="text" />
                 </div>
             </div>
 
@@ -40,16 +40,16 @@
             <hr>
             <div class="form-row">
                 <div class="form-group">
-                    <label for="email">Название контрагента</label>
-                    <input v-model="orders.email" id="email" type="email" />
+                    <label for="full_name">ФИО</label>
+                    <input v-model="order.provider.full_name" id="full_name" type="text" />
                 </div>
                 <div class="form-group">
-                    <label for="phone_number">Телефон контрагента</label>
-                    <input v-model="orders.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
+                    <label for="phone">Телефон поставщика</label>
+                    <input v-model="order.provider.phone" id="phone" type="text" />
                 </div>
                 <div class="form-group">
-                    <label for="telegram">Логин в телеграм контрагента</label>
-                    <input v-model="orders.telegram" id="telegram" type="text" />
+                    <label for="telegram">Логин в телеграм поставщика</label>
+                    <input v-model="order.provider.telegram" id="telegram" type="text" />
                 </div>
             </div>
 
@@ -60,24 +60,24 @@
 
                 <div class="form-group">
                     <label for="new_password">Дата поступления на склад</label>
-                    <input v-model="orders.password " id="new_password" type="text" placeholder="Введите новый пароль" />
+                    <input v-model="order.password " id="new_password" type="text" placeholder="Введите новый пароль" />
 
                 </div>
                 <div class="form-group">
                     <label for="confirm_password">Статус поступления на склад</label>
-                    <input v-model="orders.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
+                    <input v-model="order.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
                 </div>
             </div>
 
             <h3>   Состав заказа</h3>
             <hr>
 
-                <Table
-                    :data="orders"
-                    :columns="columns"
-                    :rowsPerPageOptions="[5, 10, 25]"
-                    :path="'/providers/detail/'"
-                />
+<!--                <Table-->
+<!--                    :data="order"-->
+<!--                    :columns="columns"-->
+<!--                    :rowsPerPageOptions="[5, 10, 25]"-->
+<!--                    :path="'/providers/detail/'"-->
+<!--                />-->
         </form>
     </div>
 
@@ -100,9 +100,7 @@ export default {
             loading: false,
             id: this.$route.params.id,
 
-            orders: {
-                'manager': '',
-            },
+            order: [],
             columns: [
                 { label: 'Номер позиции', key: 'full_name' },
                 { label: 'Бренд', key: 'city' },
@@ -119,8 +117,12 @@ export default {
         }
     },
     created: async function () {
-        this.update()
+            ProvideService.getOrderById(this.id)
+                .then(response => this.order = response.data.order)
+                .catch(error => this.errorMessage = error)
+                .finally(() => this.loading = false)
     },
+
     // created() {
     //     CounterpartiesService.getById(this.id)
     //         .then(response => this.counterparties = response.data.counterparties)
@@ -131,14 +133,8 @@ export default {
     //     CounterpartiesOrdersService.getOrders()
     //         .then(response => this.orders = response.data.orders)
     // },
+
     methods: {
-        update: function () {
-            this.loading = true;
-            ProvideService.getOrderById(this.id)
-                .then(response => this.order = response.data.order)
-                .catch(error => this.errorMessage = error)
-                .finally(() => this.loading = false)
-        },
         back() {
             this.$router.push({ path: '/providers/orders' });
         },

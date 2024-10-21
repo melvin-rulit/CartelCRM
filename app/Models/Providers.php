@@ -17,7 +17,7 @@ class Providers extends Model
 
     public function getFullNameWithContacts(): string
     {
-        return sprintf('%s %s %s ( telegram: %s  Телефон: %s )',  $this->first_name, $this->middle_name, $this->last_name, $this->telegram_login, $this->phone);
+        return sprintf('%s %s %s ( telegram: %s  Телефон: %s )',  $this->first_name, $this->middle_name, $this->last_name, $this->telegram, $this->phone);
     }
 
     public function orders(): HasMany
