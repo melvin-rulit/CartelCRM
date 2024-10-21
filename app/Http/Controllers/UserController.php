@@ -88,7 +88,7 @@ class UserController extends Controller
             return $this->error('Пользователь не найден');
         }
 
-        return new JsonResponse(['user' => UserDetailResource::make($user)]);
+        return new JsonResponse(['user' => UserDetailResource::make($user), 'role' => auth()->user()->getRoleNames()->first()]);
     }
 
     public function update(UpdateUserRequest $request, int $id): JsonResponse
@@ -99,25 +99,30 @@ class UserController extends Controller
             return $this->error('Пользователь не найден');
         }
 
-        $user->role_id = $request->getRoleId();
-        $user->enabled = $request->isEnabled();
-
         $user->first_name = $request->getFirstName();
         $user->middle_name = $request->getMiddleName();
         $user->last_name = $request->getLastName();
         $user->birthday = $request->getBirthday();
+        $user->email = $request->getEmail();
+
         $user->passport_series = $request->getPassportSeries();
+        $user->passport_give = $request->getPassportGive();
         $user->passport_number = $request->getPassportNumber();
-        $user->passport_notes = $request->getPassportNotes();
+        $user->passport_issuedBy = $request->getPassportIssuedBy();
+        $user->passport_issuedByDate = $request->getPassportIssuedByData();
         $user->registration_address = $request->getRegistrationAddress();
+        $user->live_adress  = $request->getLiveAddress();
         $user->phone_number = $request->getPhone();
-        $user->comment = $request->getComment();
+        $user->telegram = $request->getTelegram();
+//        $user->comment = $request->getComment();
 
         if ($request->getPassword()) {
             $user->password = \Hash::make($request->getPassword());
+            $user->password_see = $request->getPassword();
         }
 
-        $user->branch_id = $request->getBranchId();
+        // Назначение роли пользователю
+        $user->assignRole($request->get('role'));
 
         $user->save();
 

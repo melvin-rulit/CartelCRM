@@ -64,7 +64,7 @@ class ProviderController extends Controller
         $provider->last_name = $request->getLastName();
         $provider->phone = $request->getPhone();
         $provider->city = $request->getCity();
-        $provider->telegram_login = $request->getTelegramLogin();
+        $provider->telegram = $request->getTelegramLogin();
 
         $provider->save();
 

@@ -2,6 +2,7 @@
     <div>
         <Header title="Детальная информация о пользователе">
             <ButtonUI @click="back">Назад</ButtonUI>
+            <ButtonUI color="green" @click="edit">Редактировать</ButtonUI>
         </Header>
         <hr>
 
@@ -18,10 +19,11 @@
                     <div>
                         <h2>{{ user.full_name }}</h2>
                         <p class="user-role">{{ user.role }}</p>
+
                     </div>
                 </div>
             </div>
-
+            {{ role }}
             <PageNav :tabs="['Личные данные', 'Документы и адрес']">
                 <template #tab-0>
                     <div class="user-personal-info">
@@ -165,7 +167,7 @@
 
                                 <div class="form-group">
                                     <label for="live_address">Адрес проживания</label>
-                                    <input v-model="user.live_address" id="live_address" type="text" placeholder="Не заданно" readonly
+                                    <input v-model="user.live_adress" id="live_address" type="text" placeholder="Не заданно" readonly
                                            @mousedown.prevent
                                            @copy.prevent
                                            @paste.prevent
@@ -173,9 +175,9 @@
                                 </div>
                             </div>
 
-                            <div class="buttons">
-                                <ButtonUI type="submit">Сохранить</ButtonUI>
-                            </div>
+<!--                            <div class="buttons">-->
+<!--                                <ButtonUI type="submit">Сохранить</ButtonUI>-->
+<!--                            </div>-->
                         </form>
                     </div>
                 </template>
@@ -207,10 +209,11 @@ export default {
         return {
             id: this.$route.params.id,
             user: '',
+            // role: '',
+
             loading: false,
-            errors: null,
-            submitted: false,
-            message: null
+            message: null,
+            errors: null
         }
     },
     mounted() {
@@ -220,6 +223,7 @@ export default {
         update: async function (event) {
             UserService.getById(this.id)
                 .then(response => this.user = response.data.user)
+                // .then(response => this.role = response.data.role)
                 .catch(error => {
                     this.errors = error.response.data.message
                 })
@@ -227,6 +231,9 @@ export default {
         },
         back() {
             this.$router.push({ path: '/users' });
+        },
+        edit() {
+            this.$router.push({ path: '/users/' + this.id });
         },
     }
 }

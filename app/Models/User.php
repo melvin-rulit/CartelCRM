@@ -87,12 +87,12 @@ class User extends Authenticatable
         $user = User::find($userId);
         if ($user) {
             // Получаем первую роль пользователя
-            $role = $user->getRoleNames()->first();
+            return $user->getRoleNames()->first();
 
             // Если роль существует, возвращаем её русское название
-            if ($role && array_key_exists(strtolower($role), RolesEnum::labels())) {
-                return RolesEnum::labels()[strtolower($role)];
-            }
+//            if ($role && array_key_exists(strtolower($role), RolesEnum::labels())) {
+//                return RolesEnum::labels()[strtolower($role)];
+//            }
         }
     }
 

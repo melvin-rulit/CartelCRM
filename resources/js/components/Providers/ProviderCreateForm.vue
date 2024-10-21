@@ -1,4 +1,6 @@
 <template>
+    <Alert ref="alertComponent" :message="alertMessage" :type="alertType" />
+
     <div>
         <Header title="Создание поставщика">
             <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
@@ -47,9 +49,9 @@
                                 <span v-if="errors" class="error-message">{{ errors.phone[0] }}</span>
                             </div>
                             <div class="form-group">
-                                <label for="telegram_login">Логин телеграм</label>
-                                <input v-model="provider.telegram_login" id="phone" type="text" />
-                                <span v-if="errors" class="error-message">{{ errors.telegram_login[0] }}</span>
+                                <label for="telegram">Логин телеграм</label>
+                                <input v-model="provider.telegram" id="telegram" type="text" />
+                                <span v-if="errors" class="error-message">{{ errors.telegram[0] }}</span>
                             </div>
                         </div>
 
@@ -63,6 +65,7 @@
 
         </PageNav>
     </div>
+
 </template>
 
 <script>
@@ -91,11 +94,12 @@ export default {
                 last_name: null,
                 city: null,
                 phone: null,
-                telegram_login: null
+                telegram: null
             },
 
+            alertMessage: '',
+            alertType: 'success',
             errors: null,
-            submitted: false,
             message: null
         }
     },
@@ -103,16 +107,31 @@ export default {
 
     },
     methods: {
+        triggerSuccessAlert() {
+            this.alertMessage = 'Поставщик был успешно создан';
+            this.alertType = 'success';
+            this.$refs.alertComponent.showAlert();
+        },
+        triggerErrorAlert() {
+            this.alertMessage = 'Не гуд лорем бла бла!';
+            this.alertType = 'error';
+            this.$refs.alertComponent.showAlert();
+        },
+
         store: async function (event) {
             event.preventDefault()
             this.errors = null
             ProvideService.store(this.provider)
                 .then(response => {
                     this.provider = response.data.provider
-                    this.$router.push({name: 'providersList'})
+                    this.triggerSuccessAlert();
+                    setTimeout(() => {
+                        this.$router.push({name: 'providersList'})
+                    }, 5000);
+
                 })
                 .catch(error => {
-                    this.errors = error.response.data.errors
+                    this.errors = error.response.data.errors.first_name
                 })
         },
         cancelCreation() {

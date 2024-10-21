@@ -40,21 +40,30 @@
                 </option>
             </select>
 
-            <ButtonUI
-                color="white"
-                fontSize="11px"
-                padding="5px 10px"
-                fontWeight="500"
-                @click="togglePanel"
-            >
-                <Icon icon="jam:settings-alt" class="ico"/>
-                Фильтр
-            </ButtonUI>
+<!--            <ButtonUI-->
+<!--                color="white"-->
+<!--                fontSize="11px"-->
+<!--                padding="5px 10px"-->
+<!--                fontWeight="500"-->
+<!--                @click="togglePanel"-->
+<!--            >-->
+<!--                <Icon icon="jam:settings-alt" class="ico"/>-->
+<!--                Фильтр-->
+<!--            </ButtonUI>-->
 
-<!--            <button @click="togglePanel"></button>-->
+            <button @click="togglePanel" class="white-button">
+                 Фильтр
+            </button>
+            <FilterPanel
+                :isOpen="isFilterOpen"
+                :dropdownOptions="dropdownConfig"
+                :checkBoxOptions="checkBoxConfig"
+                @filterApplied="handleFilterApplied"
+                @close="closeFilter"
+            />
 
 
-            <FilterPanel :isOpen="isPanelOpen" @close="togglePanel" />
+<!--            <FilterPanel :isOpen="isPanelOpen" @close="togglePanel" />-->
 
         </div>
 
@@ -194,6 +203,40 @@ export default {
                 // { id: 4, label: 'Ожидающие' },
             ],
             selectedStatus: null, // для хранения выбранного статуса
+            isFilterOpen: false,
+            dropdownConfig: [
+                {
+                    id: 'name-sort',
+                    label: 'Название',
+                    options: [
+                        { text: 'По возрастанию', value: 'asc' },
+                        { text: 'По убыванию 1', value: 'desc' },
+                        { text: 'По убыванию 2', value: 'desasc' },
+                        { text: 'По убыванию 3', value: 'daesc' },
+                    ],
+                },
+                {
+                    id: 'comany-sort',
+                    label: 'Комания',
+                    options: [
+                        { text: 'Названия', value: 'asc' },
+                        { text: 'Убываеия', value: 'desc' },
+                    ],
+                },
+                {
+                    id: 'rating-sort',
+                    label: 'Рейтинг',
+                    options: [
+                        { text: 'По возрастанию', value: 'asc' },
+                        { text: 'По убыванию', value: 'desc' },
+                    ],
+                },
+            ],
+            checkBoxConfig: [
+                { id: 'checkbox-1', label: 'Одна ерунда 1', value: 'option1' },
+                { id: 'checkbox-2', label: 'Вторая ерунда 2', value: 'option2' },
+            ],
+
         };
     },
     computed: {
@@ -239,6 +282,16 @@ export default {
 
         handleRowsChange() {
             this.currentPage = 1; // сбрасываем на первую страницу при изменении количества строк
+        },
+        togglePanel() {
+            this.isFilterOpen = !this.isFilterOpen;
+        },
+        closeFilter() {
+            this.isFilterOpen = false;
+        },
+        handleFilterApplied(filterData) {
+            console.log('Примененные фильтры:', filterData);
+            // Добавьте логику для применения фильтров к filteredData здесь
         },
 
         // applyFilter() {

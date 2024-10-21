@@ -1,34 +1,24 @@
 <template>
     <div>
-        <Header :title="order_create ? 'Заказы контрагентов' : 'Создание заказа контрагенту'">
-            <ButtonUI v-show="order_create" @click="goToAdd('order')">Создать заказ</ButtonUI>
-            <ButtonUI v-if="!order_create" @click="cancelCreation" color="red">Отмена</ButtonUI>
+        <Header title="Заказы на складе">
         </Header>
         <hr>
-
         <Table v-show="order_create"
             :data="orders"
             :columns="columns"
             :rowsPerPageOptions="[5, 10, 25]"
-            :path="'/counterparties/order/detail/'"
+            :path="'/providers/order/detail/'"
         />
     </div>
 </template>
+
 <script>
-import TextInput from "../../forms/TextInput.vue";
-import Alert from "../../forms/Alert.vue";
-import _ from "lodash";
-import DateInput from "../../forms/DateInput.vue";
-import Spinner from "../../forms/Spinner.vue";
-import Success from "../../forms/Success.vue";
-import Checkbox from "../../forms/Checkbox.vue";
-import {CounterpartiesService} from "../../../services/CounterpartiesService";
-import Header from "../../Header.vue";
-import Table from "../../forms/Table.vue";
-import ButtonUI from "../../UI/ButtonUI.vue";
+import Header from "../Header.vue";
+import Table from "../forms/Table.vue";
+import ButtonUI from "../UI/ButtonUI.vue";
 
 export default {
-  components: {ButtonUI, Table, Header, Spinner, DateInput, Alert, TextInput, Success, Checkbox},
+  components: {ButtonUI, Table, Header},
     data: function () {
         return {
             loading: false,
@@ -40,44 +30,52 @@ export default {
             },
             orders: [],
             columns: [
+                { label: 'Статус оплаты', key: 'is_paid' },
                 { label: 'Номер заказа', key: 'order_number' },
-                { label: 'ФИО контрагента', key: 'counterpart.full_name' },
-                { label: 'Состав заказа', key: 'order_details' },
+                { label: 'Дата заказа', key: 'order_date' },
                 { label: 'Статус заказа', key: 'status' },
-                { label: 'Адрес доставки', key: 'delivery_address' },
+                { label: 'ФИО поставщика', key: 'provider.full_name_with_contacts' },
+                { label: 'Состав заказа', key: 'order_details' },
                 { label: 'Сумма заказа', key: 'order_price' },
             ],
+            previousRoute: '',
             order_create: true,
             errorMessage: null,
             query: null,
         }
     },
     name: "OrderList",
+    // mounted() {
+    //     this.previousRoute = this.$route.path; // сохраняем маршрут при монтировании
+    // },
     created: async function () {
         this.update()
     },
     methods: {
-        update: function () {
+        update() {
             this.loading = true;
-            CounterpartiesService.getOrders(this.filters)
-                .then(response => this.orders = response.data.orders)
+            ProvideService.getOrders(this.filters)
+                .then(response => {
+                    this.orders = response.data.orders;
+                })
                 .catch(error => this.errorMessage = error)
-                .finally(() => this.loading = false)
+                .finally(() => this.loading = false);
         },
         goToAdd(type) {
             this.$store.dispatch('saveRoute', this.$route.path); // Сохраняем текущий маршрут
             // this.$router.push({ path: type === 'provider' ? '/providers/create' : '/providers/orders/create' });
             if (type === 'order') {
-                this.$router.push({ path: '/counterparties/orders/create' });
+                this.$router.push({ path: '/providers/orders/create' });
                 this.order_create = false;
             } else if (type === 'provider') {
                 this.$router.push({ path: '/providers/create' });
             }
         },
-
         cancelCreation() {
             this.order_create = true;
         },
+    },
+
 
         deleteDeal: function(id) {
             // if (confirm('Вы действительно хотите удалить сделку?')) {
@@ -97,7 +95,7 @@ export default {
       //   }, 2000)
       // }
     }
-    },
+
     // watch: {
     //     'filters.clientName': _.debounce(function () {
     //         this.update()

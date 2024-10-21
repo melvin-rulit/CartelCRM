@@ -118,10 +118,10 @@ button {
 
     /* Стили для зеленой кнопки */
     &.green-button {
-        background: #73EC8B; /* Зеленый цвет */
+        background: #7ABF54; /* Зеленый цвет */
         transition: background-image 0.5s, border-color 0.5s;
         &:hover {
-            background: #e60000; /* Темнее при наведении */
+            background: #6BAF48; /* Темнее при наведении */
             transition: 0.5s;
         }
     }

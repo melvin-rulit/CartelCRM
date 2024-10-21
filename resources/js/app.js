@@ -25,7 +25,7 @@ import ProviderEditForm from "./components/Providers/ProviderEditForm.vue";
 //Заказы Поставщикам
 import OrderProviderList from "./components/Providers/ProvidersOrders/OrdersList.vue";
 import OrderProviderDetail from "./components/Providers/ProvidersOrders/OrderDetail.vue";
-import OrderProviderCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
+import OrderProviderCreateForm from "./components/Providers/ProvidersOrders/OrderCreateForm.vue";
 import OrderProviderEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
 
 //Контрагенты
@@ -39,8 +39,8 @@ import OrderCounterpartiesDetail from "./components/Counterparties/Counterpartie
 import OrderCounterpartiesCreateForm from "./components/Counterparties/CounterpartiesOrders/OrderCreateForm.vue";
 import OrderCounterpartiesEditForm from "./components/Counterparties/CounterpartiesOrders/OrderEditForm.vue";
 //Склад
-import StatsPayments from "./components/Store/StatsPayments.vue";
-import StatsActives from "./components/Store/StatsActives.vue";
+import StoreOrders from "./components/Store/OrdersList.vue";
+
 
 
 import BranchesList from "./components/branches/BranchesList.vue";
@@ -125,6 +125,8 @@ const router = createRouter({
             path: '/providers/orders/:id',
             component: OrderProviderEditForm
         },
+
+
         //Контрагенты
         {
             name: 'listCounterparties',
@@ -166,6 +168,14 @@ const router = createRouter({
             name: 'editCounterpartiesOrder',
             path: '/counterparties/orders/:id',
             component: OrderCounterpartiesEditForm
+        },
+
+
+        //Склад
+        {
+            name: 'statsOrders',
+            path: '/store',
+            component: StoreOrders
         },
 
 
@@ -225,18 +235,10 @@ const router = createRouter({
             path: '/sources/:id',
             component: SourceEditForm
         },
-        //Отчет по финансовым операциям
-        {
-            name: 'statsPayments',
-            path: '/Store-payments',
-            component: StatsPayments
-        },
-        //Отчет по остаточной стоимости актива
-        {
-            name: 'statsActives',
-            path: '/Store-actives',
-            component: StatsActives
-        }
+
+
+
+
     ],
 })
 

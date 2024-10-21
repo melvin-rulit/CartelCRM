@@ -76,7 +76,7 @@ export default {
             this.$store.dispatch('saveRoute', this.$route.path); // Сохраняем текущий маршрут
             // this.$router.push({ path: type === 'provider' ? '/providers/create' : '/providers/orders/create' });
             if (type === 'order') {
-                // this.$router.push({ path: '/providers/orders/create' });
+                this.$router.push({ path: '/providers/orders/create' });
                 this.order_create = false;
             } else if (type === 'provider') {
                 this.$router.push({ path: '/providers/create' });

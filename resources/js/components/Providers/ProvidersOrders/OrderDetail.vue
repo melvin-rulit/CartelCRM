@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header title="Детальная информация заказа">
+        <Header title="Детальная информация заказа поставщику">
             <ButtonUI @click="back">Назад</ButtonUI>
         </Header>
         <hr>
@@ -28,11 +28,11 @@
                 </div>
                 <div class="form-group">
                     <label for="birthday">Ответственный менеджер</label>
-                    <input v-model="orders.birthday" id="birthday" type="date" />
+                    <input v-model="orders.manager" id="birthday" type="text" />
                 </div>
                 <div class="form-group">
-                    <label for="birthday">Информация о исходящих платежах по заказу</label>
-                    <input v-model="orders.birthday" id="birthday" type="date" />
+                    <label for="birthday">Исходящие платежы по заказу</label>
+                    <input v-model="orders.birthday" id="birthday" type="text" />
                 </div>
             </div>
 
@@ -100,21 +100,20 @@ export default {
             loading: false,
             id: this.$route.params.id,
 
-            // counterparties: {
-            //     'firstName': '',
-            //     'middleName': '',
-            //     'lastName': '',
-            //     'city': '',
-            //     'phone': '',
-            //     'telegram_login': '',
-            // },
-            orders: [],
+            orders: {
+                'manager': '',
+            },
             columns: [
-                { label: 'Номер заказа', key: 'full_name' },
-                { label: 'Дата заказа', key: 'city' },
-                { label: 'Статус заказа', key: 'phone' },
-                { label: 'Ответственный менеджер', key: 'telegram_login' },
-                { label: 'Заказов', key: '' },
+                { label: 'Номер позиции', key: 'full_name' },
+                { label: 'Бренд', key: 'city' },
+                { label: 'Модель', key: 'phone' },
+                { label: 'Состояние', key: 'telegram_login' },
+                { label: 'Параметры модели', key: '' },
+                { label: 'Цвет', key: '' },
+                { label: 'Страна', key: '' },
+                { label: 'Серийный номер', key: '' },
+                { label: 'Цена вход', key: '' },
+                { label: 'Цена продажи', key: '' },
             ],
 
         }

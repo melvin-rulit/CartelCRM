@@ -1,71 +1,155 @@
 <template>
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <div class="px-6 py-6 lg:px-8">
-            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Редактирование пользователя</h3>
-            <Alert :errors="errors"/>
-            <Success :message="message"/>
-            <form @submit="update">
-                <div class="grid md:grid-cols-3 md:gap-6">
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Фамилия пользователя" v-model:value="user.lastName" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Имя пользователя" v-model:value="user.firstName" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Отчество пользователя" v-model:value="user.middleName" type="text"/>
-                    </div>
-                </div>
-                <div class="relative z-0 w-full mb-6 group">
-                    <Checkbox title="Пользователь активен?" name="enabled" v-model:checked="user.enabled"
-                              :checked="user.enabled" type="checkbox"/>
-                </div>
-                <div class="grid md:grid-cols-5 md:gap-6">
-                    <div class="relative z-0 w-full mb-6 group">
-                        <Select name="roleId" v-model:value="user.roleId" title="Роль" :values="userRoles"/>
-                    </div>
+    <Alert ref="alertComponent" :message="alertMessage" :type="alertType" />
 
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Email" v-model:value="user.email" type="email"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Номер телефона" v-model:value="user.phoneNumber" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Пароль" v-model:value="user.password" type="password"/>
-                    </div>
+    <div>
+        <Header title="Редактирование пользователя">
+            <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
+        </Header>
+        <hr>
+
+    </div>
+
+    <div class="content-user">
+
+        <div class="user-settings">
+            <div class="avatar" @click="triggerAvatarUpload">
+                <img :src="avatar || defaultAvatar" alt="фото" class="avatar-image" />
+                <!--                <img v-if="avatar" :src="avatar" alt="фото" class="avatar-image" />-->
+                <!--                <div v-else class="avatar-placeholder">-->
+                <!--                    <span class="plus-sign">+</span>-->
+                <!--                </div>-->
+                <input type="file" ref="avatarInput" @change="onAvatarChange" style="display: none;" />
+                <div>
+                    <h2>{{ fullName }}</h2>
+                    <p class="user-role">{{ data.user.role || 'Роль не указана' }}</p>
                 </div>
-                <div class="relative z-0 w-100 mb-6 group">
-                    <DateInput title="Дата рождения" v-model:value="user.birthday" type="date"/>
-                </div>
-                <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Серия паспорта" v-model:value="user.passportSeries" type="text"/>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <TextInput title="Номер паспорта" v-model:value="user.passportNumber" type="text"/>
-                    </div>
-                </div>
-                <div class="relative z-0 w-full mb-6 group">
-                    <TextInput title="Кем выдан паспорт" v-model:value="user.passportNotes" type="text"/>
-                </div>
-                <div class="relative z-0 w-full mb-6 group">
-                    <TextInput title="Адрес регистрации" v-model:value="user.registrationAddress" type="text"/>
-                </div>
-                <div class="relative z-0 w-full mb-6 group">
-                    <Textarea title="Комментарий" v-model:value="user.comment"/>
-                </div>
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <router-link to="/users" type="button"
-                                 class="text-sm font-semibold leading-6 text-gray-900">Отмена
-                    </router-link>
-                    <button type="submit"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Сохранить
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
+
+        <PageNav :tabs="['Личные данные', 'Документы и адрес']">
+            <template #tab-0>
+                <div class="user-personal-info">
+                    <h3>Личные данные</h3>
+                    <hr>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first_name">Фамилия</label>
+                                <input v-model="data.user.first_name" id="first_name" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="middle_name">Имя</label>
+                                <input v-model="data.user.middle_name" id="middle_name" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Отчество</label>
+                                <input v-model="data.user.last_name" id="last_name" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Дата рождения</label>
+                                <input v-model="data.user.birthday" id="birthday" type="date" />
+                            </div>
+                        </div>
+
+                        <h3>Контактная информация</h3>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input v-model="data.user.email" id="email" type="email" />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Номер телефона</label>
+                                <input v-model="data.user.phone_number" id="phone_number" />
+                            </div>
+                            <div class="form-group">
+                                <label for="telegram">Telegram</label>
+                                <input v-model="data.user.telegram" id="telegram" type="text" />
+                            </div>
+                        </div>
+
+<div v-show="data.role === 'Администратор'">
+    <h3>Вход для пользователя</h3>
+    <hr>
+
+    <div class="form-row">
+
+        <div class="form-group">
+            <label for="email">Роль пользователя</label>
+            <select v-model="data.user.role" id="role" class="role-select">
+                <option v-for="role in roles" :key="role.id" :value="role.name">{{ role.name }}</option>
+            </select>
+            <span v-if="!data.user.role" class="error-role">{{ "Укажите роль" }}</span>
+        </div>
+        <div class="form-group">
+            <label for="new_password">Новый пароль</label>
+            <input v-model="data.user.password " id="new_password" type="text" placeholder="Введите новый пароль" />
+<!--            <span v-if="errorPssword" class="error-message">{{ errorPssword }}</span>-->
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Установленный пароль</label>
+            <input v-model="data.user.password_see" id="confirm_password" type="text" />
+        </div>
+    </div>
+</div>
+
+
+                        <div class="buttons">
+                            <ButtonUI @click="update" type="submit">Сохранить изменения</ButtonUI>
+                        </div>
+                    </form>
+                </div>
+            </template>
+
+            <template #tab-1>
+                <div class="user-docs-address">
+                    <h3>Паспортные данные</h3>
+                    <hr>
+                    <form @click="store">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="passport_series">Серия паспорта</label>
+                                <input v-model="data.user.passport_series" id="passport_series" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="passport_number">Номер паспорта</label>
+                                <input v-model="data.user.passport_number" id="passport_number" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="passport_give">Кем выдан паспорт</label>
+                                <input v-model="data.user.passport_give" id="passport_give" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="passport_issuedByDate">Дата выдачи паспорта</label>
+                                <input v-model="data.user.passport_issuedByDate" id="passport_issuedByDate" type="date" />
+                            </div>
+                        </div>
+
+                        <h3>Адрес пользователя</h3>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="registration_address">Адрес регистрации</label>
+                                <input v-model="data.user.registration_address" id="registration_address" type="text" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="live_adress">Адрес проживания</label>
+                                <input v-model="data.user.live_adress" id="live_adress" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="buttons">
+                            <ButtonUI @click="update" type="update">Сохранить изменения</ButtonUI>
+                        </div>
+                    </form>
+                </div>
+            </template>
+
+        </PageNav>
     </div>
 </template>
 
@@ -78,58 +162,282 @@ import Select from "../forms/Select.vue";
 import Checkbox from "../forms/Checkbox.vue";
 import DateInput from "../forms/DateInput.vue";
 import Textarea from "../forms/Textarea.vue";
+import Header from "../Header.vue";
+import PageNav from "../UI/PageNav.vue";
+import ButtonUI from "../UI/ButtonUI.vue";
 
 export default {
     name: "UserEditForm",
-    components: {Textarea, DateInput, Select, Alert, TextInput, Success, Checkbox},
+    components: {ButtonUI, PageNav, Header, Textarea, DateInput, Select, Alert, TextInput, Success, Checkbox},
     data: function () {
         return {
             loading: false,
             id: this.$route.params.id,
-            userRoles: [],
-            user: {
-                'firstName': '',
-                'middleName': '',
-                'lastName': '',
-                'birthday': null,
-                'passportSeries': '',
-                'passportNumber': '',
-                'passportNotes': '',
-                'registrationAddress': '',
-                'comment': '',
-                'phoneNumber': '',
-                'email': '',
-                'enabled': '',
-                'password': null,
-                'roleId': 0,
-                'branchId': 0
+            data: {
+                user: {
+                    first_name: '',
+                    middle_name: '',
+                    last_name: '',
+                    birthday: '',
+                    email: '',
+                    phone_number: '',
+                    telegram: '',
+                    passport_series: '',
+                    passport_number: '',
+                    passport_give: '',
+                    passport_issuedByDate: '',
+                    registration_address: '',
+                    live_adress: '',
+                    role: '',
+                    password : '',
+                    password_see: '',
+                },
             },
+
+            roles: [],
+            roleTranslations: {
+                'admin': 'Администратор',
+                'cashier': 'Кассир',
+                'courier': 'Курьер',
+                'manager': 'Менеджер',
+                'guest': 'Гость',
+            },
+
+            alertMessage: '',
+            alertType: 'success',
+            message: null,
             errors: null,
-            submitted: false,
-            message: null
         }
     },
-    created() {
+    async created() {
+        UserService.getRoles().then(response => {
+            this.roles = response.data.roles.map(role => ({
+                id: role.id,
+                name: role.name,
+                label: this.roleTranslations[role.name] || role.name
+            }));
+            // this.roles = response.data.roles
+        })
+        try {
+            const response = await UserService.getRoles();
+            this.roles = response.data.roles.map(role => this.roleTranslations[role] || role);
+        } catch (error) {
+            console.error('Ошибка при получении ролей:', error);
+        }
+
         UserService.getById(this.id)
-            .then(response => this.user = response.data.user)
+            .then(response => this.data = response.data)
+            // .then(response => this.user = response.data.user)
             .catch(error => {
                 this.errors = error.response.data.message
             })
-        // UserService.getRoles().then(response => this.userRoles = response.data.roles)
+    },
+    computed: {
+        fullName() {
+            return `${this.data.user.first_name || 'Фамилия'} ${this.data.user.middle_name || 'Имя'} ${this.data.user.last_name || 'Отчество'}`;
+        }
     },
     methods: {
         update: async function (event) {
             event.preventDefault()
             this.errors = null
-            UserService.update(this.user)
+            UserService.update(this.data.user)
                 .then(response => {
                     this.user = response.data.user
-                    this.message = 'Изменения сохранены'
+                    this.triggerSuccessAlert();
                 })
                 .catch(error => {
                     this.errors = error.response.data.message
                 })
-        }
+        },
+        triggerSuccessAlert() {
+            this.alertMessage = 'Изменения сохранены';
+            this.alertType = 'success';
+            this.$refs.alertComponent.showAlert();
+        },
+        triggerErrorAlert() {
+            this.alertMessage = 'Не гуд лорем бла бла!';
+            this.alertType = 'error';
+            this.$refs.alertComponent.showAlert();
+        },
+        cancelCreation() {
+            this.$router.push({name: 'listUsers'})
+        },
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.content-user {
+    max-width: 1400px;
+    margin: auto;
+
+    .user-settings {
+        max-width: 600px;
+        background-color: #ffffff;
+        padding: 1.5em;
+        margin: 1em auto 4em;
+        border: 1px solid #e3ebf6;
+        box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.1);
+        border-radius: 12px;
+
+        h2 {
+            text-align: center;
+            margin-bottom: 0.5em;
+            color: #333;
+        }
+
+        .avatar {
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+
+            .user-role {
+                font-size: 14px;
+                color: #777;
+                margin-bottom: 0.5em;
+            }
+
+            .avatar-image {
+                width: 100px;
+                height: 100px;
+                border: 1px solid #e3ebf6;
+                box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.1);
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+            }
+            .avatar-placeholder {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                font-size: 30px; /* Размер значка «+» */
+                color: #aaa; /* Цвет значка «+» */
+            }
+        }
+    }
+
+    .user-personal-info,
+    .user-docs-address,
+    .user-settings-info {
+        margin-top: 1.5em;
+
+        h3 {
+            margin-bottom: 1em;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 20px;
+
+            label {
+                display: block;
+                font-size: 13px;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            input {
+                width: 100%;
+                padding: 8px;
+                font-size: 14px;
+                border: 1px solid #e3ebf6;
+                border-radius: 4px;
+                box-sizing: border-box;
+                transition: border-color 0.3s;
+                outline: none;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                &::placeholder {
+                    color: #b1c2d9;
+                }
+            }
+
+            select {
+                margin-top: 5px;
+                width: 250px;
+                padding: 0.6em;
+                border: 1px solid #e3ebf6;
+                border-radius: 5px;
+                background-color: #fff;
+                font-size: 14px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                option {
+                    padding: 0.5em;
+                }
+            }
+        }
+
+        .form-group:last-child {
+            margin-right: 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: end;
+            margin-top: 2em;
+        }
+    }
+
+    .user-settings-info {
+        .role-select {
+            max-width: 200px;
+            margin-top: 0.5em;
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 14px;
+            background-color: #ffffff;
+            color: #333;
+            transition: border-color 0.3s, box-shadow 0.3s;
+
+            // Стили для фокуса
+            &:focus {
+                border-color: #569afa;
+                box-shadow: 0 0 5px rgba(86, 154, 250, 0.5);
+                outline: none;
+            }
+
+            // Стили для выпадающего списка
+            option {
+                padding: 8px;
+                background-color: #ffffff;
+                color: #333;
+
+                &:hover {
+                    background-color: #f0f0f0; // Цвет фона при наведении
+                }
+            }
+
+        }
+    }
+    .error-message {
+        color: #ff4d4d;
+        font-size: 0.75em;
+    }
+    .error-role {
+        color: #ff4d4d; /* Красный цвет текста */
+        margin-left: 10px;
+        font-size: 0.75em;
+    }
+}
+</style>

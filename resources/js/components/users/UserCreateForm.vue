@@ -1,11 +1,20 @@
 <template>
+    <Alert ref="alertComponent" :message="alertMessage" :type="alertType" />
+
     <div>
         <Header title="Создание пользователя">
-            <template #errors>
-                <div v-if="!user.email || !user.password || !user.role">
-             При создании пользователя обязательно укажите email, пароль и роль
-                </div>
-            </template>
+<!--            <template #errors>-->
+<!--                <div v-if="!user.email || !user.password || !user.role">-->
+<!--             При создании пользователя обязательно укажите email, пароль и роль-->
+<!--                </div>-->
+<!--            </template>-->
+
+<!--                <div>-->
+<!--                    <button @click="triggerSuccessAlert">удача</button>-->
+<!--                    <button @click="triggerErrorAlert">ошибка</button>-->
+
+<!--&lt;!&ndash;                    <Alert ref="alertComponent" :message="alertMessage" :type="alertType" />&ndash;&gt;-->
+<!--                </div>-->
 
             <ButtonUI color="red" @click="cancelCreation">Отмена</ButtonUI>
         </Header>
@@ -79,10 +88,11 @@
                         <div class="form-row">
 
                             <div class="form-group">
+                                <label for="telegram">Роль пользователя</label>
                                 <select v-model="user.role" id="role" class="role-select">
-                                    <option v-for="role in roles" :key="role.id" :value="role.id">{{  roleTranslations[role.name] }}</option>
+                                    <option v-for="role in roles" :key="role.id" :value="role.name">{{ role.name }}</option>
                                 </select>
-                                <span v-if="!user.role" class="error-role">{{ "Укажите роль" }}</span>
+                                <span v-if="roleSelect" class="error-role">{{ "Укажите роль" }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="new_password">Новый пароль</label>
@@ -92,6 +102,7 @@
                             <div class="form-group">
                                 <label for="confirm_password">Подтвердите пароль</label>
                                 <input v-model="user.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
+                                <span v-if="passwordMismatch" class="error-message">Пароли не совпадают</span>
                             </div>
                         </div>
 
@@ -155,9 +166,9 @@
 </template>
 
 <script>
+import {UserService} from "../../services/UserService";
 import ButtonUI from "../UI/ButtonUI.vue";
 import PageNav from '../UI/PageNav.vue';
-import {UserService} from "../../services/UserService";
 import Header from "../Header.vue";
 import Alert from "../forms/Alert.vue";
 
@@ -199,14 +210,23 @@ export default {
                 'manager': 'Менеджер',
                 'guest': 'Гость',
             },
+            alertMessage: '',
+            alertType: 'success',
             errorEmail: '',
             errorPssword: '',
+            passwordMismatch: false,
+            roleSelect: false,
             isSaving: false,
         };
     },
     created: async function () {
         UserService.getRoles().then(response => {
-            this.roles = response.data.roles
+            this.roles = response.data.roles.map(role => ({
+                id: role.id,
+                name: role.name,
+                label: this.roleTranslations[role.name] || role.name
+            }));
+            // this.roles = response.data.roles
         })
         try {
             const response = await UserService.getRoles();
@@ -221,6 +241,17 @@ export default {
         }
     },
     methods: {
+        triggerSuccessAlert() {
+            this.alertMessage = 'Пользователь был успешно создан';
+            this.alertType = 'success';
+            this.$refs.alertComponent.showAlert();
+        },
+        triggerErrorAlert() {
+            this.alertMessage = 'Не гуд лорем бла бла!';
+            this.alertType = 'error';
+            this.$refs.alertComponent.showAlert();
+        },
+
         onAvatarChange(event) {
             const file = event.target.files[0];
             if (file) {
@@ -246,10 +277,21 @@ export default {
         store: async function () {
             this.errorPssword = ''
             this.errorEmail = ''
+            this.passwordMismatch = false; // Сброс ошибки перед проверкой
+
+            // Проверка на совпадение паролей
+            if (this.user.password !== this.user.password_see) {
+                this.passwordMismatch = true;
+                return;
+            }
+
             UserService.store(this.user)
                 .then(response => {
                     this.user = response.data.user
-                    this.$router.push({name: 'listUsers'})
+                    this.triggerSuccessAlert();
+                    setTimeout(() => {
+                        this.$router.push({ name: 'listUsers' });
+                    }, 5000);
                 })
                 .catch(error => {
                     this.errorEmail = error.response.data.errors.email[0]
@@ -359,6 +401,25 @@ export default {
 
                 &::placeholder {
                     color: #b1c2d9;
+                }
+            }
+
+            select {
+                margin-top: 9px;
+                width: 250px;
+                padding: 0.5em;
+                border: 1px solid #e3ebf6;
+                border-radius: 5px;
+                background-color: #fff;
+                font-size: 14px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                option {
+                    padding: 0.5em;
                 }
             }
         }
