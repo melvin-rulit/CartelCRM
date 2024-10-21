@@ -233,8 +233,8 @@ export default {
                 },
             ],
             checkBoxConfig: [
-                { id: 'checkbox-1', label: 'Одна ерунда 1', value: 'option1' },
-                { id: 'checkbox-2', label: 'Вторая ерунда 2', value: 'option2' },
+                { id: 'checkbox-1', label: 'Поле', value: 'option1' },
+                { id: 'checkbox-2', label: 'Поле 2', value: 'option2' },
             ],
 
         };
