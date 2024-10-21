@@ -22,7 +22,7 @@ class CounterpartiesResource extends JsonResource
             'lastName' => $this->resource->last_name,
             'phone' => $this->resource->phone,
             'city' => $this->resource->city,
-            'telegram_login' => $this->resource->telegram_login,
+            'telegram' => $this->resource->telegram,
         ];
     }
 }

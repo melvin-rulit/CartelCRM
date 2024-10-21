@@ -18,32 +18,32 @@
                 <form>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="passport_series">ФИО</label>
-                            <input v-model="counterpart.full_name" id="passport_series" type="text" readonly
+                            <label for="full_name">ФИО</label>
+                            <input v-model="counterpart.full_name" id="full_name" type="text" readonly
                                    @mousedown.prevent
                                    @copy.prevent
                                    @paste.prevent
                                    @selectstart.prevent/>
                         </div>
                         <div class="form-group">
-                            <label for="passport_number">Город</label>
-                            <input v-model="counterpart.city" id="passport_number" type="text" readonly
+                            <label for="city">Город</label>
+                            <input v-model="counterpart.city" id="city" type="text" readonly
                                    @mousedown.prevent
                                    @copy.prevent
                                    @paste.prevent
                                    @selectstart.prevent/>
                         </div>
                         <div class="form-group">
-                            <label for="passport_give">Телефон</label>
-                            <input v-model="counterpart.phone" id="passport_give" type="text" readonly
+                            <label for="phone">Телефон</label>
+                            <input v-model="counterpart.phone" id="phone" type="text" readonly
                                    @mousedown.prevent
                                    @copy.prevent
                                    @paste.prevent
                                    @selectstart.prevent/>
                         </div>
                         <div class="form-group">
-                            <label for="passport_issuedByDate">Логин в телеграм</label>
-                            <input v-model="counterpart.telegram_login" id="passport_issuedByDate" type="text" readonly
+                            <label for="telegram">Логин в телеграм</label>
+                            <input v-model="counterpart.telegram" id="telegram" type="text" readonly
                                    @mousedown.prevent
                                    @copy.prevent
                                    @paste.prevent
@@ -82,7 +82,7 @@ export default {
                 'full_name': '',
                 'city': '',
                 'phone': '',
-                'telegram_login': '',
+                'telegram': '',
             },
 
             columns: [
