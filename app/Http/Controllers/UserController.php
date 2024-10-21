@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\Users\ManagerListResource;
 use App\Http\Resources\Users\UserDetailResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -147,17 +148,12 @@ class UserController extends Controller
         return new JsonResponse(['user' => UserResource::make(auth()->user()), 'role' => auth()->user()->getRoleNames()->first()]);
     }
 
-//    public function managersList(): JsonResponse
-//    {
-//        $managersList = [];
-//        $managers = User::whereIn('role_id', [User::ROLE_MANAGER, User::ROLE_ADMIN])->get();
-//
-//        foreach ($managers as $manager) {
-//            $managersList[] = ['id' => $manager->id, 'name' => $manager->getFullName()];
-//        }
-//
-//        return new JsonResponse(['managers' => $managersList]);
-//    }
+    public function managersList(): JsonResponse
+    {
+        $managers = User::role('Менеджер')->get();
+
+        return new JsonResponse(['managers' => ManagerListResource::collection($managers)]);
+    }
 //
 //    public function adminsList(): JsonResponse
 //    {

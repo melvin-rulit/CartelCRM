@@ -8,6 +8,11 @@ export class UserService {
         return axios.get(url);
     }
 
+    static getManagers(){
+        let url = `${this.serverUrl}/users/managers`;
+        return axios.get(url);
+    }
+
     static store(user) {
         let url = `${this.serverUrl}/users`;
         return axios.post(url, user)

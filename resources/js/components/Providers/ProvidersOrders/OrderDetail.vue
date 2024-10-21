@@ -32,7 +32,19 @@
                 </div>
                 <div class="form-group">
                     <label for="full_name">Ответственный менеджер</label>
-                    <input v-model="order.manager.full_name" id="full_name" type="text" />
+
+                    <select v-model="order.manager.id" @change="updateManager" class="role-select">
+                        <option :value="order.manager.id" disabled>
+                            {{ order.manager.full_name }}
+                        </option>
+                        <option
+                            v-for="manager in filteredManagers"
+                            :key="manager.id"
+                            :value="manager.id">
+                            {{ manager.full_name }}
+                        </option>
+                    </select>
+
                 </div>
                 <div class="form-group">
                     <label for="birthday">Исходящие платежы по заказу</label>
@@ -95,6 +107,7 @@ import {ProvideService} from "../../../services/ProvideService";
 import Header from "../../Header.vue";
 import Table from "../../forms/Table.vue";
 import ButtonUI from "../../UI/ButtonUI.vue";
+import {UserService} from "../../../services/UserService";
 
 export default {
     name: "OrderDetail",
@@ -104,7 +117,14 @@ export default {
             loading: false,
             id: this.$route.params.id,
 
-            order: [],
+            order: {
+                manager:{
+                    id: '',
+                    full_name: '',
+                }
+
+            },
+            managers: [],
             columns: [
                 { label: 'Номер позиции', key: 'full_name' },
                 { label: 'Бренд', key: 'city' },
@@ -131,20 +151,25 @@ export default {
                 .then(response => this.order = response.data.order)
                 .catch(error => this.errorMessage = error)
                 .finally(() => this.loading = false)
+
+            // UserService.getRoles().then(response => this.userRoles = response.data.roles)
+            UserService.getManagers()
+                .then(response => this.managers = response.data.managers)
     },
 
-    // created() {
-    //     CounterpartiesService.getById(this.id)
-    //         .then(response => this.counterparties = response.data.counterparties)
-    //         .catch(error => {
-    //             this.errors = error.response.data.message
-    //         })
-    //     // UserService.getRoles().then(response => this.userRoles = response.data.roles)
-    //     CounterpartiesOrdersService.getOrders()
-    //         .then(response => this.orders = response.data.orders)
-    // },
+    computed: {
+        filteredManagers() {
+            return this.managers.filter(manager => manager.id !== this.order.manager.id);
+        }
+    },
 
     methods: {
+        updateManager() {
+            const selectedManager = this.managers.find(manager => manager.id === this.order.manager.id);
+            if (selectedManager) {
+                this.order.manager.full_name = selectedManager.full_name; // Обновляем имя менеджера
+            }
+        },
         back() {
             this.$router.push({ path: '/providers/orders' });
         },
