@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Providers\CreateProviderRequest;
 use App\Http\Requests\Providers\Order\CreateProviderOrderRequest;
+use App\Http\Requests\Providers\UpdateProvideRequest;
 use App\Http\Resources\Providers\Orders\OrderResource;
 use App\Http\Resources\Providers\Orders\SuccessfulOrderResource;
 use App\Http\Resources\Providers\ProvidersResource;
@@ -134,26 +135,27 @@ class ProviderController extends Controller
 
         return new JsonResponse(['order' => OrderResource::make($counterpart_order)]);
     }
-//
-//    public function update(UpdateProxyRequest $request, int $id): JsonResponse
-//    {
-//        $proxy = $this->proxy->find($id);
-//
-//        if (!$proxy) {
-//            return $this->error('Доверенность не найдена');
-//        }
-//
-//        $proxy->delegate_id = $request->getDelegateId();
-//        $proxy->owner_id = $request->getOwnerId();
-//        $proxy->number = $request->getNumber();
-//        $proxy->valid_until = $request->getValidUntil();
-//        $proxy->issued_by = $request->getIssuedBy();
-//        $proxy->issued_number = $request->getIssuedNumber();
-//
-//        $proxy->save();
-//
-//        return new JsonResponse(['proxy' => ProvidersResource::make($proxy)]);
-//    }
+
+    public function update(UpdateProvideRequest $request): JsonResponse
+    {
+        $provider = $this->providers->find($request->input('id'));
+
+        if (!$provider) {
+            return $this->error('Доверенность не найдена');
+        }
+
+        $provider->first_name = $request->getFirstName();
+        $provider->middle_name = $request->getMiddleName();
+        $provider->last_name = $request->getLastName();
+        $provider->phone = $request->getPhone();
+        $provider->city = $request->getCity();
+        $provider->telegram = $request->getTelegramLogin();
+
+        $provider->save();
+
+        return new JsonResponse(['provider' => ProvidersResource::make($provider)]);
+    }
+
 //
 //    public function delete(int $id): JsonResponse
 //    {

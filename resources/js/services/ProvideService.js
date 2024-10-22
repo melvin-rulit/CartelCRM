@@ -35,17 +35,17 @@ export class ProvideService {
         return axios.put(url, order)
     }
 
-    static store(proxy) {
+    static store(provider) {
         let url = `${this.serverUrl}/providers`;
-        return axios.post(url, proxy)
+        return axios.post(url, provider)
     }
 
-    //
-    // static update(proxy) {
-    //     let url = `${this.serverUrl}/proxies/${proxy.id}`;
-    //     return axios.put(url, proxy)
-    // }
-    //
+
+    static update(provider) {
+        let url = `${this.serverUrl}/providers/${provider}`;
+        return axios.put(url, provider)
+    }
+
 
     //
     // static delete(id) {

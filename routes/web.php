@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', [ProviderController::class, 'list'])->name('providers.list');
 //        Route::get('/{id}', [ProviderController::class, 'show']);
         Route::post('/', [ProviderController::class, 'store']);
-        Route::put('/{id}', [ProviderController::class, 'update']);
+        Route::put('/{provider}', [ProviderController::class, 'update']);
         Route::delete('/{id}', [ProviderController::class, 'delete']);
         Route::get('/detail/{id}', [ProviderController::class, 'detail_show']);
 

@@ -7,6 +7,7 @@
                 </div>
 
             </template>
+            <ButtonUI color="green" @click="edit">Редактировать</ButtonUI>
             <ButtonUI @click="back">Назад</ButtonUI>
         </Header>
         <hr>
@@ -137,6 +138,9 @@ export default {
             } else {
                 this.$router.push({ path: '/providers' }); // Путь по умолчанию
             }
+        },
+        edit() {
+            this.$router.push({ path: '/providers/' + this.id });
         },
     }
 }

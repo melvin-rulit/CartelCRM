@@ -1,8 +1,8 @@
 <template>
     <div>
         <Header title="Детальная информация о пользователе">
-            <ButtonUI @click="back">Назад</ButtonUI>
             <ButtonUI color="green" @click="edit">Редактировать</ButtonUI>
+            <ButtonUI @click="back">Назад</ButtonUI>
         </Header>
         <hr>
 
