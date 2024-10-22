@@ -295,7 +295,7 @@
                     </div>
 
                     <div class="buttons">
-<!--                        <button @click.prevent="addOrderSostav">Добавить состав</button>-->
+                        <button @click.prevent="addOrderSostav">Добавить состав</button>
                         <!--                        <ButtonUI @click.prevent="addOrderSostav">Добавить состав</ButtonUI>-->
                     </div>
 
@@ -423,6 +423,20 @@ export default {
                 this.order.countepart.phone = selectedCountepart.phone; // Подставляем телефон
                 this.order.countepart.telegram = selectedCountepart.telegram; // Подставляем логин в Telegram
             }
+        },
+        addOrderSostav() {
+            this.orderSostavs.push({...this.newOrderSostav}); // Добавляем новый состав
+            this.newOrderSostav = { // Сбрасываем поля ввода
+                brand: '',
+                model: '',
+                state: '',
+                params_model: '',
+                color: '',
+                country: '',
+                series_number: '',
+                price_in: '',
+                price_out: ''
+            };
         },
         store: async function (event) {
             event.preventDefault()

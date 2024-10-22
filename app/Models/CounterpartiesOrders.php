@@ -34,7 +34,7 @@ class CounterpartiesOrders extends Model
 
     public function sostavs(): HasMany
     {
-        return $this->hasMany(CounterpartiesOrdersSostav::class, 'counterparty_order_id ', 'id');
+        return $this->hasMany(CounterpartiesOrdersSostav::class, 'counterparty_order_id', 'id');
     }
 
 }
