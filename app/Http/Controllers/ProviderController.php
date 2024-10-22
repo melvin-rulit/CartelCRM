@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Providers\CreateProviderRequest;
+use App\Http\Requests\Providers\Order\CreateProviderOrderRequest;
 use App\Http\Resources\Providers\Orders\OrderResource;
 use App\Http\Resources\Providers\Orders\SuccessfulOrderResource;
 use App\Http\Resources\Providers\ProvidersResource;
 use App\Models\Providers;
 use App\Models\ProvidersOrders;
+use App\Models\ProvidersOrdersSostav;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Random\RandomException;
 
 class ProviderController extends Controller
 {
@@ -28,6 +33,13 @@ class ProviderController extends Controller
         return new JsonResponse(['providers' => ProvidersResource::collection($providers)]);
     }
 
+    /**
+     * @throws RandomException
+     */
+    public function unique_order_number(): string
+    {
+        return substr(bin2hex(random_bytes(5)), 0, 10);
+    }
 
     public function order_list(): JsonResponse
     {
@@ -44,6 +56,25 @@ class ProviderController extends Controller
         );
     }
 
+    public function order_create(CreateProviderOrderRequest $request): JsonResponse
+    {
+        $order = ProvidersOrders::create([
+            'order_number' => $request->getOrderNumber(),
+            'order_date' => $request->getOrderDate(),
+            'status' => $request->getOrderStatus(),
+            'manager_id' => $request->getManager(),
+            'provider_id' => $request->getProviderId(),
+        ]);
+
+        // Сохранение составов заказа
+
+        foreach ($request->getOrderSostavs() as $sostav) {
+            $order->sostavs()->create($sostav);
+        }
+
+       return new JsonResponse($order);
+    }
+
     public function successful_orders($id): JsonResponse
     {
         $provider_orders = ProvidersOrders::where('provider_id', $id)->where('status', 'completed')->get();
@@ -53,6 +84,16 @@ class ProviderController extends Controller
         }
 
         return new JsonResponse(['orders' => SuccessfulOrderResource::collection($provider_orders)]);
+    }
+
+    public function update_order_status(Request $request, $order): JsonResponse
+    {
+
+//        $provider_order = ProvidersOrders::where('id', $order)->get();
+//        $provider_order->status = 'completed';
+//        $provider_order->save();
+
+        return response()->json($order['id']);
     }
 
     public function store(CreateProviderRequest $request): JsonResponse

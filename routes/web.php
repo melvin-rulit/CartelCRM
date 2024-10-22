@@ -41,8 +41,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/detail/{id}', [ProviderController::class, 'detail_show']);
 
         Route::get('/orders', [ProviderController::class, 'order_list'])->name('providers_orders.list');
+        Route::post('/order', [ProviderController::class, 'order_create']);
+        Route::get('/get_unique_order_number', [ProviderController::class, 'unique_order_number']);
         Route::get('/successful_orders/{id}', [ProviderController::class, 'successful_orders'])->name('providers_successful_orders.list');
         Route::get('/order/detail/{id}', [ProviderController::class, 'order_detail_show'])->name('providers_orders.detail');
+
     });
 
     Route::group(['prefix' => 'counterparties'], function () {

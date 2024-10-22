@@ -25,15 +25,21 @@ export class ProvideService {
         return axios.get(url);
     }
 
-    // static dict(){
-    //     let url = `${this.serverUrl}/proxies/dict`;
-    //     return axios.get(url);
-    // }
-    //
+    static orderStore(order) {
+        let url = `${this.serverUrl}/providers/order`;
+        return axios.post(url, order)
+    }
+
+    static changeStatus(order) {
+        let url = `${this.serverUrl}/api/providers/orders/${order}`;
+        return axios.put(url, order)
+    }
+
     static store(proxy) {
         let url = `${this.serverUrl}/providers`;
         return axios.post(url, proxy)
     }
+
     //
     // static update(proxy) {
     //     let url = `${this.serverUrl}/proxies/${proxy.id}`;
@@ -46,4 +52,9 @@ export class ProvideService {
     //     let url = `${this.serverUrl}/proxies/${id}`;
     //     return axios.delete(url)
     // }
+
+    static getUniqueOrderNumber(){
+        let url = `${this.serverUrl}/providers/get_unique_order_number`;
+        return axios.get(url);
+    }
 }

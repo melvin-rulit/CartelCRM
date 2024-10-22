@@ -1,6 +1,7 @@
 <template>
     <div>
         <Header title="Детальная информация заказа поставщику">
+            <ButtonUI color="green">Редактировать</ButtonUI>
             <ButtonUI @click="back">Назад</ButtonUI>
         </Header>
         <hr>
@@ -16,39 +17,56 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="order_number">Номер заказа</label>
-                    <input v-model="order.order_number" id="order_number" type="text" />
+                    <input v-model="order.order_number" id="order_number" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
                 </div>
                 <div class="form-group">
                     <label for="order_date">Дата заказа</label>
-                    <input v-model="order.order_date" id="order_date" type="text" />
+                    <input v-model="order.order_date" id="order_date" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
                 </div>
                 <div class="form-group">
                     <label for="status">Статус заказа</label>
-                    <select v-model="order.status" id="status" class="role-select">
+                    <select @change="updateOrderStatus"> v-model="order.status" id="status" class="role-select">
                         <option v-for="status in statuses" :key="status.id" :value="status.value">
                             {{ status.label }}
                         </option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="full_name">Ответственный менеджер</label>
+                    <label >Ответственный менеджер</label>
+                    <input v-model="order.manager.full_name" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
 
-                    <select v-model="order.manager.id" @change="updateManager" class="role-select">
-                        <option :value="order.manager.id" disabled>
-                            {{ order.manager.full_name }}
-                        </option>
-                        <option
-                            v-for="manager in filteredManagers"
-                            :key="manager.id"
-                            :value="manager.id">
-                            {{ manager.full_name }}
-                        </option>
-                    </select>
+<!--                    <select v-model="order.manager.id" @change="updateManager" class="role-select">-->
+<!--                        <option :value="order.manager.id" disabled>-->
+<!--                            {{ order.manager.full_name }}-->
+<!--                        </option>-->
+<!--                        <option-->
+<!--                            v-for="manager in filteredManagers"-->
+<!--                            :key="manager.id"-->
+<!--                            :value="manager.id">-->
+<!--                            {{ manager.full_name }}-->
+<!--                        </option>-->
+<!--                    </select>-->
 
                 </div>
                 <div class="form-group">
                     <label for="birthday">Исходящие платежы по заказу</label>
-                    <input v-model="order.birthday" id="birthday" type="text" />
+                    <input v-model="order.birthday" id="birthday" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
                 </div>
             </div>
 
@@ -57,15 +75,27 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="full_name">ФИО</label>
-                    <input v-model="order.provider.full_name" id="full_name" type="text" />
+                    <input @click="goToAdd('provider')" v-model="order.provider.full_name" id="full_name" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
                 </div>
                 <div class="form-group">
                     <label for="phone">Телефон поставщика</label>
-                    <input v-model="order.provider.phone" id="phone" type="text" />
+                    <input v-model="order.provider.phone" id="phone" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
                 </div>
                 <div class="form-group">
                     <label for="telegram">Логин в телеграм поставщика</label>
-                    <input v-model="order.provider.telegram" id="telegram" type="text" />
+                    <input v-model="order.provider.telegram" id="telegram" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
                 </div>
             </div>
 
@@ -76,12 +106,20 @@
 
                 <div class="form-group">
                     <label for="order_date_in_store">Дата поступления на склад</label>
-                    <input v-model="order.order_date_in_store" id="order_date_in_store" type="text" />
+                    <input v-model="order.order_date_in_store" id="order_date_in_store" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
 
                 </div>
                 <div class="form-group">
                     <label for="confirm_password">Статус поступления на склад</label>
-                    <input v-model="order.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
+                    <input v-model="order.password_see" id="confirm_password" type="text" readonly
+                           @mousedown.prevent
+                           @copy.prevent
+                           @paste.prevent
+                           @selectstart.prevent/>
                 </div>
             </div>
 
@@ -92,7 +130,7 @@
                     :data="order.order_sostavs"
                     :columns="columns"
                     :rowsPerPageOptions="[5, 10, 25]"
-                    :path="'/providers/detail/'"
+                    :rowSelect=false
                 />
         </form>
     </div>
@@ -138,7 +176,7 @@ export default {
                 { label: 'Цена продажи', key: 'prise_pay' },
             ],
             statuses: [
-                {id: 1, label: 'К оплате', value: 'for_payment'},
+                {id: 1, label: 'К оплате', value: 'К оплате'},
                 {id: 2, label: 'Выполнен', value: 'Выполнен'},
                 // { id: 3, label: 'Неактивные' },
                 // { id: 4, label: 'Ожидающие' },
@@ -147,6 +185,8 @@ export default {
         }
     },
     created: async function () {
+        // this.$store.dispatch('clearRouteType');
+
             ProvideService.getOrderById(this.id)
                 .then(response => this.order = response.data.order)
                 .catch(error => this.errorMessage = error)
@@ -168,6 +208,25 @@ export default {
             const selectedManager = this.managers.find(manager => manager.id === this.order.manager.id);
             if (selectedManager) {
                 this.order.manager.full_name = selectedManager.full_name; // Обновляем имя менеджера
+            }
+        },
+        async updateOrderStatus () { ProvideService.changeStatus(this.order)
+            // .then(response => this.order = response.data.order)
+            .catch(error => this.errorMessage = error)
+
+        // async updateOrderStatus(orderId, status) {
+        //     const response = await axios.put(`/api/providers/orders/${orderId}`, {
+        //         status: status
+        //     });
+        //     return response.data;
+        },
+        goToAdd(type) {
+            this.$store.dispatch('saveRoute', { route: this.$route.path, type: 'provider_order' }); // Сохраняем текущий маршрут
+            if (type === 'order') {
+                this.$router.push({ path: '/providers/orders/create' });
+                this.order_create = false;
+            } else if (type === 'provider') {
+                this.$router.push({ path: '/providers/detail/' + this.order.provider.id});
             }
         },
         back() {
@@ -270,6 +329,10 @@ export default {
                 &:focus {
                     border-color: #569afa;
                 }
+                &:hover {
+                    cursor: pointer;
+                    border-color: #569afa;
+                }
 
                 &::placeholder {
                     color: #b1c2d9;
@@ -287,6 +350,10 @@ export default {
                 transition: border-color 0.3s;
 
                 &:focus {
+                    border-color: #569afa;
+                }
+                &:hover {
+                    cursor: pointer;
                     border-color: #569afa;
                 }
 

@@ -62,9 +62,6 @@
                 @close="closeFilter"
             />
 
-
-<!--            <FilterPanel :isOpen="isPanelOpen" @close="togglePanel" />-->
-
         </div>
 
         <!-- Вторая строка: чекбокс выбора всех, настраиваемые заголовки колонок -->
@@ -170,7 +167,12 @@ export default {
         },
         path: {
             type: String,
-            required: true
+            required: false
+        },
+        rowSelect: {
+            type: Boolean,
+            required: false,
+            default: true
         }
     },
     data() {
@@ -326,7 +328,9 @@ export default {
             }
         },
         goToDetails: function (id) {
-            this.$router.push({path: `${this.path}${id}`});
+            if (this.rowSelect){
+                this.$router.push({path: `${this.path}${id}`});
+            }
         },
         // getValue(row, key) {
         //     const keys = key.split('.'); // Разделяем ключи по точке

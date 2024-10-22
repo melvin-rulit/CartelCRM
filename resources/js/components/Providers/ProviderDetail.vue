@@ -77,6 +77,7 @@ import Header from "../Header.vue";
 import Table from "../forms/Table.vue";
 import ButtonUI from "../UI/ButtonUI.vue";
 import PageNav from "../UI/PageNav.vue";
+import {mapGetters, mapState} from "vuex";
 
 export default {
     name: "ProviderDetail",
@@ -106,6 +107,9 @@ export default {
     mounted() {
         this.update();
     },
+    computed: {
+        ...mapGetters(['getPreviousRoute', 'getRouteType']),
+    },
     methods: {
         update: async function (event) {
             ProvideService.getById(this.id)
@@ -125,7 +129,14 @@ export default {
 
         },
         back() {
-            this.$router.push({ path: '/providers' });
+            const route = this.getPreviousRoute.route;
+            const type = this.getPreviousRoute.type;
+
+            if (type === 'provider_order') {
+                this.$router.push({ path: route });
+            } else {
+                this.$router.push({ path: '/providers' }); // Путь по умолчанию
+            }
         },
     }
 }

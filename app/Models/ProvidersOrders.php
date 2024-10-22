@@ -12,6 +12,14 @@ class ProvidersOrders extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+     'order_number',
+     'order_date',
+     'status',
+     'manager_id',
+     'provider_id',
+    ];
+
     public function provider(): HasOne
     {
         return $this->hasOne(Providers::class, 'id', 'provider_id');
