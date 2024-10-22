@@ -41,7 +41,7 @@ export default {
                 { label: 'ФИО', key: 'full_name' },
                 { label: 'Город', key: 'city' },
                 { label: 'Телефон', key: 'phone' },
-                { label: 'Логин в телеграм', key: 'telegram_login' },
+                { label: 'Логин в телеграм', key: 'telegram' },
                 { label: 'Заказов', key: '' },
             ],
         }
