@@ -27,9 +27,17 @@
                 fontWeight="500"
                 v-if="selectedRows.length > 0" @click="deleteSelected"
             >
-                {{ selectAll ? 'Удалить всех' : 'Удалить пользователя' }}
+                {{ selectAll ? 'Удалить все' : 'Удалить строку' }}
             </ButtonUI>
-
+            <button @click="addfilter('all')" class="white-button for_payment">
+                Все
+            </button>
+            <button @click="addfilter('for_payment')" class="white-button for_payment">
+                Текущие
+            </button>
+            <button @click="addfilter('completed')" class="white-button completed">
+                Архивные
+            </button>
             <select v-model="rowsPerPage" @change="handleRowsChange">
                 <option
                     v-for="option in rowsPerPageOptions"
@@ -291,6 +299,9 @@ export default {
         closeFilter() {
             this.isFilterOpen = false;
         },
+        addfilter(type) {
+            this.$emit('filterApplied', type);
+        },
         handleFilterApplied(filterData) {
             console.log('Примененные фильтры:', filterData);
             // Добавьте логику для применения фильтров к filteredData здесь
@@ -393,6 +404,13 @@ export default {
                 color: #b1c2d9;
             }
         }
+
+        .for_payment {
+            margin-right: 5px;
+        }
+        //.for_payment.active {
+        //   background-color: red;
+        //}
 
         select {
             cursor: pointer;

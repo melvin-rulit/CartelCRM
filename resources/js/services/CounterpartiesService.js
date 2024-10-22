@@ -33,8 +33,8 @@ export class CounterpartiesService {
         return axios.delete(url, id)
     }
 
-    static getOrders(page, query){
-        let url = `${this.serverUrl}/counterparties/orders/`;
+    static getOrders(query){
+        let url = `${this.serverUrl}/counterparties/orders?query=` + query;
         return axios.get(url);
     }
     static getOrdersForCounterpart(id){

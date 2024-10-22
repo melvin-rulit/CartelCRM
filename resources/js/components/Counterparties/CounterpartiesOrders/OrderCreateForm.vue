@@ -212,7 +212,7 @@
                         </div>
                     </div>
 
-                    <div class="buttons">
+                    <div v-if="newOrderSostav.brand || newOrderSostav.model" class="buttons">
                         <button @click.prevent="addOrderSostav">Добавить состав</button>
                         <!--                        <ButtonUI @click.prevent="addOrderSostav">Добавить состав</ButtonUI>-->
                     </div>
@@ -249,9 +249,10 @@ import Header from "../../Header.vue";
 import ButtonUI from "../../UI/ButtonUI.vue";
 import Table from "../../forms/Table.vue";
 import PageNav from "../../UI/PageNav.vue";
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
-  name: "DealCreateForm",
+  name: "CountepartOrderCreateForm",
   components: {PageNav, Table, ButtonUI, Header, Alert},
   data: function () {
       const createdAt = new Date().toISOString().slice(0, 16)
@@ -283,6 +284,7 @@ export default {
           },
           orderSostavs: [], // Массив для составов заказа
           newOrderSostav: {
+              id: null,
               brand: '',
               model: '',
               state: '',
@@ -342,8 +344,10 @@ export default {
             }
         },
         addOrderSostav() {
-            this.orderSostavs.push({...this.newOrderSostav}); // Добавляем новый состав
+            const newId = uuidv4().substring(0, 8);;
+            this.orderSostavs.push({...this.newOrderSostav, id: newId }); // Добавляем новый состав
             this.newOrderSostav = { // Сбрасываем поля ввода
+                id: null,
                 brand: '',
                 model: '',
                 state: '',
@@ -354,6 +358,9 @@ export default {
                 price_in: '',
                 price_out: ''
             };
+        },
+        removeOrderSostav(id) {
+            this.orderSostavs = this.orderSostavs.filter(sostav => sostav.id !== id);
         },
         store: async function (event) {
             event.preventDefault()

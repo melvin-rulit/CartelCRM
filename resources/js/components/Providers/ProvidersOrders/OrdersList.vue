@@ -34,10 +34,8 @@ export default {
         return {
             loading: false,
             filters: {
-                clientName: '',
-                ownerName: '',
-                activeName: '',
-                dealDate: '',
+                for_payment: '',
+                completed: '',
             },
             orders: [],
             columns: [

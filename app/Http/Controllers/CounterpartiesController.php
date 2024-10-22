@@ -78,18 +78,20 @@ class CounterpartiesController extends Controller
         return substr(bin2hex(random_bytes(5)), 0, 10);
     }
 
-    public function order_list(): JsonResponse
+    public function order_list(Request $request): JsonResponse
     {
-        $orders = $this->counterpartiesOrders::all();
+        $orders = $this->counterpartiesOrders::query();
 
-//        $orders = $query->paginate(self::PER_PAGE);
+
+        if ($request->query('query')) {
+            $orders->where('status', $request->query('query'));
+        }
+
+        $counterparties_order = $orders->get();
 
         return new JsonResponse(
             [
-                'orders' => OrderResource::collection($orders),
-//                'deal_static_type' => ['1' => Deal::KIND_WITH_OWNER, '2' => Deal::KIND_WITH_PROXY],
-//                'limit' => self::PER_PAGE,
-//                'total' => $orders->total(),
+                'orders' => OrderResource::collection($counterparties_order),
                 'url'   => route('counterparties_orders.list')
             ]
         );
