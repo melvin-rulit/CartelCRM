@@ -1,6 +1,92 @@
+<!--<template>-->
+<!--    <div>-->
+<!--        <Header title="Создание заказа контрагенту">-->
+<!--            <ButtonUI @click="cancelCreation" color="red">Отмена</ButtonUI>-->
+<!--        </Header>-->
+<!--        <hr>-->
+<!--    </div>-->
+
+<!--    <div class="content-user">-->
+
+
+<!--        <div class="user-personal-info">-->
+<!--            <h4>Технические данные заказа</h4>-->
+<!--            <hr>-->
+<!--            <form>-->
+<!--                <div class="form-row">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="last_name">Номер заказа</label>-->
+<!--                        <input v-model="orders.last_name" id="last_name" type="text" />-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="first_name">Дата заказа</label>-->
+<!--                        <input v-model="orders.first_name" id="first_name" type="text" />-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="middle_name">Статус заказа</label>-->
+<!--                        <input v-model="orders.middle_name" id="middle_name" type="text" />-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="birthday">Ответственный менеджер</label>-->
+<!--                        <input v-model="orders.birthday" id="birthday" type="date" />-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="birthday">Исходящие платежы по заказу</label>-->
+<!--                        <input v-model="orders.birthday" id="birthday" type="date" />-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <h4>Данные поставщика</h4>-->
+<!--                <hr>-->
+<!--                <div class="form-row">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="email">Название контрагента</label>-->
+<!--                        <input v-model="orders.email" id="email" type="email" />-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="phone_number">Телефон контрагента</label>-->
+<!--                        <input v-model="orders.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="telegram">Логин в телеграм контрагента</label>-->
+<!--                        <input v-model="orders.telegram" id="telegram" type="text" />-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <h4>Информация о складских операциях</h4>-->
+<!--                <hr>-->
+
+<!--                <div class="form-row">-->
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="new_password">Дата поступления на склад</label>-->
+<!--                        <input v-model="orders.password " id="new_password" type="text" placeholder="Введите новый пароль" />-->
+
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="confirm_password">Статус поступления на склад</label>-->
+<!--                        <input v-model="orders.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <h3>   Состав заказа</h3>-->
+<!--                <hr>-->
+
+<!--            </form>-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+
+<!--</template>-->
+
 <template>
+    <Alert ref="alertComponent" :message="alertMessage" :type="alertType" />
+
     <div>
         <Header title="Создание заказа контрагенту">
+            <!--            <Info message="Перед тем, как заполнить состав заказа - создайте сам заказ"></Info>-->
+            <ButtonUI v-show="!showCreateProvider" @click="addCountepart(true)">Добавить контрагента</ButtonUI>
             <ButtonUI @click="cancelCreation" color="red">Отмена</ButtonUI>
         </Header>
         <hr>
@@ -8,141 +94,391 @@
 
     <div class="content-user">
 
+        <PageNav :tabs="['Технические данные заказа', 'Состав заказа']">
+            <template #tab-0>
+                <div class="order-personal-info">
 
-        <div class="user-personal-info">
-            <h4>Технические данные заказа</h4>
-            <hr>
-            <form>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="last_name">Номер заказа</label>
-                        <input v-model="orders.last_name" id="last_name" type="text" />
+                    <form>
+                        <div v-show="!showCreateCountepart" class="form-row">
+                            <div class="form-group">
+                                <label for="order_number">Номер заказа</label>
+                                <input v-model="order.order_number" id="order_number" type="text" readonly
+                                       @mousedown.prevent
+                                       @copy.prevent
+                                       @paste.prevent
+                                       @selectstart.prevent/>
+                            </div>
+                            <div class="form-group">
+                                <label for="order_date ">Дата доставки</label>
+                                <input v-model="order.order_date " id="order_date " type="text" readonly
+                                       @mousedown.prevent
+                                       @copy.prevent
+                                       @paste.prevent
+                                       @selectstart.prevent/>
+                            </div>
+                            <div class="form-group">
+                                <label for="order_date ">Адрес доставки</label>
+                                <input v-model="order.delivery_address" id="order_date " type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="middle_name">Статус заказа</label>
+                                <select v-model="order.status" id="order_status" class="status-select">
+                                    <option value="for_payment">К приемке</option>
+                                    <option value="used"></option>
+                                </select>
+                                <span v-if="!order.status" class="error-message">Заполните поле</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Ответственный менеджер</label>
+                                <select v-model="order.manager" @change="updateManager" class="manager-select">
+                                    <!--                                                <option :value="managers" disabled>-->
+                                    <!--                                                    {{ order.manager.full_name }}-->
+                                    <!--                                                </option>-->
+                                    <option
+                                        v-for="manager in managers"
+                                        :key="manager.id"
+                                        :value="manager.id">
+                                        {{ manager.full_name }}
+                                    </option>
+                                </select>
+                                <span v-if="!order.manager" class="error-message">Заполните поле</span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birthday">Исходящие платежы по заказу</label>
+                                <input v-model="order.birthday" id="birthday" type="text"/>
+                            </div>
+                        </div>
+
+                        <div v-show="!showCreateCountepart">
+                            <h4>Прикрепить контрагента</h4>
+                            <hr>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Список поставщиков</label>
+
+                                    <select v-model="selectedCountepartId" @change="updateCountepartDetails"
+                                            class="provider-select">
+                                        <!--                            <option value="" disabled>Выберите поставщика</option>-->
+                                        <option v-for="countepart in counteparties" :key="countepart.id" :value="countepart.id">
+                                            {{ countepart.full_name }}
+                                        </option>
+                                    </select>
+                                    <span v-if="!selectedCountepartId" class="error-message">Заполните поле</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Телефон поставщика</label>
+                                    <input v-model="order.countepart.phone" id="phone" type="text" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telegram">Логин в телеграм поставщика</label>
+                                    <input v-model="order.countepart.telegram" id="telegram" type="text" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-show="showCreateCountepart">
+                            <h3>Инициалы</h3>
+                            <hr>
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="first_name">Фамилия</label>
+                                        <input v-model="countepart.first_name" id="first_name" type="text" />
+                                        <span v-if="!countepart.first_name" class="error-message">{{ 'Заполните поле' }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="middle_name">Имя</label>
+                                        <input v-model="countepart.middle_name" id="middle_name" type="text" />
+                                        <span v-if="!countepart.middle_name" class="error-message">{{ 'Заполните поле' }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Отчество</label>
+                                        <input v-model="countepart.last_name" id="last_name" type="text" />
+                                        <span v-if="!countepart.last_name" class="error-message">{{ 'Заполните поле' }}</span>
+                                    </div>
+                                </div>
+
+                                <h3>Контактная информация</h3>
+                                <hr>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="city">Город</label>
+                                        <input v-model="countepart.city" id="city" type="text" />
+                                        <span v-if="!countepart.city" class="error-message">{{ 'Заполните поле' }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Номер телефона</label>
+                                        <input v-model="countepart.phone" id="phone" type="text" />
+                                        <span v-if="!countepart.phone" class="error-message">{{ 'Заполните поле' }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telegram">Логин телеграм</label>
+                                        <input v-model="countepart.telegram" id="telegram" type="text" />
+                                        <span v-if="!countepart.telegram" class="error-message">{{ 'Заполните поле' }}</span>
+                                    </div>
+                                </div>
+
+                                <div v-show="showCreateCountepart" class="buttons">
+                                    <ButtonUI @click="addCountepart(false)" color="red" class="if-create-provider" >Отмена</ButtonUI>
+                                    <ButtonUI @click="storeCountepart" :disabled=" !countepart.first_name || !countepart.middle_name || !countepart.last_name || !countepart.city || !countepart.phone || !countepart.telegram">Сохранить контрагента</ButtonUI>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div v-show="!showCreateCountepart" class="buttons">
+                            <ButtonUI @click="store" :disabled=" !selectedCountepartId || !order.status || !order.manager" type="submit">Сохранить заказ</ButtonUI>
+                        </div>
+                    </form>
+                </div>
+            </template>
+
+            <template #tab-1>
+                <div class="order-sostav">
+
+                    <h4>Добавить состав</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="brand">Бренд</label>
+                            <input v-model="newOrderSostav.brand" id="brand" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="model">Модель</label>
+                            <input v-model="newOrderSostav.model" id="model" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">Состояние</label>
+                            <select v-model="newOrderSostav.state" id="order_status" class="state-select">
+                                <option value="new">Новый</option>
+                                <option value="used">Б/У</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="params_model">Параметры модели</label>
+                            <input v-model="newOrderSostav.params_model" id="params_model" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Цвет</label>
+                            <input v-model="newOrderSostav.color" id="color" type="text"/>
+                        </div>
+
                     </div>
-                    <div class="form-group">
-                        <label for="first_name">Дата заказа</label>
-                        <input v-model="orders.first_name" id="first_name" type="text" />
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">Страна</label>
+                            <input v-model="newOrderSostav.city" id="city" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="series_number">Серийный номер</label>
+                            <input v-model="newOrderSostav.series_number" id="series_number" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="price_in">Цена вход (руб)</label>
+                            <input v-model="newOrderSostav.prise" id="prise" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="price_out">Цена продажи (руб)</label>
+                            <input v-model="newOrderSostav.prise_pay" id="prise_pay" type="text"/>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="middle_name">Статус заказа</label>
-                        <input v-model="orders.middle_name" id="middle_name" type="text" />
+
+                    <div class="buttons">
+<!--                        <button @click.prevent="addOrderSostav">Добавить состав</button>-->
+                        <!--                        <ButtonUI @click.prevent="addOrderSostav">Добавить состав</ButtonUI>-->
                     </div>
-                    <div class="form-group">
-                        <label for="birthday">Ответственный менеджер</label>
-                        <input v-model="orders.birthday" id="birthday" type="date" />
-                    </div>
-                    <div class="form-group">
-                        <label for="birthday">Исходящие платежы по заказу</label>
-                        <input v-model="orders.birthday" id="birthday" type="date" />
-                    </div>
+
+                    <h4>Список, который будет добавлен к заказу</h4>
+
+
+                    <Table
+                        :data="orderSostavs"
+                        :columns="columns"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        :rowSelect=false
+                    />
+                    <!--                    <ul>-->
+                    <!--                        <li v-for="(sostav, index) in orderSostavs" :key="index">-->
+                    <!--                            {{ sostav.brand }} - {{ sostav.model }} ({{ sostav.state }})-->
+                    <!--                            <ButtonUI @click="removeOrderSostav(index)">Удалить</ButtonUI>-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
                 </div>
 
-                <h4>Данные поставщика</h4>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Название контрагента</label>
-                        <input v-model="orders.email" id="email" type="email" />
-                    </div>
-                    <div class="form-group">
-                        <label for="phone_number">Телефон контрагента</label>
-                        <input v-model="orders.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
-                    </div>
-                    <div class="form-group">
-                        <label for="telegram">Логин в телеграм контрагента</label>
-                        <input v-model="orders.telegram" id="telegram" type="text" />
-                    </div>
-                </div>
+            </template>
 
-                <h4>Информация о складских операциях</h4>
-                <hr>
-
-                <div class="form-row">
-
-                    <div class="form-group">
-                        <label for="new_password">Дата поступления на склад</label>
-                        <input v-model="orders.password " id="new_password" type="text" placeholder="Введите новый пароль" />
-
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm_password">Статус поступления на склад</label>
-                        <input v-model="orders.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
-                    </div>
-                </div>
-
-                <h3>   Состав заказа</h3>
-                <hr>
-
-            </form>
-        </div>
-
+        </PageNav>
     </div>
-
 
 </template>
 
 <script>
-import TextInput from "../../forms/TextInput.vue";
-import Alert from "../../forms/Alert.vue";
-import Success from "../../forms/Success.vue";
-import Select from "../../forms/Select.vue";
-import Textarea from "../../forms/Textarea.vue";
-import NumberInput from "../../forms/NumberInput.vue";
-import DateInput from "../../forms/DateInput.vue";
 import {UserService} from "../../../services/UserService";
 import {ProvideService} from "../../../services/ProvideService";
-import {ClientService} from "../../../services/ClientService";
-import {BranchService} from "../../../services/BranchService";
-import {ActiveService} from "../../../services/ActiveService";
+import {CounterpartiesService} from "../../../services/CounterpartiesService";
+import Alert from "../../forms/Alert.vue";
 import Header from "../../Header.vue";
 import ButtonUI from "../../UI/ButtonUI.vue";
+import Table from "../../forms/Table.vue";
+import PageNav from "../../UI/PageNav.vue";
 
 export default {
   name: "DealCreateForm",
-  components: {ButtonUI, Header, DateInput, NumberInput, Textarea, Select, Alert, TextInput, Success},
+  components: {PageNav, Table, ButtonUI, Header, Alert},
   data: function () {
-    const createdAt = new Date().toISOString().slice(0, 16)
-    return {
-      loading: false,
-        orders: {
-        type: null,
-        kind: null,
-        proxyId: null,
-        ownerId: null,
-        branchId: null,
-        clientId: null,
-        activeId: null,
-        remain: null,
-        createdAt: createdAt,
-        validUntil: null,
-        costOfRent: null,
-        costOfBuyout: null,
-        initial: null,
-        comment: null,
-        redemption_period: null,
-        citizenship: null,
-      },
+      const createdAt = new Date().toISOString().slice(0, 16)
+      return {
+          // loading: false,
+          selectedCountepartId: null,
+          counteparties: [],
+          managers: [],
+          order: {
 
-      errors: null,
-      submitted: false,
-      message: null,
-    }
+              manager: null,
+              order_number: null,
+              order_date: new Date().toISOString().split('T')[0],
+              delivery_address : null,
+              countepart: {
+                  id: '',
+                  phone: '',
+                  telegram: '',
+              }
+          },
+          showCreateCountepart: false,
+          countepart: {
+              first_name: null,
+              middle_name: null,
+              last_name: null,
+              city: null,
+              phone: null,
+              telegram: null
+          },
+          orderSostavs: [], // Массив для составов заказа
+          newOrderSostav: {
+              brand: '',
+              model: '',
+              state: '',
+              params_model: '',
+              color: '',
+              city: '',
+              series_number: '',
+              prise: '',
+              prise_pay: ''
+          },
+          columns: [
+              { label: 'Бренд', key: 'brand' },
+              { label: 'Модель', key: 'model' },
+              { label: 'Состояние', key: 'state' },
+              { label: 'Параметры модели', key: 'params_model' },
+              { label: 'Цвет', key: 'color' },
+              { label: 'Страна', key: 'city' },
+              { label: 'Серийный номер', key: 'series_number' },
+              { label: 'Цена вход', key: 'prise' },
+              { label: 'Цена продажи', key: 'prise_pay' },
+          ],
+
+          alertMessage: '',
+          alertType: 'success',
+          submitted: false,
+          errors: '',
+          message: null,
+      }
   },
 
-  mounted() {
+    created: async function () {
+        CounterpartiesService.getUniqueOrderNumber()
+            .then(response => this.order.order_number = response.data)
+            .catch(error => this.errorMessage = error)
 
-  },
+        CounterpartiesService.getCounterparties()
+            .then(response => this.counteparties = response.data.counterparties)
+            .catch(error => this.errorMessage = error)
+
+        UserService.getManagers()
+            .then(response => this.managers = response.data.managers)
+    },
+
     methods: {
+        updateManager() {
+            const selectedManager = this.managers.find(manager => manager.id === this.order.manager.id);
+            if (selectedManager) {
+                this.order.manager.full_name = selectedManager.full_name; // Обновляем имя менеджера
+            }
+        },
+        updateCountepartDetails() {
+            const selectedCountepart = this.counteparties.find(countepart => countepart.id === this.selectedCountepartId);
+            if (selectedCountepart) {
+                this.order.countepart.id = selectedCountepart.id; // Подставляем id
+                this.order.countepart.phone = selectedCountepart.phone; // Подставляем телефон
+                this.order.countepart.telegram = selectedCountepart.telegram; // Подставляем логин в Telegram
+            }
+        },
         store: async function (event) {
             event.preventDefault()
-            this.errors = null
-            ProvideService.store(this.provider)
+
+            const orderData = {
+                order: {
+                    ...this.order,
+                    orderSostavs: this.orderSostavs // Добавляем массив составов к заказу
+                }
+            };
+            CounterpartiesService.orderStore(orderData)
                 .then(response => {
-                    this.provider = response.data.provider
-                    this.$router.push({name: 'providersList'})
+                    this.triggerSuccessAlert('order');
                 })
                 .catch(error => {
-                    this.errors = error.response.data.errors
+                    // this.errors = error.response.data.errors
                 })
+        },
+        storeCountepart: async function (event) {
+            event.preventDefault()
+            this.errors = null
+            CounterpartiesService.store(this.countepart)
+                .then(response => {
+                    this.showCreateCountepart = false
+                    this.triggerSuccessAlert('countepart');
+
+                    CounterpartiesService.getCounterparties()
+                        .then(response => this.counteparties = response.data.counterparties)
+                        .catch(error => this.errorMessage = error)
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors.first_name
+                })
+        },
+        triggerSuccessAlert(type) {
+            if (type === 'countepart'){
+                this.alertMessage = 'Контрагент был успешно создан';
+            }else if(type === 'order'){
+                this.alertMessage = 'Заказ контрагенту был успешно создан';
+            }
+
+            this.alertType = 'success';
+            this.$refs.alertComponent.showAlert();
+        },
+        triggerErrorAlert() {
+            this.alertMessage = 'Не гуд лорем бла бла!';
+            this.alertType = 'error';
+            this.$refs.alertComponent.showAlert();
+        },
+        addCountepart(type) {
+            if (type){
+                this.showCreateCountepart = true;
+            }else {
+                this.showCreateCountepart = false;
+            }
+
         },
         cancelCreation() {
             this.$router.push({name: 'ordersCounterpartiesList'})
@@ -193,6 +529,7 @@ export default {
                 object-fit: cover;
                 cursor: pointer;
             }
+
             .avatar-placeholder {
                 display: flex;
                 align-items: center;
@@ -205,7 +542,8 @@ export default {
         }
     }
 
-    .user-personal-info{
+    .order-personal-info,
+    .order-sostav {
         margin-top: 1.5em;
 
         h3 {
@@ -249,6 +587,56 @@ export default {
                     color: #b1c2d9;
                 }
             }
+
+            .status-select,
+            .manager-select,
+            .state-select {
+                width: 250px;
+                //width: 460px;
+                padding: 0.5em;
+                border: 1px solid #e3ebf6;
+                border-radius: 5px;
+                background-color: #fff;
+                font-size: 14px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    border-color: #569afa;
+                }
+
+                option {
+                    padding: 0.5em;
+                }
+            }
+
+            .provider-select {
+                width: 460px;
+                padding: 0.5em;
+                border: 1px solid #e3ebf6;
+                border-radius: 5px;
+                background-color: #fff;
+                font-size: 14px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    border-color: #569afa;
+                }
+
+                option {
+                    padding: 0.5em;
+                }
+            }
+
         }
 
         .form-group:last-child {
@@ -293,6 +681,9 @@ export default {
                 }
             }
         }
+    }
+    .if-create-provider {
+        margin-right: 10px;
     }
     .error-message {
         color: #ff4d4d;

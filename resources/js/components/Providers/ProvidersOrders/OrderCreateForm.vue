@@ -17,7 +17,7 @@
                 <div class="order-personal-info">
 
                     <form>
-                        <div class="form-row">
+                        <div v-show="!showCreateProvider" class="form-row">
                             <div class="form-group">
                                 <label for="order_number">Номер заказа</label>
                                 <input v-model="order.order_number" id="order_number" type="text" readonly
@@ -332,7 +332,6 @@ export default {
         ProvideService.getProvides()
             .then(response => this.providers = response.data.providers)
             .catch(error => this.errorMessage = error)
-        // .finally(() => this.loading = false)
 
         UserService.getManagers()
             .then(response => this.managers = response.data.managers)
@@ -426,10 +425,7 @@ export default {
                     this.errors = error.response.data.errors.first_name
                 })
         },
-        // goToAdd() {
-        //     this.$store.dispatch('saveRoute', this.$route.path); // Сохраняем текущий маршрут
-        //     this.$router.push({ path: '/providers/create'});
-        // },
+
         addProvider(type) {
             if (type){
                 this.showCreateProvider = true;

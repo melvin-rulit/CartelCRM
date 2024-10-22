@@ -13,6 +13,15 @@ class CounterpartiesOrders extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_number',
+        'order_date',
+        'delivery_address',
+        'status',
+        'manager_id',
+        'counterpart_id',
+    ];
+
     public function counterpart(): BelongsTo
     {
         return $this->belongsTo(Counterparties::class, 'counterpart_id', 'id');
@@ -23,9 +32,9 @@ class CounterpartiesOrders extends Model
         return sprintf('%s %s %s',  $this->first_name, $this->middle_name, $this->last_name);
     }
 
-//    public function orders(): HasMany
-//    {
-//        return $this->hasMany(OrderResource::class, 'counterpart_id');
-//    }
+    public function sostavs(): HasMany
+    {
+        return $this->hasMany(CounterpartiesOrdersSostav::class, 'counterparty_order_id ', 'id');
+    }
 
 }

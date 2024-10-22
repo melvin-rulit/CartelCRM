@@ -28,7 +28,7 @@ class CreateCounterpartiesRequest extends FormRequest
             'last_name' => 'required',
             'phone' => 'required',
             'city' => 'required',
-            'telegram_login' => 'required',
+            'telegram' => 'required',
         ];
     }
 
@@ -40,7 +40,7 @@ class CreateCounterpartiesRequest extends FormRequest
             'last_name.required' => 'Поле  должно быть заполнено',
             'phone.required' => 'Поле  должно быть заполнено',
             'city.required' => 'Поле  должно быть заполнено',
-            'telegram_login.required' => 'Поле должно быть заполнено',
+            'telegram.required' => 'Поле должно быть заполнено',
         ];
     }
 
@@ -71,6 +71,6 @@ class CreateCounterpartiesRequest extends FormRequest
 
     public function getTelegramLogin(): string
     {
-        return $this->input('telegram_login');
+        return $this->input('telegram');
     }
 }

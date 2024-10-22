@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Counterparties\CreateCounterpartiesRequest;
+use App\Http\Requests\Counterparties\Order\CreateCountepartOrderRequest;
 use App\Http\Requests\Counterparties\UpdateCounterpartRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\Counterparties\CounterpartiesResource;
@@ -13,6 +14,7 @@ use App\Models\CounterpartiesOrders;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Random\RandomException;
 
 class CounterpartiesController extends Controller
 {
@@ -47,6 +49,35 @@ class CounterpartiesController extends Controller
         );
     }
 
+    public function order_create(CreateCountepartOrderRequest $request): JsonResponse
+    {
+        $order = CounterpartiesOrders::create([
+            'order_number' => $request->getOrderNumber(),
+            'order_date' => $request->getOrderDate(),
+            'delivery_address' => $request->getOrderAdress(),
+            'status' => $request->getOrderStatus(),
+            'manager_id' => $request->getManager(),
+            'counterpart_id' => $request->getCountepartId(),
+        ]);
+
+//         Сохранение составов заказа
+
+        foreach ($request->getOrderSostavs() as $sostav) {
+            $order->sostavs()->create($sostav);
+        }
+
+        return new JsonResponse($order);
+//        return new JsonResponse($request->getCountepartId());
+    }
+
+    /**
+     * @throws RandomException
+     */
+    public function unique_order_number(): string
+    {
+        return substr(bin2hex(random_bytes(5)), 0, 10);
+    }
+
     public function order_list(): JsonResponse
     {
         $orders = $this->counterpartiesOrders::all();
@@ -72,7 +103,7 @@ class CounterpartiesController extends Controller
         $Counterpart->last_name = $request->getLastName();
         $Counterpart->phone = $request->getPhone();
         $Counterpart->city = $request->getCity();
-        $Counterpart->telegram_login = $request->getTelegramLogin();
+        $Counterpart->telegram = $request->getTelegramLogin();
 
         $Counterpart->save();
 

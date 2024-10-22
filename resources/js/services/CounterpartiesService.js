@@ -13,6 +13,11 @@ export class CounterpartiesService {
         return axios.get(url)
     }
 
+    static orderStore(order) {
+        let url = `${this.serverUrl}/counterparties/order`;
+        return axios.post(url, order)
+    }
+
     static store(user) {
         let url = `${this.serverUrl}/counterparties`;
         return axios.post(url, user)
@@ -40,35 +45,8 @@ export class CounterpartiesService {
         let url = `${this.serverUrl}/counterparties/order/detail/${id}`;
         return axios.get(url);
     }
-
-    //
-    // static currentUser()
-    // {
-    //     let url = `${this.serverUrl}/user`;
-    //     return axios.get(url)
-    // }
-    //
-    // static getRoles()
-    // {
-    //     let url = `${this.serverUrl}/roles`;
-    //     return axios.get(url)
-    // }
-    //
-    // static getManagersList()
-    // {
-    //     let url = `${this.serverUrl}/users/managers`;
-    //     return axios.get(url)
-    // }
-    //
-    // static getAdminsList()
-    // {
-    //     let url = `${this.serverUrl}/users/admins`;
-    //     return axios.get(url)
-    // }
-    //
-    // static getInvestorsList()
-    // {
-    //     let url = `${this.serverUrl}/users/investors`;
-    //     return axios.get(url)
-    // }
+    static getUniqueOrderNumber(){
+        let url = `${this.serverUrl}/counterparties/get_unique_order_number`;
+        return axios.get(url);
+    }
 }
