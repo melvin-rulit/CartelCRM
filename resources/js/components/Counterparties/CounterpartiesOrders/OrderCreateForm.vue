@@ -325,7 +325,6 @@
 
 <script>
 import {UserService} from "../../../services/UserService";
-import {ProvideService} from "../../../services/ProvideService";
 import {CounterpartiesService} from "../../../services/CounterpartiesService";
 import Alert from "../../forms/Alert.vue";
 import Header from "../../Header.vue";
@@ -440,7 +439,10 @@ export default {
         },
         store: async function (event) {
             event.preventDefault()
-
+            if (this.orderSostavs.length === 0) {
+                this.triggerErrorAlert(); // Вызов функции для отображения сообщения
+                return; // Прерываем выполнение метода
+            }
             const orderData = {
                 order: {
                     ...this.order,
@@ -482,7 +484,7 @@ export default {
             this.$refs.alertComponent.showAlert();
         },
         triggerErrorAlert() {
-            this.alertMessage = 'Не гуд лорем бла бла!';
+            this.alertMessage = 'Состав заказа не может быть пустым!';
             this.alertType = 'error';
             this.$refs.alertComponent.showAlert();
         },

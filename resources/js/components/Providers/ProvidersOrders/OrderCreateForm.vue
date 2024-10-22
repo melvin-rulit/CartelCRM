@@ -383,7 +383,7 @@ export default {
             this.$refs.alertComponent.showAlert();
         },
         triggerErrorAlert() {
-            this.alertMessage = 'Не гуд лорем бла бла!';
+            this.alertMessage = 'Состав заказа не может быть пустым!';
             this.alertType = 'error';
             this.$refs.alertComponent.showAlert();
         },
@@ -394,7 +394,10 @@ export default {
 
         store: async function (event) {
             event.preventDefault()
-
+            if (this.orderSostavs.length === 0) {
+                this.triggerErrorAlert(); // Вызов функции для отображения сообщения
+                return; // Прерываем выполнение метода
+            }
             const orderData = {
                 order: {
                     ...this.order,
