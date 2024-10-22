@@ -1,92 +1,10 @@
-<!--<template>-->
-<!--    <div>-->
-<!--        <Header title="Создание заказа контрагенту">-->
-<!--            <ButtonUI @click="cancelCreation" color="red">Отмена</ButtonUI>-->
-<!--        </Header>-->
-<!--        <hr>-->
-<!--    </div>-->
-
-<!--    <div class="content-user">-->
-
-
-<!--        <div class="user-personal-info">-->
-<!--            <h4>Технические данные заказа</h4>-->
-<!--            <hr>-->
-<!--            <form>-->
-<!--                <div class="form-row">-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="last_name">Номер заказа</label>-->
-<!--                        <input v-model="orders.last_name" id="last_name" type="text" />-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="first_name">Дата заказа</label>-->
-<!--                        <input v-model="orders.first_name" id="first_name" type="text" />-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="middle_name">Статус заказа</label>-->
-<!--                        <input v-model="orders.middle_name" id="middle_name" type="text" />-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="birthday">Ответственный менеджер</label>-->
-<!--                        <input v-model="orders.birthday" id="birthday" type="date" />-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="birthday">Исходящие платежы по заказу</label>-->
-<!--                        <input v-model="orders.birthday" id="birthday" type="date" />-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <h4>Данные поставщика</h4>-->
-<!--                <hr>-->
-<!--                <div class="form-row">-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="email">Название контрагента</label>-->
-<!--                        <input v-model="orders.email" id="email" type="email" />-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="phone_number">Телефон контрагента</label>-->
-<!--                        <input v-model="orders.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="telegram">Логин в телеграм контрагента</label>-->
-<!--                        <input v-model="orders.telegram" id="telegram" type="text" />-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <h4>Информация о складских операциях</h4>-->
-<!--                <hr>-->
-
-<!--                <div class="form-row">-->
-
-<!--                    <div class="form-group">-->
-<!--                        <label for="new_password">Дата поступления на склад</label>-->
-<!--                        <input v-model="orders.password " id="new_password" type="text" placeholder="Введите новый пароль" />-->
-
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="confirm_password">Статус поступления на склад</label>-->
-<!--                        <input v-model="orders.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <h3>   Состав заказа</h3>-->
-<!--                <hr>-->
-
-<!--            </form>-->
-<!--        </div>-->
-
-<!--    </div>-->
-
-
-<!--</template>-->
-
 <template>
     <Alert ref="alertComponent" :message="alertMessage" :type="alertType" />
 
     <div>
         <Header title="Создание заказа контрагенту">
             <!--            <Info message="Перед тем, как заполнить состав заказа - создайте сам заказ"></Info>-->
-            <ButtonUI v-show="!showCreateProvider" @click="addCountepart(true)">Добавить контрагента</ButtonUI>
+            <ButtonUI v-show="!showCreateCountepart" @click="addCountepart(true)">Добавить контрагента</ButtonUI>
             <ButtonUI @click="cancelCreation" color="red">Отмена</ButtonUI>
         </Header>
         <hr>
