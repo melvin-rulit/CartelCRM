@@ -1,6 +1,10 @@
 <template>
+    <Alert ref="alertComponent" :message="alertMessage" :type="alertType" />
+
     <div>
         <Header title="Создание заказа поставщику">
+<!--            <Info message="Перед тем, как заполнить состав заказа - создайте сам заказ"></Info>-->
+            <ButtonUI v-show="!showCreateProvider" @click="addProvider(true)">Добавить поставщика</ButtonUI>
             <ButtonUI @click="cancelCreation" color="red">Отмена</ButtonUI>
         </Header>
         <hr>
@@ -8,75 +12,241 @@
 
     <div class="content-user">
 
+        <PageNav :tabs="['Технические данные заказа', 'Состав заказа']">
+            <template #tab-0>
+                <div class="order-personal-info">
 
-        <div class="user-personal-info">
-            <h4>Технические данные заказа</h4>
-            <hr>
-            <form>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="last_name">Номер заказа</label>
-                        <input v-model="orders.last_name" id="last_name" type="text" />
-                    </div>
-                    <div class="form-group">
-                        <label for="first_name">Дата заказа</label>
-                        <input v-model="orders.first_name" id="first_name" type="text" />
-                    </div>
-                    <div class="form-group">
-                        <label for="middle_name">Статус заказа</label>
-                        <input v-model="orders.middle_name" id="middle_name" type="text" />
-                    </div>
-                    <div class="form-group">
-                        <label for="birthday">Ответственный менеджер</label>
-                        <input v-model="orders.birthday" id="birthday" type="text" />
-                    </div>
-                    <div class="form-group">
-                        <label for="birthday">Исходящие платежы по заказу</label>
-                        <input v-model="orders.birthday" id="birthday" type="text" />
-                    </div>
-                </div>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="order_number">Номер заказа</label>
+                                <input v-model="order.order_number" id="order_number" type="text" readonly
+                                       @mousedown.prevent
+                                       @copy.prevent
+                                       @paste.prevent
+                                       @selectstart.prevent/>
+                            </div>
+                            <div class="form-group">
+                                <label for="order_date ">Дата заказа</label>
+                                <input v-model="order.order_date " id="order_date " type="text" readonly
+                                       @mousedown.prevent
+                                       @copy.prevent
+                                       @paste.prevent
+                                       @selectstart.prevent/>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle_name">Статус заказа</label>
+                                <select v-model="order.status" id="order_status" class="status-select">
+                                    <option value="for_payment">К приемке</option>
+                                    <option value="used"></option>
+                                </select>
+                                <span v-if="!order.status" class="error-message">Заполните поле</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Ответственный менеджер</label>
+                                <select v-model="order.manager" @change="updateManager" class="manager-select">
+                                    <!--                                                <option :value="managers" disabled>-->
+                                    <!--                                                    {{ order.manager.full_name }}-->
+                                    <!--                                                </option>-->
+                                    <option
+                                        v-for="manager in managers"
+                                        :key="manager.id"
+                                        :value="manager.id">
+                                        {{ manager.full_name }}
+                                    </option>
+                                </select>
+                                <span v-if="!order.manager" class="error-message">Заполните поле</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Исходящие платежы по заказу</label>
+                                <input v-model="order.birthday" id="birthday" type="text"/>
+                            </div>
+                        </div>
 
-                <h4>Данные поставщика</h4>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Название контрагента</label>
-                        <input v-model="orders.email" id="email" type="email" />
-                    </div>
-                    <div class="form-group">
-                        <label for="phone_number">Телефон контрагента</label>
-                        <input v-model="orders.phone_number" id="phone_number" type="tel" placeholder="(___)___-____" />
-                    </div>
-                    <div class="form-group">
-                        <label for="telegram">Логин в телеграм контрагента</label>
-                        <input v-model="orders.telegram" id="telegram" type="text" />
-                    </div>
-                </div>
+                        <div v-show="!showCreateProvider">
+                            <h4>Прикрепить поставщика</h4>
+                            <hr>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Список поставщиков</label>
 
-                <h4>Информация о складских операциях</h4>
-                <hr>
+                                    <select v-model="selectedProviderId" @change="updateProviderDetails"
+                                            class="provider-select">
+                                        <!--                            <option value="" disabled>Выберите поставщика</option>-->
+                                        <option v-for="provider in providers" :key="provider.id" :value="provider.id">
+                                            {{ provider.full_name }}
+                                        </option>
+                                    </select>
+                                    <span v-if="!selectedProviderId" class="error-message">Заполните поле</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Телефон поставщика</label>
+                                    <input v-model="order.provider.phone" id="phone" type="text" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telegram">Логин в телеграм поставщика</label>
+                                    <input v-model="order.provider.telegram" id="telegram" type="text" readonly
+                                           @mousedown.prevent
+                                           @copy.prevent
+                                           @paste.prevent
+                                           @selectstart.prevent/>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="form-row">
-
-                    <div class="form-group">
-                        <label for="new_password">Дата поступления на склад</label>
-                        <input v-model="orders.password " id="new_password" type="text" placeholder="Введите новый пароль" />
-
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm_password">Статус поступления на склад</label>
-                        <input v-model="orders.password_see" id="confirm_password" type="text" placeholder="Подтвердите пароль" />
-                    </div>
-                </div>
-
-                <h4>   Состав заказа</h4>
-                <hr>
-
-            </form>
+<div v-show="showCreateProvider">
+    <h3>Инициалы</h3>
+    <hr>
+    <form>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="first_name">Фамилия</label>
+                <input v-model="provider.first_name" id="first_name" type="text" />
+                <span v-if="!provider.first_name" class="error-message">{{ 'Заполните поле' }}</span>
+            </div>
+            <div class="form-group">
+                <label for="middle_name">Имя</label>
+                <input v-model="provider.middle_name" id="middle_name" type="text" />
+                <span v-if="!provider.middle_name" class="error-message">{{ 'Заполните поле' }}</span>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Отчество</label>
+                <input v-model="provider.last_name" id="last_name" type="text" />
+                <span v-if="!provider.last_name" class="error-message">{{ 'Заполните поле' }}</span>
+            </div>
         </div>
 
-    </div>
+        <h3>Контактная информация</h3>
+        <hr>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="city">Город</label>
+                <input v-model="provider.city" id="city" type="text" />
+                <span v-if="!provider.city" class="error-message">{{ 'Заполните поле' }}</span>
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input v-model="provider.phone" id="phone" type="text" />
+                <span v-if="!provider.phone" class="error-message">{{ 'Заполните поле' }}</span>
+            </div>
+            <div class="form-group">
+                <label for="telegram">Логин телеграм</label>
+                <input v-model="provider.telegram" id="telegram" type="text" />
+                <span v-if="!provider.telegram" class="error-message">{{ 'Заполните поле' }}</span>
+            </div>
+        </div>
 
+        <div v-show="showCreateProvider" class="buttons">
+            <ButtonUI @click="addProvider(false)" color="red" class="if-create-provider" >Отмена</ButtonUI>
+            <ButtonUI @click="storeProvider" :disabled=" !provider.first_name || !provider.middle_name || !provider.last_name || !provider.city || !provider.phone || !provider.telegram">Сохранить поставщика</ButtonUI>
+        </div>
+    </form>
+</div>
+
+
+<!--                        <h4>Информация о складских операциях</h4>-->
+<!--                        <hr>-->
+
+<!--                        <div class="form-row">-->
+
+<!--                            <div class="form-group">-->
+<!--                                <label for="new_password">Дата поступления на склад</label>-->
+<!--                                <input v-model="order.password " id="new_password" type="text"/>-->
+
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <label for="confirm_password">Статус поступления на склад</label>-->
+<!--                                <input v-model="order.password_see" id="confirm_password" type="text"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div v-show="!showCreateProvider" class="buttons">
+                            <ButtonUI @click="store" :disabled=" !selectedProviderId || !order.status || !order.manager" type="submit">Сохранить заказ</ButtonUI>
+                        </div>
+                    </form>
+                </div>
+            </template>
+
+            <template #tab-1>
+                <div class="order-sostav">
+
+                    <h4>Добавить состав</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="brand">Бренд</label>
+                            <input v-model="newOrderSostav.brand" id="brand" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="model">Модель</label>
+                            <input v-model="newOrderSostav.model" id="model" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">Состояние</label>
+                            <select v-model="newOrderSostav.state" id="order_status" class="state-select">
+                                <option value="new">Новый</option>
+                                <option value="used">Б/У</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="params_model">Параметры модели</label>
+                            <input v-model="newOrderSostav.params_model" id="params_model" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Цвет</label>
+                            <input v-model="newOrderSostav.color" id="color" type="text"/>
+                        </div>
+
+                    </div>
+
+                        <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">Страна</label>
+                            <input v-model="newOrderSostav.city" id="city" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="series_number">Серийный номер</label>
+                            <input v-model="newOrderSostav.series_number" id="series_number" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="price_in">Цена вход (руб)</label>
+                            <input v-model="newOrderSostav.prise" id="prise" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="price_out">Цена продажи (руб)</label>
+                            <input v-model="newOrderSostav.prise_pay" id="prise_pay" type="text"/>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button @click.prevent="addOrderSostav">Добавить состав</button>
+<!--                        <ButtonUI @click.prevent="addOrderSostav">Добавить состав</ButtonUI>-->
+                    </div>
+
+                    <h4>Список, который будет добавлен к заказу</h4>
+
+
+                    <Table
+                        :data="orderSostavs"
+                        :columns="columns"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        :rowSelect=false
+                    />
+<!--                    <ul>-->
+<!--                        <li v-for="(sostav, index) in orderSostavs" :key="index">-->
+<!--                            {{ sostav.brand }} - {{ sostav.model }} ({{ sostav.state }})-->
+<!--                            <ButtonUI @click="removeOrderSostav(index)">Удалить</ButtonUI>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+                </div>
+
+            </template>
+
+        </PageNav>
+    </div>
 
 </template>
 
@@ -88,56 +258,187 @@ import PageNav from "../../UI/PageNav.vue";
 import ButtonUI from "../../UI/ButtonUI.vue";
 import {ProvideService} from "../../../services/ProvideService";
 import Table from "../../forms/Table.vue";
+import {UserService} from "../../../services/UserService";
+import Info from "../../forms/Info.vue";
+import Alert from "../../forms/Alert.vue";
 
 export default {
-  name: "DealCreateForm",
-  components: {Table, ButtonUI, PageNav, Header},
-  data: function () {
-    const createdAt = new Date().toISOString().slice(0, 16)
-    return {
-      loading: false,
+    name: "DealCreateForm",
+    components: {Alert, Info, Table, ButtonUI, PageNav, Header},
+    data: function () {
+        const createdAt = new Date().toISOString().slice(0, 16)
+        return {
+            // loading: false,
+            selectedProviderId: null,
+            providers: [],
+            managers: [],
+            order: {
 
-        orders: {
-        type: null,
-        kind: null,
-        proxyId: null,
-        ownerId: null,
-        branchId: null,
-        clientId: null,
-        activeId: null,
-        remain: null,
-        createdAt: createdAt,
-        validUntil: null,
-        costOfRent: null,
-        costOfBuyout: null,
-        initial: null,
-        comment: null,
-        redemption_period: null,
-        citizenship: null,
-      },
+                manager: null,
+                order_number: null,
+                order_date: new Date().toISOString().split('T')[0],
+                provider: {
+                    id: '',
+                    phone: '',
+                    telegram: '',
+                }
+            },
+            showCreateProvider: false,
+            provider: {
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                city: null,
+                phone: null,
+                telegram: null
+            },
+            orderSostavs: [], // Массив для составов заказа
+            newOrderSostav: {
+                brand: '',
+                model: '',
+                state: '',
+                params_model: '',
+                color: '',
+                city: '',
+                series_number: '',
+                prise: '',
+                prise_pay: ''
+            },
+            columns: [
+                { label: 'Бренд', key: 'brand' },
+                { label: 'Модель', key: 'model' },
+                { label: 'Состояние', key: 'state' },
+                { label: 'Параметры модели', key: 'params_model' },
+                { label: 'Цвет', key: 'color' },
+                { label: 'Страна', key: 'city' },
+                { label: 'Серийный номер', key: 'series_number' },
+                { label: 'Цена вход', key: 'prise' },
+                { label: 'Цена продажи', key: 'prise_pay' },
+            ],
 
-        submitted: false,
-        errors: null,
-        message: null,
-    }
-  },
+            alertMessage: '',
+            alertType: 'success',
+            submitted: false,
+            errors: '',
+            message: null,
+        }
+    },
 
-  mounted() {
+    created: async function () {
+        ProvideService.getUniqueOrderNumber()
+            .then(response => this.order.order_number = response.data)
+            .catch(error => this.errorMessage = error)
 
-  },
+        ProvideService.getProvides()
+            .then(response => this.providers = response.data.providers)
+            .catch(error => this.errorMessage = error)
+        // .finally(() => this.loading = false)
+
+        UserService.getManagers()
+            .then(response => this.managers = response.data.managers)
+    },
+
+    computed: {
+        filteredManagers() {
+            return this.managers.filter(manager => manager.id !== this.order.manager.id);
+        }
+    },
+
     methods: {
+        updateManager() {
+            const selectedManager = this.managers.find(manager => manager.id === this.order.manager.id);
+            if (selectedManager) {
+                this.order.manager.full_name = selectedManager.full_name; // Обновляем имя менеджера
+            }
+        },
+        updateProviderDetails() {
+            const selectedProvider = this.providers.find(provider => provider.id === this.selectedProviderId);
+            if (selectedProvider) {
+                this.order.provider.id = selectedProvider.id; // Подставляем id
+                this.order.provider.phone = selectedProvider.phone; // Подставляем телефон
+                this.order.provider.telegram = selectedProvider.telegram; // Подставляем логин в Telegram
+            }
+        },
+        addOrderSostav() {
+            this.orderSostavs.push({...this.newOrderSostav}); // Добавляем новый состав
+            this.newOrderSostav = { // Сбрасываем поля ввода
+                brand: '',
+                model: '',
+                state: '',
+                params_model: '',
+                color: '',
+                country: '',
+                series_number: '',
+                price_in: '',
+                price_out: ''
+            };
+        },
+        triggerSuccessAlert(type) {
+            if (type === 'provide'){
+                this.alertMessage = 'Поставщик был успешно создан';
+            }else if(type === 'order'){
+                this.alertMessage = 'Заказ поставщику был успешно создан';
+            }
+
+            this.alertType = 'success';
+            this.$refs.alertComponent.showAlert();
+        },
+        triggerErrorAlert() {
+            this.alertMessage = 'Не гуд лорем бла бла!';
+            this.alertType = 'error';
+            this.$refs.alertComponent.showAlert();
+        },
+
+        removeOrderSostav(index) {
+            this.orderSostavs.splice(index, 1); // Удаляем состав по индексу
+        },
+
         store: async function (event) {
+            event.preventDefault()
+
+            const orderData = {
+                order: {
+                    ...this.order,
+                    orderSostavs: this.orderSostavs // Добавляем массив составов к заказу
+                }
+            };
+            ProvideService.orderStore(orderData)
+                .then(response => {
+                    this.triggerSuccessAlert('order');
+                })
+                .catch(error => {
+                    // this.errors = error.response.data.errors
+                })
+        },
+        storeProvider: async function (event) {
             event.preventDefault()
             this.errors = null
             ProvideService.store(this.provider)
                 .then(response => {
-                    this.provider = response.data.provider
-                    this.$router.push({name: 'providersList'})
+                    this.showCreateProvider = false
+                    this.triggerSuccessAlert('provide');
+
+                    ProvideService.getProvides()
+                        .then(response => this.providers = response.data.providers)
+                        .catch(error => this.errorMessage = error)
                 })
                 .catch(error => {
-                    this.errors = error.response.data.errors
+                    this.errors = error.response.data.errors.first_name
                 })
         },
+        // goToAdd() {
+        //     this.$store.dispatch('saveRoute', this.$route.path); // Сохраняем текущий маршрут
+        //     this.$router.push({ path: '/providers/create'});
+        // },
+        addProvider(type) {
+            if (type){
+                this.showCreateProvider = true;
+            }else {
+                this.showCreateProvider = false;
+            }
+
+        },
+
         cancelCreation() {
             this.$router.push({name: 'ordersProviderList'})
         },
@@ -185,6 +486,7 @@ export default {
                 object-fit: cover;
                 cursor: pointer;
             }
+
             .avatar-placeholder {
                 display: flex;
                 align-items: center;
@@ -197,7 +499,8 @@ export default {
         }
     }
 
-    .user-personal-info{
+    .order-personal-info,
+    .order-sostav {
         margin-top: 1.5em;
 
         h3 {
@@ -241,6 +544,56 @@ export default {
                     color: #b1c2d9;
                 }
             }
+
+            .status-select,
+            .manager-select,
+            .state-select {
+                width: 250px;
+                //width: 460px;
+                padding: 0.5em;
+                border: 1px solid #e3ebf6;
+                border-radius: 5px;
+                background-color: #fff;
+                font-size: 14px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    border-color: #569afa;
+                }
+
+                option {
+                    padding: 0.5em;
+                }
+            }
+
+            .provider-select {
+                width: 460px;
+                padding: 0.5em;
+                border: 1px solid #e3ebf6;
+                border-radius: 5px;
+                background-color: #fff;
+                font-size: 14px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #569afa;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    border-color: #569afa;
+                }
+
+                option {
+                    padding: 0.5em;
+                }
+            }
+
         }
 
         .form-group:last-child {
@@ -286,6 +639,9 @@ export default {
             }
         }
     }
+.if-create-provider {
+    margin-right: 10px;
+}
     .error-message {
         color: #ff4d4d;
         font-size: 0.75em;

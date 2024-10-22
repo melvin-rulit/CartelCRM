@@ -11,7 +11,7 @@ export default {
         // Текст кнопки, обязательный параметр
         buttonText: {
             type: String,
-            required: true,
+            required: false,
         },
         // Цвет по умолчанию
         color: {
