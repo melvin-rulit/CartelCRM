@@ -17,9 +17,9 @@ class CounterpartiesResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'full_name' => $this->resource->getFullName(),
-            'firstName' => $this->resource->first_name,
-            'middleName' => $this->resource->middle_name,
-            'lastName' => $this->resource->last_name,
+            'first_name' => $this->resource->first_name,
+            'middle_name' => $this->resource->middle_name,
+            'last_name' => $this->resource->last_name,
             'phone' => $this->resource->phone,
             'city' => $this->resource->city,
             'telegram' => $this->resource->telegram,

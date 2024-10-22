@@ -7,6 +7,7 @@
                 </div>
 
             </template>
+            <ButtonUI color="green" @click="edit">Редактировать</ButtonUI>
             <ButtonUI @click="back">Назад</ButtonUI>
         </Header>
         <hr>
@@ -117,6 +118,9 @@ export default {
         },
         back() {
             this.$router.push({ path: '/counterparties' });
+        },
+        edit() {
+            this.$router.push({ path: '/counterparties/' + this.id });
         },
     }
 }

@@ -126,6 +126,11 @@ class User extends Authenticatable
 //        return $this->role_id === self::ROLE_INVESTOR;
 //    }
 
+    public function getBranchId(): ?int
+    {
+        return $this->branch_id;
+    }
+
     public function getFullName(): string
     {
         return sprintf('%s %s %s',  $this->first_name, $this->middle_name, $this->last_name);

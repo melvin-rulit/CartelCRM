@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Counterparties\CreateCounterpartiesRequest;
+use App\Http\Requests\Counterparties\UpdateCounterpartRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\Counterparties\CounterpartiesResource;
 use App\Http\Resources\Counterparties\Orders\OrderResource;
@@ -110,37 +111,24 @@ class CounterpartiesController extends Controller
         return new JsonResponse(['orders' => $counterpart_orders ]);
     }
 
-    public function update(UpdateUserRequest $request, int $id): JsonResponse
+    public function update(UpdateCounterpartRequest $request): JsonResponse
     {
-        $user = $this->users->find($id);
+        $counterpart = $this->counterparties->find($request->input('id'));
 
-        if (!$user) {
-            return $this->error('Пользователь не найден');
+        if (!$counterpart) {
+            return $this->error('Контрагент не найден');
         }
 
-        $user->role_id = $request->getRoleId();
-        $user->enabled = $request->isEnabled();
+        $counterpart->first_name = $request->getFirstName();
+        $counterpart->middle_name = $request->getMiddleName();
+        $counterpart->last_name = $request->getLastName();
+        $counterpart->phone = $request->getPhone();
+        $counterpart->city = $request->getCity();
+        $counterpart->telegram = $request->getTelegramLogin();
 
-        $user->first_name = $request->getFirstName();
-        $user->middle_name = $request->getMiddleName();
-        $user->last_name = $request->getLastName();
-        $user->birthday = $request->getBirthday();
-        $user->passport_series = $request->getPassportSeries();
-        $user->passport_number = $request->getPassportNumber();
-        $user->passport_notes = $request->getPassportNotes();
-        $user->registration_address = $request->getRegistrationAddress();
-        $user->phone_number = $request->getPhone();
-        $user->comment = $request->getComment();
+        $counterpart->save();
 
-        if ($request->getPassword()) {
-            $user->password = \Hash::make($request->getPassword());
-        }
-
-        $user->branch_id = $request->getBranchId();
-
-        $user->save();
-
-        return new JsonResponse(['user' => UserResource::make($user)]);
+        return new JsonResponse(['counterpart' => CounterpartiesResource::make($counterpart)]);
     }
 
     public function delete(int $id): JsonResponse

@@ -17,11 +17,11 @@ export class CounterpartiesService {
         let url = `${this.serverUrl}/counterparties`;
         return axios.post(url, user)
     }
-    // static update(user) {
-    //     let url = `${this.serverUrl}/users/${user.id}`;
-    //     return axios.put(url, user)
 
-    // }
+    static update(counterpart) {
+        let url = `${this.serverUrl}/counterparties/${counterpart}`;
+        return axios.put(url, counterpart)
+    }
 
     static delete(id) {
         let url = `${this.serverUrl}/counterparties/${id}`;

@@ -141,7 +141,7 @@ class ProviderController extends Controller
         $provider = $this->providers->find($request->input('id'));
 
         if (!$provider) {
-            return $this->error('Доверенность не найдена');
+            return $this->error('Поставщик не найден');
         }
 
         $provider->first_name = $request->getFirstName();
