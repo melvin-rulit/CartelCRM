@@ -64,7 +64,7 @@
 
                         </div>
 
-                        <div class="form-row">
+                        <div v-show="!showCreateCountepart" class="form-row">
                             <div class="form-group">
                                 <label for="birthday">Исходящие платежы по заказу</label>
                                 <input v-model="order.birthday" id="birthday" type="text"/>
