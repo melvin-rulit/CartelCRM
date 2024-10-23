@@ -1,6 +1,15 @@
 <template>
 <aside class="sidebar">
-<a href="/" class="logo"><img src="images/logo/logo.svg" alt="logo"></a>
+<a href="/" class="logo"><img src="/logo.pdf" alt=""></a>
+
+<!--    <a href="/" class="logo">-->
+<!--        <iframe-->
+<!--            src="path/to/your/logo.pdf" &lt;!&ndash; Замените на фактический путь к вашему PDF-файлу &ndash;&gt;-->
+<!--        width="100%"-->
+<!--        height="100"-->
+<!--        frameborder="0"-->
+<!--        ></iframe>-->
+<!--    </a>-->
 <nav>
     <ul>
 
