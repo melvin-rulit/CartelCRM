@@ -29,15 +29,19 @@
             >
                 {{ selectAll ? 'Удалить все' : 'Удалить строку' }}
             </ButtonUI>
-            <button @click="addfilter('all')" class="white-button for_payment">
-                Все
-            </button>
-            <button @click="addfilter('for_payment')" class="white-button for_payment">
-                Текущие
-            </button>
-            <button @click="addfilter('completed')" class="white-button completed">
-                Архивные
-            </button>
+
+
+                <button v-if="isThisRouteCounterpartiesOrders" @click="addfilter('all')" class="white-button for_payment">
+                    Все
+                </button>
+                <button v-if="isThisRouteCounterpartiesOrders" @click="addfilter('for_payment')" class="white-button for_payment">
+                    Текущие
+                </button>
+                <button v-if="isThisRouteCounterpartiesOrders" @click="addfilter('completed')" class="white-button completed">
+                    Архивные
+                </button>
+
+
             <select v-model="rowsPerPage" @change="handleRowsChange">
                 <option
                     v-for="option in rowsPerPageOptions"
@@ -250,6 +254,9 @@ export default {
         };
     },
     computed: {
+        isThisRouteCounterpartiesOrders() {
+            return this.$route.name === 'ordersCounterpartiesList';
+        },
         totalPages() {
             return Math.ceil(this.filteredData.length / this.rowsPerPage);
         },

@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header :title="order_create ? 'Заказы контрагентов' : 'Создание заказа контрагенту'">
-            <Info v-show="filter" :message="filter === 'for_payment' ? 'Текущие заказы' :
+            <Info v-show="filter" width="50%" :message="filter === 'for_payment' ? 'Текущие заказы' :
                 filter === 'completed' ? 'Архивные заказы' :
                 filter === 'all' ? 'Все заказы' :
                 ''"/>
