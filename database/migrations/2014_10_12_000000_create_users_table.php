@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('passport_issuedByDate')->nullable();
             $table->string('passport_give')->nullable();
             $table->string('registration_address')->nullable();
+            $table->string('live_adress')->nullable();
             $table->string('phone_number', 32)->nullable();
             $table->string('telegram', 1024)->nullable();
             $table->boolean('enabled')->default(0);
