@@ -22,6 +22,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('passport_series')->nullable();
             $table->string('passport_number')->nullable();
+            $table->string('passport_issuedBy ')->nullable();
+            $table->string('passport_issuedByDate ')->nullable();
             $table->string('passport_give')->nullable();
             $table->string('registration_address')->nullable();
             $table->string('phone_number', 32)->nullable();
